@@ -1492,7 +1492,7 @@ MySceneGraph.generateRandomString = function(length) {
  * Displays the scene, processing each node, starting in the root node.
  */
 MySceneGraph.prototype.displayScene = function() {
-    this.processGraph(this.nodes['root']);
+    this.processGraph(this.nodes['root'], this.materials[this.defaultMaterialID]);
 }
 
 MySceneGraph.prototype.processGraph = function(node, parentMaterial){
@@ -1509,11 +1509,11 @@ MySceneGraph.prototype.processGraph = function(node, parentMaterial){
     this.scene.multMatrix(node.transformMatrix);
     for(var i = 0; i < node.children.length; i++){
       this.scene.pushMatrix();
-        this.material.apply();
+        material.apply();
         this.processGraph(this.nodes[node.children[i]], material);
       this.scene.popMatrix();
     }
-    this.material.apply();
+    material.apply();
     if(node.leaves.length > 0){
       for(var i = 0; i < node.leaves.length; i++){
         node.leaves[i].display();
