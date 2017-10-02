@@ -13,8 +13,8 @@ function Sphere(scene, args){
   this.degStepXY = (2*Math.PI)/this.partsPerSections;
   this.degStepZ = (Math.PI)/this.sections;
 
-	 this.tCoord = 0;
-   this.sCoord = 0;
+	this.tCoord = 0;
+  this.sCoord = 0;
 
  	this.initBuffers();
  };
