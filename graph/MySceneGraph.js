@@ -1418,8 +1418,8 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 							this.warn("Error in leaf");
 
 						//parse leaf
-						//this.nodes[nodeID].addLeaf(new MyGraphLeaf(this,descendants[j]);
-                        sizeChildren++;
+						this.nodes[nodeID].addLeaf(new MyGraphLeaf(this,descendants[j]));
+            sizeChildren++;
 					}
 					else
 						this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
@@ -1492,7 +1492,36 @@ MySceneGraph.generateRandomString = function(length) {
  * Displays the scene, processing each node, starting in the root node.
  */
 MySceneGraph.prototype.displayScene = function() {
-	// entry point for graph rendering
-	// remove log below to avoid performance issues
-	//this.log("Graph should be rendered here...");
+    this.processGraph(this.nodes['root']);
+}
+
+MySceneGraph.prototype.processGraph = function(node, parentMaterial){
+  var material = parentMaterial;
+  if(node.nodeID != null){
+    //Processar material
+    if(node.materialID == 'clear'){
+      material = this.materials[this.defaultMaterialID];
+    }
+    else if(node.materialID != 'null'){
+      material = this.materials[node.materialID];
+    }
+    //Processa Matrix
+    this.scene.multMatrix(node.transformMatrix);
+    for(var i = 0; i < node.children.length; i++){
+      this.scene.pushMatrix();
+        this.material.apply();
+        this.processGraph(this.nodes[node.children[i]], material);
+      this.scene.popMatrix();
+    }
+    this.material.apply();
+    if(node.leaves.length > 0){
+      for(var i = 0; i < node.leaves.length; i++){
+        node.leaves[i].display();
+      }
+    }
+
+  }else{
+    console.log("Erro: nodeID == null")
+  }
+
 }
