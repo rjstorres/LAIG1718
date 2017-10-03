@@ -6,6 +6,7 @@
 function MyGraphLeaf(graph, xmlelem) {
 	this.graph = graph;
 	this.args = graph.reader.getString(xmlelem, 'args');
+	this.args= this.args.split(" ")
 	this.type = graph.reader.getString(xmlelem, 'type');
 	this.primitive = null;
 
