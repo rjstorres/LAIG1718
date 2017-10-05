@@ -1505,21 +1505,30 @@ MySceneGraph.prototype.processGraph = function(node, parentMaterial){
     else if(node.materialID != 'null'){
       material = this.materials[node.materialID];
     }
+    
+    //Apply Texture
+    if (node.textureID == 'clear')
+        material.setTexture(null); 
+    else if (node.textureID != 'null') {
+        material.setTexture(this.textures[node.textureID][0]);
+    }
+    
     //Processa Matrix
     this.scene.multMatrix(node.transformMatrix);
-    for(var i = 0; i < node.children.length; i++){
-      this.scene.pushMatrix();
-        material.apply();
+    
+    material.apply();  
+    
+    for (var i = 0; i < node.children.length; i++){
+        this.scene.pushMatrix();   
         this.processGraph(this.nodes[node.children[i]], material);
-      this.scene.popMatrix();
+        this.scene.popMatrix();
     }
-    material.apply();
+      
     if(node.leaves.length > 0){
       for(var i = 0; i < node.leaves.length; i++){
         node.leaves[i].display();
       }
     }
-
   }else{
     console.log("Erro: nodeID == null")
   }
