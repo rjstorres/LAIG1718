@@ -71,3 +71,8 @@
  	this.primitiveType = this.scene.gl.TRIANGLES;
  	this.initGLBuffers();
  };
+
+ Cylinder.prototype.setTextureCoords = function (s,t) {
+   //Todo setamplif factor
+ 	this.updateTexCoordsGLBuffers();
+ }

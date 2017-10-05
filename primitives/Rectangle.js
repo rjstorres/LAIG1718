@@ -33,13 +33,23 @@ Rectangle.prototype.initBuffers = function () {
 		0,0,1
 	];
 	this.texCoords = [
-		this.mins,this.mint,
-		this.maxs,this.mint,
-		this.mins,this.maxt,
-		this.maxs,this.maxt
+		0,0, //mins, mint
+		1,0, //maxs, mint
+		0,1, //mins, maxt
+		1,1 //maxs, maxt
 	];
 
 
 	this.primitiveType=this.scene.gl.TRIANGLES;
 	this.initGLBuffers();
 };
+
+Rectangle.prototype.setTextureCoords = function (s,t) {
+	this.texCoords = [
+		0,0, //mins, mint
+		s,0, //maxs, mint
+		0,t, //mins, maxt
+		s,t //maxs, maxt
+	];
+	this.updateTexCoordsGLBuffers();
+}

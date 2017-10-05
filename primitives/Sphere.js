@@ -93,3 +93,8 @@ function Sphere(scene, args){
  	this.primitiveType = this.scene.gl.TRIANGLES;
  	this.initGLBuffers();
  };
+
+ Sphere.prototype.setTextureCoords = function (s,t) {
+   //Todo setamplif factor
+ 	this.updateTexCoordsGLBuffers();
+ }

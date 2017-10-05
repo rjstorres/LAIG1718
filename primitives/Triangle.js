@@ -22,7 +22,7 @@ Triangle.prototype.initBuffers = function () {
 				[this.vertexCoordinates[i], this.vertexCoordinates[i+1], 0]
 		);
 	}*/
-	
+
 	this.indices = [
         0,2,1,
 				0,1,2
@@ -45,3 +45,8 @@ Triangle.prototype.initBuffers = function () {
 	this.primitiveType=this.scene.gl.TRIANGLES;
 	this.initGLBuffers();
 };
+
+Triangle.prototype.setTextureCoords = function (s,t) {
+	//Todo setamplif factor
+ this.updateTexCoordsGLBuffers();
+}
