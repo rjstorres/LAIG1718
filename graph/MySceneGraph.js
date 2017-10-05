@@ -1492,11 +1492,12 @@ MySceneGraph.generateRandomString = function(length) {
  * Displays the scene, processing each node, starting in the root node.
  */
 MySceneGraph.prototype.displayScene = function() {
-    this.processGraph(this.nodes['root'], this.materials[this.defaultMaterialID]);
+    this.processGraph(this.nodes['root'], this.materials[this.defaultMaterialID],[1,1]);
 }
 
-MySceneGraph.prototype.processGraph = function(node, parentMaterial){
+MySceneGraph.prototype.processGraph = function(node, parentMaterial, amplifFactor){
   var material = parentMaterial;
+  var amplif = amplifFactor;
   if(node.nodeID != null){
     //Processar material
     if(node.materialID == 'clear'){
@@ -1505,18 +1506,25 @@ MySceneGraph.prototype.processGraph = function(node, parentMaterial){
     else if(node.materialID != 'null'){
       material = this.materials[node.materialID];
     }
+    if(node.textureID == 'clear'){
+      material.setTexture(null);
+    }else if(node.textureID != 'null'){
+      material.setTexture(this.textures[node.textureID][0]);
+      amplif = this.textures[node.textureID].slice(1);
+      material.setTextureWrap('REPEAT','REPEAT');
+    }
     //Processa Matrix
     this.scene.multMatrix(node.transformMatrix);
     for(var i = 0; i < node.children.length; i++){
       this.scene.pushMatrix();
         material.apply();
-        this.processGraph(this.nodes[node.children[i]], material);
+        this.processGraph(this.nodes[node.children[i]], material, amplif);
       this.scene.popMatrix();
     }
     material.apply();
     if(node.leaves.length > 0){
       for(var i = 0; i < node.leaves.length; i++){
-        node.leaves[i].display();
+        node.leaves[i].display(amplif[0], amplif[1]);
       }
     }
 
