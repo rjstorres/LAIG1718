@@ -13,9 +13,6 @@ function Sphere(scene, args){
   this.degStepXY = (2*Math.PI)/this.partsPerSections;
   this.degStepZ = (Math.PI)/this.sections;
 
-	this.tCoord = 0;
-  this.sCoord = 0;
-
  	this.initBuffers();
  };
 
@@ -24,7 +21,8 @@ function Sphere(scene, args){
 
  Sphere.prototype.initBuffers = function() {
 
-
+  let sc = 0;
+  let st = 0;
   this.vertices = []
   this.indices = []
   this.normals = []
@@ -34,6 +32,8 @@ function Sphere(scene, args){
   //Vertice inferior
   this.vertices.push(0,0,-this.radius);
   this.normals.push(0,0,-1);
+  this.texCoords.push(sc, st);
+  st++;
   //Adicionar os vertices "piso a piso": 0<floor<sections
   for(floor = 1; floor < this.sections; floor++){
     //Calcular a ordenada Z da latitude atual
@@ -54,17 +54,17 @@ function Sphere(scene, args){
       );
       //[!]Informação de texturas
       this.texCoords.push(
-        this.sCoord, this.tCoord
+        sc, st
       ),
-      this.sCoord++;
+      sc++;
     }
-    this.tCoord++;
-    this.sCoord = 0;
+    st++;
+    sc = 0;
   }
   //Adicionar vertice no top da esfera
   this.vertices.push(0,0,this.radius);
   this.normals.push(0,0,1);
-  this.texCoords.push(this.sCoord, this.tCoord + 1);
+  this.texCoords.push(sc, st + 1);
   //Criar a malha poligonal
   //Parte baixa da esfera
   for(var i = 1; i <= this.partsPerSections; i++){
@@ -92,9 +92,4 @@ function Sphere(scene, args){
   }
  	this.primitiveType = this.scene.gl.TRIANGLES;
  	this.initGLBuffers();
- };
-
- Sphere.prototype.setTextureCoords = function (s,t) {
-   //Todo setamplif factor
- 	this.updateTexCoordsGLBuffers();
- }
+};
