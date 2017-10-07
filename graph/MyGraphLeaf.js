@@ -18,7 +18,7 @@ function MyGraphLeaf(graph, xmlelem) {
 			this.primitive = new Sphere(this.graph.scene, this.args);
 			break;
 		case 'cylinder':
-			this.primitive = new Cylinder(this.graph.scene, this.args);
+			this.primitive = new FullCylinder(this.graph.scene, this.args);
 			break;
 		case 'rectangle':
 			this.primitive = new Rectangle(this.graph.scene, this.args);
@@ -29,7 +29,9 @@ function MyGraphLeaf(graph, xmlelem) {
 
 }
 
-MyGraphLeaf.prototype.display = function(s, t){
-	this.primitive.setTextureCoords(s,t);
+MyGraphLeaf.prototype.display = function(afs, aft){
+	if((this.primitive instanceof Rectangle) || (this.primitive instanceof Triangle)){
+		this.primitive.setTextureCoords(afs,aft);
+	}
 	this.primitive.display();
 }
