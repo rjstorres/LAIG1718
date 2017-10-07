@@ -44,12 +44,14 @@ Rectangle.prototype.initBuffers = function () {
 	this.initGLBuffers();
 };
 
-Rectangle.prototype.setTextureCoords = function (s,t) {
+Rectangle.prototype.setTextureCoords = function (afs,aft) {
+	deltaX = Math.abs(this.vertices[6] - this.vertices[0]);
+	deltaY = Math.abs(this.vertices[4] - this.vertices[1]);
 	this.texCoords = [
 		0,0, //mins, mint
-		s,0, //maxs, mint
-		0,t, //mins, maxt
-		s,t //maxs, maxt
+		deltaX/afs,0, //maxs, mint
+		0,deltaY/aft, //mins, maxt
+		deltaX/afs,deltaY/aft //maxs, maxt
 	];
 	this.updateTexCoordsGLBuffers();
 }
