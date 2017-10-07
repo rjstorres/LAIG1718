@@ -10,6 +10,7 @@
   this.tRadius = args[2];
   this.sections = args[3];
   this.partsPerSections = args[4];
+  /*[!] Add drawing of lids*/
 
   this.partHeight = this.height/this.sections;
   this.radiusStep = (this.tRadius - this.bRadius)/(this.sections + 1);
@@ -66,13 +67,6 @@
     }
   }
 
-  console.log(this.vertices);
-
  	this.primitiveType = this.scene.gl.TRIANGLES;
  	this.initGLBuffers();
  };
-
- Cylinder.prototype.setTextureCoords = function (s,t) {
-   //Todo setamplif factor
- 	this.updateTexCoordsGLBuffers();
- }
