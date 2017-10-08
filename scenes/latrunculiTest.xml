@@ -165,8 +165,9 @@
 
         <DESCENDANTS> 
             <NODEREF id="chao" />
-            <NODEREF id="pernas" />
             <NODEREF id="sword" />
+            <NODEREF id="shield" />
+            <NODEREF id="pedestal" />
         </DESCENDANTS>
 
     </NODE>
@@ -188,8 +189,12 @@
 
         <NODE id="sword">       
         <MATERIAL id="lightMaterial" />     
-        <TEXTURE id="null" />       			
+        <TEXTURE id="null" />  
 
+          			
+        <TRANSLATION x="-0.5" y="20" z="25" />
+        <ROTATION axis="x" angle="180" />
+        
         <DESCENDANTS>
        		<NODEREF id="blade" />  
             <NODEREF id="handle" />          
@@ -302,7 +307,7 @@
         <TEXTURE id="null" />       			
 
         <DESCENDANTS>
-					<LEAF type="cylinder" args="1.5 0.3 0.3 20 20" /> 
+			<LEAF type="cylinder" args="1.5 0.3 0.3 20 20" /> 
         </DESCENDANTS>
 
     </NODE>
@@ -318,7 +323,50 @@
         <DESCENDANTS>
 			<LEAF id="sphere1" type="sphere" args="0.2 20 20" />
         </DESCENDANTS>
+    </NODE>
 
+    <NODE id="shield">       
+        <MATERIAL id="lightMaterial" />     
+        <TEXTURE id="null" />       			
+        
+        <TRANSLATION x="0" y="-2.8" z="8.3" />
+        <ROTATION axis="x" angle="-5" />
+        <TRANSLATION x="20" y="5" z="10" />
+        <SCALE sx="1" sy="0.8" sz="0.1" />
+        <DESCENDANTS>
+			<NODEREF id="baseRow" />
+            <NODEREF id="fesseAndChiefRow" />
+        </DESCENDANTS>
+    </NODE>
+
+    <NODE id="baseRow">       
+        <MATERIAL id="lightMaterial" />     
+        <TEXTURE id="null" />       			
+        <ROTATION axis="x" angle="90" />
+        <DESCENDANTS>
+			<LEAF type="cylinder" args="4 2 0 20 20" /> 
+        </DESCENDANTS>
+    </NODE>
+
+    <NODE id="fesseAndChiefRow">       
+        <MATERIAL id="lightMaterial" />     
+        <TEXTURE id="null" />
+        <TRANSLATION x="0" y="4" z="0" />
+        <ROTATION axis="x" angle="90" />
+        <DESCENDANTS>
+			<LEAF type="cylinder" args="4 2 2 20 20" /> 
+        </DESCENDANTS>
+    </NODE>
+
+
+    <NODE id="pedestal">       
+        <MATERIAL id="lightMaterial" />     
+        <TEXTURE id="null" />   
+        <TRANSLATION x="15" y="-8" z="10" />
+        <SCALE sx="1" sy="2" sz="1" />
+        <DESCENDANTS>
+       		<NODEREF id="prisma" />          
+        </DESCENDANTS>
     </NODE>
 
     <NODE id="prisma">       
@@ -419,8 +467,9 @@
         </DESCENDANTS>
 
     </NODE>
+
     <!-- Soldado a fazer!!!-->
-   
+   <!--
     <NODE id="pernas">       
         <MATERIAL id="lightMaterial" />     
         <TEXTURE id="banco" />       			
@@ -506,7 +555,7 @@
         </DESCENDANTS>
 
     </NODE>
-
+-->
     <NODE id="faceCubo1">       
         <MATERIAL id="null" />     
         <TEXTURE id="null" />       			
