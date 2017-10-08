@@ -166,6 +166,7 @@
         <DESCENDANTS> 
             <NODEREF id="chao" />
             <NODEREF id="pernas" />
+            <NODEREF id="sword" />
         </DESCENDANTS>
 
     </NODE>
@@ -184,10 +185,152 @@
 				</DESCENDANTS>
 
     </NODE>
-    
- 
 
-    <!-- Street bench -->
+        <NODE id="sword">       
+        <MATERIAL id="lightMaterial" />     
+        <TEXTURE id="null" />       			
+
+        <DESCENDANTS>
+       		<NODEREF id="blade" />          
+        </DESCENDANTS>
+    </NODE>
+
+    <NODE id="blade">       
+        <MATERIAL id="lightMaterial" />     
+        <TEXTURE id="null" />     
+
+        <TRANSLATION x="20" y="5" z="10" />
+
+        <DESCENDANTS>
+       		<NODEREF id="parteInferior" />          
+            <NODEREF id="parteSuperior" />  
+        </DESCENDANTS>
+    </NODE>
+
+    <NODE id="parteInferior">       
+        <MATERIAL id="lightMaterial" />     
+        <TEXTURE id="null" />       			
+
+        <SCALE sx="0.5" sy="2.5" sz="0.1" />
+        <DESCENDANTS>
+       		<NODEREF id="prisma" />          
+        </DESCENDANTS>
+    </NODE>
+
+    <NODE id="parteSuperior">       
+        <MATERIAL id="lightMaterial" />     
+        <TEXTURE id="null" />    
+        
+        <TRANSLATION x="0.5" y="10.687" z="0.1" />
+        <SCALE sx="0.0355" sy="0.1" sz="0.0077" />
+
+        <DESCENDANTS>
+       		<NODEREF id="piramide" />          
+        </DESCENDANTS>
+    </NODE>
+
+    <NODE id="prisma">       
+        <MATERIAL id="null" />     
+        <TEXTURE id="null" />       			
+
+        <SCALE sx="0.2" sy="0.5" sz="0.2" />
+        
+        <DESCENDANTS>
+       		<NODEREF id="faceCubo1" />
+            <NODEREF id="faceCubo2" />
+            <NODEREF id="faceCubo3" />
+            <NODEREF id="faceCubo4" />
+            <NODEREF id="faceCubo5" />
+            <NODEREF id="faceCubo6" />      
+        </DESCENDANTS>
+
+    </NODE>
+    
+     <!-- A pyramid -->
+    <NODE id="piramide">       
+
+        <MATERIAL id="null" />      
+        <TEXTURE id="null" />       			
+
+
+
+        <DESCENDANTS>
+       		<NODEREF id="meiaPiramide1" /> 
+            <NODEREF id="meiaPiramide2" />       
+  	 
+        </DESCENDANTS>
+
+    </NODE>
+
+
+    <!-- Half a pyramid -->
+    <NODE id="meiaPiramide1">       
+        <MATERIAL id="null" />      
+        <TEXTURE id="null" />       			
+
+        <DESCENDANTS>
+            <NODEREF id="meiaPiramide" />      
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- The other half -->
+    <NODE id="meiaPiramide2">       
+        <MATERIAL id="null" />      
+        <TEXTURE id="null" />       			
+
+
+		<ROTATION axis="y" angle="180" />
+
+        <DESCENDANTS>
+            <NODEREF id="meiaPiramide" />       
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Generic half a pyramid -->
+    <NODE id="meiaPiramide">       
+        <MATERIAL id="null" />      
+        <TEXTURE id="null" />       			
+
+        <DESCENDANTS>
+            <NODEREF id="facePiramide1" />       
+            <NODEREF id="facePiramide2" />    	 
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Pyramid face -->
+   <NODE id="facePiramide1">       
+        <MATERIAL id="null" />      
+        <TEXTURE id="null" />       			
+
+
+		<ROTATION axis="x" angle="44.42" />
+       	<ROTATION axis="y" angle="-45" />
+        
+        <DESCENDANTS>
+					<LEAF id="triangle1" type="triangle" args="2 0 12 12 0 2 0 0 0" />
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Another pyramid face -->
+    <NODE id="facePiramide2">      
+        <MATERIAL id="null" />      
+        <TEXTURE id="null" />       			
+
+
+       	<ROTATION axis="z" angle="-44.42" />
+       	<ROTATION axis="y" angle="45" />  
+
+        <DESCENDANTS>
+					<LEAF id="triangle1" type="triangle" args="2 0 12 12 0 2 0 0 0" />
+        </DESCENDANTS>
+
+    </NODE>
+    <!-- Soldado a fazer!!!-->
+   
     <NODE id="pernas">       
         <MATERIAL id="lightMaterial" />     
         <TEXTURE id="banco" />       			
@@ -201,7 +344,7 @@
 
     </NODE>
 
-    <!-- One bench -->
+    
     <NODE id="perna2">       
         <MATERIAL id="null" />     
         <TEXTURE id="null" />       			
@@ -214,7 +357,7 @@
 
     </NODE>
 
-    <!-- Another bench -->
+    
      <NODE id="perna1">      
         <MATERIAL id="null" />     
         <TEXTURE id="null" />       			
@@ -228,7 +371,7 @@
 
     </NODE>
 
-     <!-- One bench -->
+     
     <NODE id="perna3">       
         <MATERIAL id="null" />     
         <TEXTURE id="null" />       			
@@ -241,7 +384,7 @@
 
     </NODE>
 
-    <!-- Another bench -->
+    
      <NODE id="perna4">      
         <MATERIAL id="null" />     
         <TEXTURE id="null" />       			
@@ -255,7 +398,7 @@
 
     </NODE>
     
-    <!-- Generic bench -->
+    
     <NODE id="perna">       
         <MATERIAL id="null" />     
         <TEXTURE id="null" />       			
@@ -274,9 +417,6 @@
 
     </NODE>
 
-
-
-    <!-- A cube face -->
     <NODE id="faceCubo1">       
         <MATERIAL id="null" />     
         <TEXTURE id="null" />       			
@@ -289,7 +429,7 @@
 
     </NODE>
 
-    <!-- Another cube face -->
+    
      <NODE id="faceCubo2">      
         <MATERIAL id="null" />     
         <TEXTURE id="null" />       			
@@ -303,7 +443,7 @@
 
     </NODE>
 
-    <!-- Another cube face -->
+
     <NODE id="faceCubo3">       
         <MATERIAL id="null" />     
         <TEXTURE id="null" />       			
@@ -317,7 +457,7 @@
 
     </NODE>
 
-    <!-- Another cube face -->
+
     <NODE id="faceCubo4">       
         <MATERIAL id="null" />    
         <TEXTURE id="null" />       			
@@ -331,7 +471,7 @@
 
     </NODE>
 
-    <!-- Another cube face -->
+
     <NODE id="faceCubo5">       
         <MATERIAL id="null" />    
         <TEXTURE id="null" />       			
@@ -346,7 +486,7 @@
 
     </NODE>
 
-    <!-- Another cube face -->
+
     <NODE id="faceCubo6">       
         <MATERIAL id="null" />     
         <TEXTURE id="null" />       			
@@ -358,8 +498,8 @@
         <DESCENDANTS>
 					<LEAF  type="rectangle" args="0 4 5 0" />        
         </DESCENDANTS>
-
     </NODE>
+
 
 
 </NODES>
