@@ -191,7 +191,8 @@
         <TEXTURE id="null" />       			
 
         <DESCENDANTS>
-       		<NODEREF id="blade" />          
+       		<NODEREF id="blade" />  
+            <NODEREF id="handle" />          
         </DESCENDANTS>
     </NODE>
 
@@ -212,6 +213,7 @@
         <TEXTURE id="null" />       			
 
         <SCALE sx="0.5" sy="2.5" sz="0.1" />
+        <SCALE sx="0.2" sy="0.5" sz="0.2" />
         <DESCENDANTS>
        		<NODEREF id="prisma" />          
         </DESCENDANTS>
@@ -229,12 +231,100 @@
         </DESCENDANTS>
     </NODE>
 
+
+    <NODE id="handle">       
+        <MATERIAL id="lightMaterial" />     
+        <TEXTURE id="null" />     
+
+        <TRANSLATION x="20" y="5" z="10" />
+
+        <DESCENDANTS>
+       		<NODEREF id="crossGuard" />          
+            <NODEREF id="grip" />  
+            <NODEREF id="pommel" /> 
+        </DESCENDANTS>
+    </NODE>
+
+    <NODE id="crossGuard">       
+        <MATERIAL id="lightMaterial" />     
+        <TEXTURE id="null" />   
+
+        <TRANSLATION x="3.5" y="5.3" z="-0.28" />
+        <SCALE sx="0.5" sy="0.05" sz="0.08" />
+        <ROTATION axis="x" angle="90" />
+       	<ROTATION axis="z" angle="90" /> 
+        <DESCENDANTS>
+       		<NODEREF id="prisma" />          
+        </DESCENDANTS>
+    </NODE>
+
+    
+    <NODE id="grip">       
+        <MATERIAL id="lightMaterial" />     
+        <TEXTURE id="null" />       			
+
+        <TRANSLATION x="0.5" y="4.7" z="0.1" />
+        <SCALE sx="0.6" sy="0.8" sz="0.6" />
+        <ROTATION axis="x" angle="90" />
+        <DESCENDANTS>
+            <NODEREF id="gripSup" />
+            <NODEREF id="gripInf" />
+            <NODEREF id="gripMid" />   
+        </DESCENDANTS>
+
+    </NODE> 
+
+    <!-- Tree trunk -->
+    <NODE id="gripSup">       
+        <MATERIAL id="trunkTreeMaterial" />     
+        <TEXTURE id="null" />  
+
+        <TRANSLATION x="0" y="0" z="-0.492" />
+       
+        <DESCENDANTS>
+					<LEAF type="cylinder" args="0.5 0.15 0.3 20 20" /> 
+        </DESCENDANTS>
+
+    </NODE>
+
+    <NODE id="gripInf">       
+        <MATERIAL id="trunkTreeMaterial" />     
+        <TEXTURE id="null" />       			
+       <TRANSLATION x="0" y="0" z="1.5" />
+        <DESCENDANTS>
+					<LEAF type="cylinder" args="0.5 0.3 0.15 20 20" /> 
+        </DESCENDANTS>
+
+    </NODE>
+
+    <NODE id="gripMid">       
+        <MATERIAL id="trunkTreeMaterial" />     
+        <TEXTURE id="null" />       			
+
+        <DESCENDANTS>
+					<LEAF type="cylinder" args="1.5 0.3 0.3 20 20" /> 
+        </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Light bulb -->
+    <NODE id="pommel">       
+        <MATERIAL id="lightMaterial" />     
+        <TEXTURE id="null" />       			
+
+        <TRANSLATION x="0.525" y="3" z="0.1" />
+        <SCALE sx="1.1" sy="1" sz="1.1" />
+        
+        <DESCENDANTS>
+			<LEAF id="sphere1" type="sphere" args="0.2 20 20" />
+        </DESCENDANTS>
+
+    </NODE>
+
     <NODE id="prisma">       
         <MATERIAL id="null" />     
         <TEXTURE id="null" />       			
 
-        <SCALE sx="0.2" sy="0.5" sz="0.2" />
-        
         <DESCENDANTS>
        		<NODEREF id="faceCubo1" />
             <NODEREF id="faceCubo2" />
