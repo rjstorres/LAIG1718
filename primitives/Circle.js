@@ -21,8 +21,8 @@ Circle.prototype.initBuffers = function () {
 
   for(i = 0; i <= this.slices; i ++){
     this.vertices.push(
-      0.5*Math.cos(this.trig*i),
-      0.5*Math.sin(this.trig*i),
+      Math.cos(this.trig*i),
+      Math.sin(this.trig*i),
       0
     );
     this.normals.push(
@@ -31,8 +31,8 @@ Circle.prototype.initBuffers = function () {
       1
     );
     this.texCoords.push(
-      0.5*Math.sin(this.trig*i) + 0.5,
-      0.5*Math.cos(this.trig*i) + 0.5
+      Math.sin(this.trig*i) + 0.5,
+      Math.cos(this.trig*i) + 0.5
     )
   }
   this.vertices.push(

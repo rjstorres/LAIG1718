@@ -13,7 +13,7 @@
   /*[!] Add drawing of lids*/
 
   this.partHeight = this.height/this.sections;
-  this.radiusStep = (this.tRadius - this.bRadius)/(this.sections + 1);
+  this.radiusStep = (this.tRadius - this.bRadius)/(this.sections);
 
   this.trig = (2*Math.PI)/this.partsPerSections;
   this.trigz = (2*Math.PI)/this.sections;
@@ -36,6 +36,7 @@
   this.texCoords = []
 
   for(i = 0, radius = this.bRadius; i <= this.sections; i++, radius = this.bRadius+(this.radiusStep*i)){
+
     for(j = 0; j <= this.partsPerSections; j ++){
       this.vertices.push(
         radius*Math.cos(this.trig*j),

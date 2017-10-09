@@ -16,17 +16,18 @@ FullCylinder.prototype.constructor=FullCylinder;
 
 
 FullCylinder.prototype.display = function() {
+
     if(this.args[5]){
       this.scene.pushMatrix();
       this.scene.translate(0,0,this.args[0]);
-      this.scene.scale(this.args[2]*2,this.args[2]*2,1);
+      this.scene.scale(this.args[2],this.args[2],1);
       this.cap.display()
       this.scene.popMatrix();
     }
     if(this.args[6]){
       this.scene.pushMatrix();
-      this.scene.scale(this.args[1]*2,this.args[1]*2,1);
-      this.scene.rotate(Math.PI,0,1,0)
+      this.scene.scale(this.args[1],this.args[1],1);
+      this.scene.rotate(Math.PI,1,0,0)
       this.cap.display()
       this.scene.popMatrix();
     }
