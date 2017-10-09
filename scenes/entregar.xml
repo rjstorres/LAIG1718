@@ -57,18 +57,6 @@
 
 <!-- Textures -->
 <TEXTURES>
-	<!-- Tree trunk -->
-    <TEXTURE id="trunk">
-        <file path="images/trunk-image.jpg" />
-        <amplif_factor s="2" t="2" />
-    </TEXTURE>
-
-     <!-- Tree leaves -->
-    <TEXTURE id="folhas">
-        <file path="images/leaves.jpg" />
-        <amplif_factor s="3" t="4" />
-    </TEXTURE>
-
     <!-- Rocks -->
     <TEXTURE id="rocks">
         <file path="images/rocks.jpg" />
@@ -90,6 +78,10 @@
         <file path="latrunculiImages/steel.jpg" />
         <amplif_factor s="2" t="2" />
     </TEXTURE>
+    <TEXTURE id="steel2">
+        <file path="latrunculiImages/steel2.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
 
 </TEXTURES>
 
@@ -102,39 +94,13 @@
     <ambient r="0.4" g="0.4" b="0.4" a="1" />
     <emission r="0.0" g="0.0" b="0.0" a="1" />
   </MATERIAL>
-	<!-- Pyramid material -->
-    <MATERIAL id="piramideMaterial">
-        <shininess value="1" />
-        <specular r="0" g="0" b="0" a="1" />
-        <diffuse r="1.0" g="0.68" b="0.4" a="1" />
-        <ambient r="0.2" g="0.2" b="0.2" a="1" />
-        <emission r="0.0" g="0.0" b="0.0" a="1" />
-    </MATERIAL>
-
-	<!-- Tree leaves material -->
-	<MATERIAL id="leavesTreeMaterial">
-        <shininess value="1" />
-        <specular r="0.2" g="0.2" b="0.2" a="1" />
-        <diffuse r="0.0" g="0.207" b="0.0" a="1" />
-        <ambient r="0.1" g="0.1" b="0.1" a="1" />
-        <emission r="0.0" g="0.0" b="0.0" a="1" />
-    </MATERIAL>
-
+	
 	<!-- Tree trunk material -->
 	<MATERIAL id="trunkTreeMaterial">
         <shininess value="1" />
         <specular r="0.0" g="0.0" b="0.0" a="1" />
         <diffuse r="0.6" g="0.298" b="0.0" a="1" />
         <ambient r="0.1" g="0.1" b="0.1" a="1" />
-        <emission r="0.0" g="0.0" b="0.0" a="1" />
-    </MATERIAL>
-
-    <!-- Lamp post material -->
-    <MATERIAL id="lightPostMaterial">
-        <shininess value="100" />
-        <specular r="0.0" g="0.0" b="0.0" a="1" />
-        <diffuse r="0.447" g="0.416" b="0.416" a="1" />
-        <ambient r="0.0" g="0.0" b="0.0" a="1" />
         <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
 
@@ -215,7 +181,7 @@
 
     <NODE id="blade">
         <MATERIAL id="lightMaterial" />
-        <TEXTURE id="null" />
+        <TEXTURE id="steel2" />
 
         <TRANSLATION x="20" y="5" z="10" />
 
@@ -251,7 +217,7 @@
 
     <NODE id="handle">
         <MATERIAL id="trunkTreeMaterial" />
-        <TEXTURE id="null" />
+        <TEXTURE id="steel" />
 
         <TRANSLATION x="20" y="5" z="10" />
 
@@ -977,7 +943,7 @@
 
     <NODE id="shield">
         <MATERIAL id="trunkTreeMaterial" />
-        <TEXTURE id="null" />
+        <TEXTURE id="steel2" />
 
         <TRANSLATION x="0" y="-2.8" z="8.3" />
         <ROTATION axis="x" angle="-5" />
@@ -1011,7 +977,7 @@
 
     <NODE id="pedestal">
         <MATERIAL id="lightMaterial" />
-        <TEXTURE id="null" />
+        <TEXTURE id="banco" />
         <TRANSLATION x="15" y="-4" z="10" />
         <SCALE sx="1" sy="1" sz="1" />
         <DESCENDANTS>
