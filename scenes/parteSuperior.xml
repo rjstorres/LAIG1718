@@ -188,33 +188,33 @@
             <NODEREF id="bottom" />
             <NODEREF id="front" />
             <NODEREF id="back" />
-            <NODEREF id="left" />				        
+            <NODEREF id="left" />
+            <NODEREF id="right" />
 		</DESCENDANTS>
     </NODE>
 
      <NODE id="top">      
         <MATERIAL id="null" />    
         <TEXTURE id="null" />       			
-
+        <TRANSLATION x="0.75" y="3.939" z="5.81" />
         <ROTATION axis="x" angle="-90" />
-        <TRANSLATION x="2.55" y="-8.905" z="7.943" />
-        <SCALE sx="1" sy="1.277" sz="1" />
+        <SCALE sx="1" sy="1.25" sz="1" />
 
         <DESCENDANTS>
- 			 <LEAF  type="rectangle" args="0 4 5 0" />        
+ 			 <LEAF  type="rectangle" args="0 4.1 5 0" />        
        </DESCENDANTS>
     </NODE>
 
     <NODE id="bottom">      
         <MATERIAL id="null" />     
         <TEXTURE id="null" />       			
-        <TRANSLATION x="-0.75" y="0" z="0.6" />
-        <TRANSLATION x="2.5" y="4" z="2.5" />
+        
+        
         <ROTATION axis="x" angle="90" />
         <SCALE sx="1" sy="1.25" sz="1" />
 
         <DESCENDANTS>
-					<LEAF  type="rectangle" args="0 5.2 6.5 0" />        
+					<LEAF  type="rectangle" args="0 5.2 6.55 0" />        
         </DESCENDANTS>
     </NODE>
     
@@ -222,7 +222,7 @@
         <MATERIAL id="null" />    
         <TEXTURE id="null" />       			
         
-        <TRANSLATION x="1.8" y="4" z="9.6" />
+        <TRANSLATION x="0" y="0" z="6.5" />
         <ROTATION axis="x" angle="-10" />
         <DESCENDANTS>
 			<NODEREF id="triangulo1" />
@@ -233,7 +233,7 @@
     <NODE id="back">      
         <MATERIAL id="null" />    
         <TEXTURE id="null" />       			
-        <TRANSLATION x="1.8" y="4" z="3.1" />
+ 
         <ROTATION axis="x" angle="10" />
         <DESCENDANTS>
 			<NODEREF id="triangulo1" />
@@ -244,12 +244,24 @@
     <NODE id="left">      
         <MATERIAL id="null" />    
         <TEXTURE id="null" />       			
-        <TRANSLATION x="1.8" y="4" z="3.1" />
+        
         <ROTATION axis="y" angle="-90" />
-        <ROTATION axis="x" angle="-10.5" />
+        <ROTATION axis="x" angle="-10.75" />
         <DESCENDANTS>
-			<NODEREF id="triangulo1" />
-            <NODEREF id="triangulo2" />
+			<NODEREF id="triangulo3" />
+            <NODEREF id="triangulo4" />
+		</DESCENDANTS>
+    </NODE>
+
+    <NODE id="right">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />       			
+        <TRANSLATION x="6.5" y="0" z="0" />
+        <ROTATION axis="y" angle="-90" />
+        <ROTATION axis="x" angle="10.75" />
+        <DESCENDANTS>
+			<NODEREF id="triangulo3" />
+            <NODEREF id="triangulo4" />
 		</DESCENDANTS>
     </NODE>
 
@@ -258,7 +270,7 @@
         <TEXTURE id="null" />       			
         
         <DESCENDANTS>
-			<LEAF id="triangle1" type="triangle" args="0 0 0 6.5 0 0 0.6 4 0" />
+			<LEAF id="triangle1" type="triangle" args="0 0 0 6.5 0 0 0.75 4 0" />
 		</DESCENDANTS>
     </NODE>
 
@@ -267,12 +279,28 @@
         <TEXTURE id="null" />       			
         
         <DESCENDANTS>
-			<LEAF id="triangle1" type="triangle" args="6.5 0 0 0.6 4 0 5.75 4 0" />
+			<LEAF id="triangle1" type="triangle" args="6.5 0 0 0.75 4 0 5.75 4 0" />
 		</DESCENDANTS>
     </NODE>
 
    
+<NODE id="triangulo3">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />       			
+        
+        <DESCENDANTS>
+			<LEAF id="triangle1" type="triangle" args="0 0 0 6.5 0 0 0.69 4.007 0" />
+		</DESCENDANTS>
+    </NODE>
 
+    <NODE id="triangulo4">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />       			
+        
+        <DESCENDANTS>
+			<LEAF id="triangle1" type="triangle" args="6.5 0 0 0.69 4.007 0 5.81 4.007 0" />
+		</DESCENDANTS>
+    </NODE>
 
      
     <NODE id="prisma">       
