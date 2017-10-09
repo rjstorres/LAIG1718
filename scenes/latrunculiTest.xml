@@ -192,7 +192,7 @@
         <TEXTURE id="null" />  
 
           			
-        <TRANSLATION x="-0.4" y="20" z="25" />
+        <TRANSLATION x="-0.4" y="18" z="25" />
         <ROTATION axis="x" angle="180" />
         
         <DESCENDANTS>
@@ -344,7 +344,7 @@
         <TEXTURE id="null" />       			
         <ROTATION axis="x" angle="90" />
         <DESCENDANTS>
-			<LEAF type="cylinder" args="4 2 0 20 20" /> 
+			<LEAF type="cylinder" args="4 2 0 20 20 1 0" /> 
         </DESCENDANTS>
     </NODE>
 
@@ -354,7 +354,7 @@
         <TRANSLATION x="0" y="4" z="0" />
         <ROTATION axis="x" angle="90" />
         <DESCENDANTS>
-			<LEAF type="cylinder" args="4 2 2 20 20" /> 
+			<LEAF type="cylinder" args="4 2 2 20 20 0 1" /> 
         </DESCENDANTS>
     </NODE>
 
@@ -362,8 +362,8 @@
     <NODE id="pedestal">       
         <MATERIAL id="lightMaterial" />     
         <TEXTURE id="null" />   
-        <TRANSLATION x="15" y="-8" z="10" />
-        <SCALE sx="1" sy="2" sz="1" />
+        <TRANSLATION x="15" y="-4" z="10" />
+        <SCALE sx="1" sy="1" sz="1" />
         <DESCENDANTS>
        		<NODEREF id="prisma" />          
         </DESCENDANTS>
@@ -468,94 +468,7 @@
 
     </NODE>
 
-    <!-- Soldado a fazer!!!-->
-   <!--
-    <NODE id="pernas">       
-        <MATERIAL id="lightMaterial" />     
-        <TEXTURE id="banco" />       			
-
-        <DESCENDANTS>
-       		<NODEREF id="perna1" />          
-            <NODEREF id="perna2" />
-            <NODEREF id="perna3" />          
-            <NODEREF id="perna4" />    		
-        </DESCENDANTS>
-
-    </NODE>
-
-    
-    <NODE id="perna2">       
-        <MATERIAL id="null" />     
-        <TEXTURE id="null" />       			
-
-        <TRANSLATION x="7" y="-2" z="21" />
-        
-        <DESCENDANTS>
-            <NODEREF id="perna" /> 
-        </DESCENDANTS>
-
-    </NODE>
-
-    
-     <NODE id="perna1">      
-        <MATERIAL id="null" />     
-        <TEXTURE id="null" />       			
-
-        <ROTATION axis="z" angle="20" />
-        <TRANSLATION x="7.16" y="-3.1" z="21" />
-
-        <DESCENDANTS>
-            <NODEREF id="perna" />      
-        </DESCENDANTS>
-
-    </NODE>
-
-     
-    <NODE id="perna3">       
-        <MATERIAL id="null" />     
-        <TEXTURE id="null" />       			
-
-        <TRANSLATION x="7" y="-2" z="19" />
-        
-        <DESCENDANTS>
-            <NODEREF id="perna" /> 
-        </DESCENDANTS>
-
-    </NODE>
-
-    
-     <NODE id="perna4">      
-        <MATERIAL id="null" />     
-        <TEXTURE id="null" />       			
-
-        <ROTATION axis="z" angle="20" />
-        <TRANSLATION x="7.16" y="-3.1" z="19" />
-
-        <DESCENDANTS>
-            <NODEREF id="perna" />      
-        </DESCENDANTS>
-
-    </NODE>
-    
-    
-    <NODE id="perna">       
-        <MATERIAL id="null" />     
-        <TEXTURE id="null" />       			
-
-        <SCALE sx="0.2" sy="0.5" sz="0.2" />
-        
-        <DESCENDANTS>
-
-       		<NODEREF id="faceCubo1" />
-            <NODEREF id="faceCubo2" />
-            <NODEREF id="faceCubo3" />
-            <NODEREF id="faceCubo4" />
-            <NODEREF id="faceCubo5" />
-            <NODEREF id="faceCubo6" />      
-        </DESCENDANTS>
-
-    </NODE>
--->
+   
     <NODE id="faceCubo1">       
         <MATERIAL id="null" />     
         <TEXTURE id="null" />       			
