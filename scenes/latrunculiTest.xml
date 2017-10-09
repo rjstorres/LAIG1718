@@ -208,12 +208,12 @@
         <TRANSLATION x="20" y="5" z="10" />
 
         <DESCENDANTS>
-       		<NODEREF id="parteInferior" />          
-            <NODEREF id="parteSuperior" />  
+       		<NODEREF id="parteInferiorEspada" />          
+            <NODEREF id="parteSuperiorEspada" />  
         </DESCENDANTS>
     </NODE>
 
-    <NODE id="parteInferior">       
+    <NODE id="parteInferiorEspada">       
         <MATERIAL id="lightMaterial" />     
         <TEXTURE id="null" />       			
 
@@ -224,7 +224,7 @@
         </DESCENDANTS>
     </NODE>
 
-    <NODE id="parteSuperior">       
+    <NODE id="parteSuperiorEspada">       
         <MATERIAL id="lightMaterial" />     
         <TEXTURE id="null" />    
         

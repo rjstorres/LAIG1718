@@ -164,13 +164,13 @@
         <TEXTURE id="null" />  
 
         <DESCENDANTS> 
-            <NODEREF id="parteSuperior" />
+            <NODEREF id="parteSuperiorSoldier" />
         </DESCENDANTS>
 
     </NODE>
 
     <!-- The floor -->
-    <NODE id="parteSuperior">      
+    <NODE id="parteSuperiorSoldier">      
         <MATERIAL id="null" />    
         <TEXTURE id="null" />       			
 
