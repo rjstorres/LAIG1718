@@ -7,7 +7,7 @@
     <rotation axis="x" angle="0" />
     <rotation axis="y" angle="0" />
     <rotation axis="z" angle="0" />
-    <scale sx="1.7" sy="1.7" sz="1.7" />
+    <scale sx="3" sy="3" sz="3" />
     <reference length="5" />
 </INITIALS>
 
@@ -36,6 +36,14 @@
         <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
         <specular r="1.0" g="1.0" b="1.0" a="1.0" />
     </LIGHT>
+
+    <LIGHT id="light3">
+          <enable value ="1" />
+          <position x="10" y="0" z="10" w="1" />
+          <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+          <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+          <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+      </LIGHT>
 
 </LIGHTS>
 
@@ -98,7 +106,130 @@
         <TEXTURE id="null" />
 
         <DESCENDANTS>
-             <NODEREF id="leg" />
+            <NODEREF id="hip"/>
+        </DESCENDANTS>
+    </NODE>
+
+    <NODE id="hip">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <DESCENDANTS>
+             <NODEREF id="hipBox" />
+             <NODEREF id="hipPrism" />
+             <NODEREF id="legLeft" />
+             <NODEREF id="legRight" />
+        </DESCENDANTS>
+    </NODE>
+    <NODE id="hipPrism">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+          <SCALE sx="1.5" sy="1" sz="1"/>
+
+        <DESCENDANTS>
+             <LEAF type="triangle" args="0.5 -0.1 0.2 -0.5 -0.1 0.2 -0.2 -0.4 0.2"/>
+             <LEAF type="triangle" args="-0.2 -0.4 0.2 0.2 -0.4 0.2 0.5 -0.1 0.2"/>
+             <LEAF type="triangle" args="0.5 -0.1 -0.2 -0.2 -0.4 -0.2 -0.5 -0.1 -0.2 "/>
+             <LEAF type="triangle" args="-0.2 -0.4 -0.2 0.5 -0.1 -0.2 0.2 -0.4 -0.2 "/>
+             <LEAF type="triangle" args="0.5 -0.1 0.2 0.2 -0.4 0.2 0.2 -0.4 -0.2"/>
+             <LEAF type="triangle" args="0.5 -0.1 0.2 0.2 -0.4 -0.2 0.5 -0.1 -0.2"/>
+             <LEAF type="triangle" args="-0.5 -0.1 -0.2 -0.2 -0.4 -0.2 -0.2 -0.4 0.2"/>
+             <LEAF type="triangle" args="-0.5 -0.1 -0.2 -0.2 -0.4 0.2 -0.5 -0.1 0.2"/>
+             <LEAF type="triangle" args="-0.2 -0.4 0.2 -0.2 -0.4 -0.2 0.2 -0.4 0.2"/>
+             <LEAF type="triangle" args="0.2 -0.4 0.2 -0.2 -0.4 -0.2 0.2 -0.4 -0.2"/>
+        </DESCENDANTS>
+    </NODE>
+    <NODE id="hipBox">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <SCALE sx="1.5" sy="0.2" sz="1"/>
+
+        <DESCENDANTS>
+             <NODEREF id="hipFront" />
+             <NODEREF id="hipBack" />
+             <NODEREF id="hipLeft" />
+             <NODEREF id="hipRight" />
+             <NODEREF id="hipTop" />
+        </DESCENDANTS>
+    </NODE>
+    <NODE id="hipFront">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0" y="0" z="0.2"/>
+
+        <DESCENDANTS>
+             <LEAF type="rectangle" args="-0.5 0.5 0.5 -0.5"/>
+        </DESCENDANTS>
+    </NODE>
+    <NODE id="hipBack">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <ROTATION axis="y" angle="180"/>
+        <TRANSLATION x="0" y="0" z="0.2"/>
+
+        <DESCENDANTS>
+             <LEAF type="rectangle" args="-0.5 0.5 0.5 -0.5"/>
+        </DESCENDANTS>
+    </NODE>
+    <NODE id="hipLeft">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <ROTATION axis="y" angle="90"/>
+        <TRANSLATION x="0" y="0" z="0.5"/>
+
+        <DESCENDANTS>
+             <LEAF type="rectangle" args="-0.2 0.5 0.2 -0.5"/>
+        </DESCENDANTS>
+    </NODE>
+    <NODE id="hipRight">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <ROTATION axis="y" angle="-90"/>
+        <TRANSLATION x="0" y="0" z="0.5"/>
+
+        <DESCENDANTS>
+             <LEAF type="rectangle" args="-0.2 0.5 0.2 -0.5"/>
+        </DESCENDANTS>
+    </NODE>
+    <NODE id="hipTop">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <ROTATION axis="x" angle="-90"/>
+        <TRANSLATION x="0" y="0" z="0.5"/>
+
+        <DESCENDANTS>
+             <LEAF type="rectangle" args="-0.5 0.2 0.5 -0.2"/>
+        </DESCENDANTS>
+    </NODE>
+
+    <NODE id="legRight">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="0.4" y="-0.2" z="-0.015"/>
+        <ROTATION axis="x" angle="0" />
+
+        <DESCENDANTS>
+             <NODEREF id="leg"/>
+        </DESCENDANTS>
+    </NODE>
+
+    <NODE id="legLeft">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <TRANSLATION x="-0.4" y="-0.2" z="-0.015"/>
+        <ROTATION axis="x" angle="0" />
+
+        <DESCENDANTS>
+             <NODEREF id="leg"/>
         </DESCENDANTS>
     </NODE>
 
@@ -106,25 +237,213 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
+        <TRANSLATION x="0" y="0" z="0"/>
+        <ROTATION axis="x" angle="0" />
+
         <DESCENDANTS>
              <NODEREF id="thigh" />
-            <!-- <NODEREF id="knee" />
-             <NODEREF id="calve" />
-             <NODEREF id="boot" /> -->
         </DESCENDANTS>
     </NODE>
     <NODE id="thigh">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
 
+      <ROTATION axis="x" angle="80" />
+
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="0.7 0.21 0.1 5 15 1 1"/>
+        <LEAF type="cylinder" args="0.7 0.15 0.25 5 15 1 1"/>
+        <NODEREF id="knee" />
+        <NODEREF id="calve" />
+      </DESCENDANTS>
+    </NODE>
+    <NODE id="knee">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="0" y="0" z="0.7" />
+      <SCALE sx="1" sy="1" sz="0.7"/>
+
+      <DESCENDANTS>
+        <LEAF type="sphere" args="0.25 10 10"/>
+      </DESCENDANTS>
+    </NODE>
+    <NODE id="calve">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="0" y="0" z="0.7" />
+      <SCALE sx="1" sy="1" sz="0.8"/>
+      <ROTATION axis="x" angle="30" />
+
+      <DESCENDANTS>
+        <LEAF type="cylinder" args="0.7 0.23 0.05 5 15 0 0"/>
+        <LEAF type="cylinder" args="0.7 0.15 0.2 5 15 0 0"/>
+        <NODEREF id="boot" />
+      </DESCENDANTS>
+    </NODE>
+    <NODE id="boot">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="0" y="0.1" z="0.9" />
+      <SCALE sx="0.5" sy="0.5" sz="0.5"/>
+      <ROTATION axis="x" angle="-90" />
+
+      <DESCENDANTS>
+        <NODEREF id="sole" />
+        <NODEREF id="bootsideRight" />
+        <NODEREF id="bootsideLeft" />
+        <NODEREF id="bootTop"/>
+      </DESCENDANTS>
+    </NODE>
+    <NODE id="sole">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="0" y="0" z="0" />
+      <SCALE sx="-1" sy="1" sz="-1"/>
+      <ROTATION axis="x" angle="90" />
+
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="-0.5 0.5 0.5 -1"/>
+        <LEAF type="triangle" args="-0.5 -1 0 0 -1.3 0 0.5 -1 0"/>
+        <LEAF type="rectangle" args="-0.3 0.7 0.3 0.5"/>
+        <LEAF type="triangle" args="-0.5 0.5 0 -0.3 0.5 0 -0.3 0.7 0"/>
+        <LEAF type="triangle" args="-0.5 0.5 0 -0.3 0.5 0 -0.3 0.7 0"/>
+        <LEAF type="triangle" args="0.5 0.5 0 0.3 0.7 0 0.3 0.5 0"/>
+      </DESCENDANTS>
+    </NODE>
+    <NODE id="bootsideRight">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <DESCENDANTS>
+        <NODEREF id="bootside" />
+      </DESCENDANTS>
+    </NODE>
+  <NODE id="bootsideLeft">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <DESCENDANTS>
+        <NODEREF id="toepartLeft" />
+        <NODEREF id="footsideLeft" />
+        <NODEREF id="heelangleLeft" />
+      </DESCENDANTS>
+    </NODE>
+    <NODE id="bootside">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <DESCENDANTS>
+        <NODEREF id="toepart" />
+        <NODEREF id="footside" />
+        <NODEREF id="heelangle" />
+        <NODEREF id="heelback" />
+      </DESCENDANTS>
+    </NODE>
+    <NODE id="toepart">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="0" y="0" z="1.3"/>
+      <ROTATION axis="y" angle="31"/>
+
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 0.3 0.585 0"/>
+      </DESCENDANTS>
+    </NODE>
+    <NODE id="toepartLeft">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="0" y="0" z="1.3"/>
+      <ROTATION axis="y" angle="-31"/>
+
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="-0.585 0.3 0 0"/>
+      </DESCENDANTS>
+    </NODE>
+    <NODE id="footside">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="0.5" y="0" z="0"/>
+      <ROTATION axis="y" angle="90"/>
+
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="-1.01 0.3 0.5 0"/>
+      </DESCENDANTS>
+    </NODE>
+    <NODE id="footsideLeft">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="-0.5" y="0" z="0"/>
+      <ROTATION axis="y" angle="-90"/>
+
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="1.01 0 -0.5 0.3"/>
+      </DESCENDANTS>
+    </NODE>
+    <NODE id="heelangle">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="0.5" y="0" z="-0.5"/>
+      <ROTATION axis="y" angle="135"/>
+
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="0 0.3 0.285 0"/>
+      </DESCENDANTS>
+    </NODE>
+    <NODE id="heelangleLeft">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="-0.5" y="0" z="-0.5"/>
+      <ROTATION axis="y" angle="-135"/>
+
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="-0.285 0.3 0 0"/>
+      </DESCENDANTS>
+    </NODE>
+    <NODE id="heelback">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="0" y="0" z="-0.7"/>
+      <ROTATION axis="y" angle="180"/>
+
+      <DESCENDANTS>
+        <LEAF type="rectangle" args="-0.3 0.3 0.3 0"/>
+      </DESCENDANTS>
+    </NODE>
+    <NODE id="bootTop">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="0" y="0" z="0" />
+      <SCALE sx="1" sy="1" sz="1"/>
       <ROTATION axis="x" angle="0" />
 
       <DESCENDANTS>
-        <LEAF type="cylinder" args="1 0.3 0.5 5 15 1 1"/>
+        <LEAF type="triangle" args="-0.4 0.5 1 0 0.3 1.3 0.4 0.5 1"/>
+        <LEAF type="triangle" args="-0.4 0.5 1 -0.5 0.3 1 0 0.3 1.3"/>
+        <LEAF type="triangle" args="0 0.3 1.3 0.5 0.3 1 0.4 0.5 1"/>
+        <LEAF type="triangle" args="-0.4 0.5 1 0.4 0.5 1 -0.3 0.8 0"/>
+        <LEAF type="triangle" args="-0.3 0.8 0 0.4 0.5 1 0.3 0.8 0"/>
+        <LEAF type="triangle" args="0.4 0.5 1 0.5 0.3 1 0.5 0.3 -0.5"/>
+        <LEAF type="triangle" args="0.4 0.5 1 0.5 0.3 -0.5 0.3 0.8 0"/>
+        <LEAF type="triangle" args="-0.4 0.5 1 -0.5 0.3 -0.5 -0.5 0.3 1"/>
+        <LEAF type="triangle" args="-0.4 0.5 1 -0.3 0.8 0 -0.5 0.3 -0.5"/>
+        <LEAF type="triangle" args="0.5 0.3 -0.5 0.3 0.3 -0.7 0.3 0.8 0"/>
+        <LEAF type="triangle" args="-0.5 0.3 -0.5 -0.3 0.8 0 -0.3 0.3 -0.7"/>
+        <LEAF type="triangle" args="0.3 0.3 -0.7 -0.3 0.3 -0.7 0.3 0.5 -0.42"/>
+        <LEAF type="triangle" args="-0.3 0.3 -0.7 -0.3 0.5 -0.42 0.3 0.5 -0.42"/>
       </DESCENDANTS>
     </NODE>
-
-  </NODE>
 </NODES>
 
 </SCENE>
