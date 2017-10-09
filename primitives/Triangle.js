@@ -19,14 +19,22 @@ Triangle.prototype.initBuffers = function () {
 	this.vertices = this.vertexCoordinates;
 
 	this.indices = [
-        0,2,1,
 				0,1,2
 		];
 
+//calculo de normais
+	vectorU=[this.vertices[3]-this.vertices[0],this.vertices[4]-this.vertices[1], this.vertices[5]-this.vertices[2]];
+	vectorV=[this.vertices[6]-this.vertices[0],this.vertices[7]-this.vertices[1], this.vertices[8]-this.vertices[2]];
+	Normals=[
+		(vectorU[1]*vectorV[2])-(vectorU[2]*vectorV[1]),
+		(vectorU[2]*vectorV[0])-(vectorU[0]*vectorV[2]),
+		(vectorU[0]*vectorV[1])-(vectorU[1]*vectorV[0])
+	];
+
 	this.normals = [
-		0,0,1,
-		0,0,1,
-		0,0,1
+		Normals[0],Normals[1],Normals[2],
+		Normals[0],Normals[1],Normals[2],
+		Normals[0],Normals[1],Normals[2]
 	];
 
   this.texCoords = [
