@@ -175,14 +175,162 @@
         <TEXTURE id="null" />       			
 
         <DESCENDANTS>
-			<NODEREF id="body" />		        
+			<NODEREF id="body" />
+            <NODEREF id="arms" />	
+            <NODEREF id="head" />	        
 		</DESCENDANTS>
     </NODE>
+
 
     <NODE id="body">      
         <MATERIAL id="null" />    
         <TEXTURE id="null" />       			
+        
+        <DESCENDANTS>
+			<NODEREF id="prismaTrapezoidal" />		        
+		</DESCENDANTS>
+    </NODE>
 
+    <NODE id="arms">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />       			
+        
+        <DESCENDANTS>
+			<NODEREF id="arm1" />
+            <NODEREF id="arm2" />        
+		</DESCENDANTS>
+    </NODE>
+
+    <NODE id="arm1">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />   
+        
+        <TRANSLATION x="-0.3" y="3" z="3.25" /> 
+        <ROTATION axis="z" angle="-15" />  			
+        <ROTATION axis="x" angle="90" />
+        <SCALE sx="0.8" sy="0.8" sz="0.6" /> 
+        <DESCENDANTS>
+			<NODEREF id="shoulder" />
+            <NODEREF id="betweenElbowShoulder" />
+            <NODEREF id="elbow" />  
+            <NODEREF id="forearm" />     
+            <NODEREF id="hand" />  
+		</DESCENDANTS>
+    </NODE>
+
+    <NODE id="arm2">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />   
+         
+        <TRANSLATION x="6.9" y="3" z="3.25" /> 
+        <ROTATION axis="z" angle="15" />  			
+        <ROTATION axis="x" angle="90" />
+        <SCALE sx="0.8" sy="0.8" sz="0.6" /> 
+        <DESCENDANTS>
+			<NODEREF id="shoulder" />
+            <NODEREF id="betweenElbowShoulder" />
+            <NODEREF id="elbow" />  
+            <NODEREF id="forearm" />     
+            <NODEREF id="hand" />  
+		</DESCENDANTS>
+    </NODE>
+    <NODE id="shoulder">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />       			
+         
+        <DESCENDANTS>
+			<NODEREF id="sphere1" />  	        
+		</DESCENDANTS>
+    </NODE>
+
+    <NODE id="betweenElbowShoulder">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />       			
+         
+        <DESCENDANTS>
+			<NODEREF id="cylinder1" />  	        
+		</DESCENDANTS>
+    </NODE>
+
+    <NODE id="elbow">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />       			
+        <TRANSLATION x="0" y="0" z="5.5" />
+        <DESCENDANTS>
+			<NODEREF id="sphere1"/>  	        
+		</DESCENDANTS>
+    </NODE>
+
+    <NODE id="forearm">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />       			
+        <TRANSLATION x="0" y="0" z="5.5" />
+        <DESCENDANTS>
+			<NODEREF id="cylinder1" />  	        
+		</DESCENDANTS>
+    </NODE>
+
+    <NODE id="hand">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />       			
+        <TRANSLATION x="0" y="0" z="10.5" />
+        <DESCENDANTS>
+			<LEAF id="sphere1" type="sphere" args="1.4 50 4" />         
+		</DESCENDANTS>
+    </NODE>
+
+    <NODE id="cylinder1">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />       			
+
+        <DESCENDANTS>
+			 <LEAF id="cylinder1" type="cylinder" args="5 1.1 1.1 50 5 1 1" />   
+		</DESCENDANTS>
+    </NODE>
+
+    <NODE id="sphere1">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />       			
+
+        <DESCENDANTS>
+			 <LEAF id="sphere1" type="sphere" args="1.4 20 20" />        
+		</DESCENDANTS>
+    </NODE>
+
+    <NODE id="head">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />       			
+        <DESCENDANTS>
+            <NODEREF id="neck" /> 
+            <NODEREF id="helmet" />
+		</DESCENDANTS>
+    </NODE>
+
+     <NODE id="neck">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />  
+        <TRANSLATION x="1.625" y="5.11" z="4.875" />
+        <SCALE sx="0.5" sy="0.3" sz="0.5" />
+        <ROTATION axis="x" angle="180" />
+        <DESCENDANTS>
+            <NODEREF id="prismaTrapezoidal" /> 
+            
+		</DESCENDANTS>
+    </NODE>
+
+    <NODE id="helmet">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" /> 
+        <TRANSLATION x="-0.01" y="2.7" z="0" /> 
+        <SCALE sx="0.653" sy="0.6" sz="0.65" />
+        <DESCENDANTS>
+            <NODEREF id="prisma" /> 
+		</DESCENDANTS>
+    </NODE>
+
+    <NODE id="prismaTrapezoidal">      
+        <MATERIAL id="null" />    
+        <TEXTURE id="null" />       			
         <DESCENDANTS>
 			<NODEREF id="top" />
             <NODEREF id="bottom" />
