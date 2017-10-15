@@ -49,7 +49,26 @@ Triangle.prototype.initBuffers = function () {
 	this.initGLBuffers();
 };
 
-Triangle.prototype.setTextureCoords = function (afs,aft) {
+Triangle.prototype.setTextureCoords = function (afs, aft) {
+	
+	/*this.p1 = vec3.fromValues(this.vertexCoordinates[0],this.vertexCoordinates[1],this.vertexCoordinates[2]);
+	this.p2 = vec3.fromValues(this.vertexCoordinates[3],this.vertexCoordinates[4],this.vertexCoordinates[5]);
+	this.p3 = vec3.fromValues(this.vertexCoordinates[6],this.vertexCoordinates[7],this.vertexCoordinates[8]);
+	
+	this.a = vec3.distance(this.p2, this.p3);
+	this.b = vec3.distance(this.p1,this.p3);
+	this.c = vec3.distance(this.p2, this.p1);
+	
+	this.cosB = (Math.pow(this.a, 2) - Math.pow(this.b, 2) + Math.pow(this.c, 2)) / (2 * this.a * this.c);
+	this.angB = Math.acos(this.cosB);
+	this.sinB = Math.sin(this.angB);
+	
+	this.texCoords = [
+		0,0,
+		this.c/afs,0,
+		(this.c-this.a*this.cosB)/afs,(this.a*this.sinB)/aft
+	  ];*/
+
 	//Calcular distancias entre vértices
 	let v = this.vertices; //Para não ter de escrever muito
 	let dist = [-1,-1,-1]; //Init para error checking
