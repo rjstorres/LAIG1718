@@ -1517,9 +1517,10 @@ MySceneGraph.prototype.processGraph = function(node, parentMaterial, amplifFacto
     }
     //Processa Matrix
     this.scene.multMatrix(node.transformMatrix);
+    material.apply();  
     for(var i = 0; i < node.children.length; i++){
       this.scene.pushMatrix();
-        material.apply();
+        //material.apply();
         this.processGraph(this.nodes[node.children[i]], material, amplif);
       this.scene.popMatrix();
     }
