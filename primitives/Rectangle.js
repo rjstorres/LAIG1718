@@ -45,21 +45,21 @@ Rectangle.prototype.initBuffers = function () {
 };
 
 Rectangle.prototype.setTextureCoords = function (afs, aft) {
-	this.height = Math.abs(this.vertexCoordinates[3] - this.vertexCoordinates[1]);
+	/*this.height = Math.abs(this.vertexCoordinates[3] - this.vertexCoordinates[1]);
 	this.width = Math.abs(this.vertexCoordinates[2] - this.vertexCoordinates[0]);
 	this.texCoords=[
 		0,0,
 		this.width/afs,0,
 		0,this.height/aft,
 		this.width/afs,this.height/aft
-	];
-	/*deltaX = Math.abs(this.vertices[6] - this.vertices[0]);
+	];*/
+	deltaX = Math.abs(this.vertices[6] - this.vertices[0]);
 	deltaY = Math.abs(this.vertices[4] - this.vertices[1]);
 	this.texCoords = [
 		0,0, //mins, mint
 		deltaX/afs,0, //maxs, mint
 		0,deltaY/aft, //mins, maxt
 		deltaX/afs,deltaY/aft //maxs, maxt
-	];*/
+	];
 	this.updateTexCoordsGLBuffers();
 }
