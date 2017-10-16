@@ -10,7 +10,8 @@
   this.tRadius = args[2];
   this.sections = args[3];
   this.partsPerSections = args[4];
-  /*[!] Add drawing of lids*/
+  this.tStep = 1/this.sections;
+  this.vStep = 1/this.partsPerSections;
 
   this.partHeight = this.height/this.sections;
   this.radiusStep = (this.tRadius - this.bRadius)/(this.sections);
@@ -36,8 +37,9 @@
   this.texCoords = []
 
   for(i = 0, radius = this.bRadius; i <= this.sections; i++, radius = this.bRadius+(this.radiusStep*i)){
-
+    this.tCoord = this.tStep * i;
     for(j = 0; j <= this.partsPerSections; j ++){
+      this.sCoord = this.vStep*j;
       this.vertices.push(
         radius*Math.cos(this.trig*j),
         radius*Math.sin(this.trig*j),
@@ -50,11 +52,9 @@
       );
       this.texCoords.push(
         this.sCoord, this.tCoord
-      ),
-      this.sCoord++;
+      );
     }
-    this.tCoord++;
-    this.sCoord = 0;
+
   }
 
   var offset = 0;
