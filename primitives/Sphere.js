@@ -9,6 +9,8 @@ function Sphere(scene, args){
 	this.sections = args[1];
 	this.partsPerSections = args[2];
   this.radiusStep = (this.radius*2)/this.sections
+  this.tStep = 1/this.sections;
+  this.vStep = 1/this.partsPerSections;
 
   this.degStepXY = (2*Math.PI)/this.partsPerSections;
   this.degStepZ = (Math.PI)/this.sections;
@@ -32,8 +34,7 @@ function Sphere(scene, args){
   //Vertice inferior
   this.vertices.push(0,0,-this.radius);
   this.normals.push(0,0,-1);
-  this.texCoords.push(sc, st);
-  st++;
+  this.texCoords.push(0.5,0);
   //Adicionar os vertices "piso a piso": 0<floor<sections
   for(floor = 1; floor < this.sections; floor++){
     //Calcular a ordenada Z da latitude atual
@@ -41,6 +42,7 @@ function Sphere(scene, args){
     //Calcular raio da latitude atual
     let latRadius = Math.sqrt(Math.pow(this.radius,2)-Math.pow(z,2));
     for(i = 0; i <= this.partsPerSections; i++){ //Adicionar vertice repetido devido a texturas
+      sc = this.vStep*i;
       this.vertices.push(
         latRadius*Math.cos(this.degStepXY * i),
         latRadius*Math.sin(this.degStepXY * i),
@@ -53,18 +55,17 @@ function Sphere(scene, args){
         Math.sin(this.degStepZ * i)
       );
       //[!]Informação de texturas
-      this.texCoords.push(
+    this.texCoords.push(
         sc, st
-      ),
-      sc++;
+      )
     }
-    st++;
-    sc = 0;
+    st = this.tStep * floor;
   }
+
   //Adicionar vertice no top da esfera
   this.vertices.push(0,0,this.radius);
   this.normals.push(0,0,1);
-  this.texCoords.push(sc, st + 1);
+  this.texCoords.push(0.5,1-this.tStep);
   //Criar a malha poligonal
   //Parte baixa da esfera
   for(var i = 1; i <= this.partsPerSections; i++){
