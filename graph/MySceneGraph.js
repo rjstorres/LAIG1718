@@ -1410,15 +1410,40 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                 else
 					if (descendants[j].nodeName == "LEAF")
 					{
-						var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
+						var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle', 'patch']);
 
 						if (type != null)
 							this.log("   Leaf: "+ type);
 						else
 							this.warn("Error in leaf");
 
+            if(type == "patch"){
+              let cplines = descendants[j].children;
+              for(var line = 0; line < cplines.length; line++){
+                if(cplines[line].nodeName != "CPLINE")
+                  this.onXMLMinorError("Unknown patch tag child "+cplines[lines].nodeName);
+                else if(cplines[line].length == 0){
+                  this.onXMLMinorError("CPLINE tag must have atleast one child ");
+                }
+                else{
+                  let cpoints = cplines[line].children;
+                  for(var point = 0; point < cpoints.length; point++){
+                    if(cpoints[point].nodeName != "CPOINT")
+                      this.onXMLMinorError("Unknown patch tag child "+cpoints[point].nodeName);
+                    else if(cpoints[point].children.length != 0)
+                      this.onXMLMinorError("CPOINT must not have any child node ");
+                    else if(cpoints[point].attributes.length != 4)
+                      this.onXMLMinorError("CPOINT must have 4 arguments (xx yy zz ww) ");
+                  }
+                }
+              }
+              console.log("patch leaf processed")
+            }
+            this.nodes[nodeID].addLeaf(new MyGraphLeaf(this,descendants[j]));
+
+
 						//parse leaf
-						this.nodes[nodeID].addLeaf(new MyGraphLeaf(this,descendants[j]));
+
             sizeChildren++;
 					}
 					else
@@ -1517,7 +1542,7 @@ MySceneGraph.prototype.processGraph = function(node, parentMaterial, amplifFacto
     }
     //Processa Matrix
     this.scene.multMatrix(node.transformMatrix);
-    material.apply();  
+    material.apply();
     for(var i = 0; i < node.children.length; i++){
       this.scene.pushMatrix();
         //material.apply();
