@@ -5,9 +5,10 @@
 
 function MyGraphLeaf(graph, xmlelem) {
 	this.graph = graph;
+	this.type = graph.reader.getString(xmlelem, 'type');
+	this.type == 'patch' ? this.args = xmlelem : this.args = graph.reader.getString(xmlelem, 'args');
 	this.args = graph.reader.getString(xmlelem, 'args');
 	this.args = this.args.split(" ").map(Number);
-	this.type = graph.reader.getString(xmlelem, 'type');
 	this.primitive = null;
 
 	switch (this.type) {
@@ -23,6 +24,8 @@ function MyGraphLeaf(graph, xmlelem) {
 		case 'rectangle':
 			this.primitive = new Rectangle(this.graph.scene, this.args);
 			break;
+		case 'patch':
+			this.primitive = new NURBSPatch(this.graphs.scene, this.args, this.graph.reader);
 		default:
 			break;
 	}
