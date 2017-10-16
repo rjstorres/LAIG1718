@@ -32,11 +32,15 @@ function Sphere(scene, args){
 
   //Assumindo uma esfera em centro 0,0,0
   //Vertice inferior
-  this.vertices.push(0,0,-this.radius);
-  this.normals.push(0,0,-1);
-  this.texCoords.push(0.5,0);
+  let texPoleOffset = this.vStep/2;
+  for(var i = 0; i < this.partsPerSections; i++){
+    this.vertices.push(0,0,-this.radius);
+    this.normals.push(0,0,-1);
+    this.texCoords.push(texPoleOffset+(this.vStep*i), 0);
+  }
   //Adicionar os vertices "piso a piso": 0<floor<sections
   for(floor = 1; floor < this.sections; floor++){
+    st = this.tStep * floor;
     //Calcular a ordenada Z da latitude atual
     let z = -this.radius + this.radiusStep*floor; //Radius porque estamos a começar de baixo.
     //Calcular raio da latitude atual
@@ -59,25 +63,26 @@ function Sphere(scene, args){
         sc, st
       )
     }
-    st = this.tStep * floor;
   }
 
   //Adicionar vertice no top da esfera
-  this.vertices.push(0,0,this.radius);
-  this.normals.push(0,0,1);
-  this.texCoords.push(0.5,1-this.tStep);
+  for(var i = 0; i < this.partsPerSections; i++){
+    this.vertices.push(0,0,this.radius);
+    this.normals.push(0,0,1);
+    this.texCoords.push(texPoleOffset+(this.vStep*i), 1);
+  }
   //Criar a malha poligonal
   //Parte baixa da esfera
-  for(var i = 1; i <= this.partsPerSections; i++){
+  for(var i = 0; i < this.partsPerSections; i++){
     this.indices.push(
-      0, i + 1, i
+      i, this.partsPerSections + i + 1 , this.partsPerSections + i
     );
   }
   //Secções intermediarias
   for(var floor = 0; floor < this.sections - 2; floor++){ //offset -2 pois as secções topo e baixo são lidadas de diferente forma
     let row = (this.partsPerSections + 1) * floor; //offset + 1 devido a vertices repetidos
     for(var i = 1; i <= this.partsPerSections; i++){
-      let pivot = i+row
+      let pivot = i+row+this.partsPerSections-1
       this.indices.push(
         pivot, pivot+this.partsPerSections+2, pivot+this.partsPerSections+1,
         pivot, pivot+1, pivot+this.partsPerSections+2
@@ -85,10 +90,10 @@ function Sphere(scene, args){
     }
   }
   //Parte de topo da esfera
-  let top = (this.vertices.length/3) - 1;
-  for(i = top-this.partsPerSections-1; i < top - 1; i++){
+  let top = (this.vertices.length/3) - (this.partsPerSections + 1);
+  for(i = top-this.partsPerSections-1, j=0; j <= this.partsPerSections; i++,j++){
     this.indices.push(
-      top, i, i+1
+      top+j, i, i+1
     );
   }
  	this.primitiveType = this.scene.gl.TRIANGLES;
