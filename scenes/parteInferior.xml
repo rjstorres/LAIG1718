@@ -51,7 +51,7 @@
 <TEXTURES>
 	<!-- Tree trunk -->
   <TEXTURE id="steel">
-      <file path="latrunculiImages/steel.jpg" />
+      <file path="images/leaves.jpg" />
       <amplif_factor s="2" t="2" />
   </TEXTURE>
   <TEXTURE id="wood">
@@ -103,10 +103,37 @@
     <!-- The root node -->
     <NODE id="root">
         <MATERIAL id="defaultMaterial" />
-        <TEXTURE id="null" />
+        <TEXTURE id="steel" />
 
         <DESCENDANTS>
-            <NODEREF id="hip"/>
+          <!--  <NODEREF id="hip"/> -->
+            <NODEREF id="nurbsTest"/>
+        </DESCENDANTS>
+    </NODE>
+
+    <NODE id="nurbsTest">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+
+        <DESCENDANTS>
+             <LEAF type="patch" args="2 2">
+               <CPLINE>
+                <CPOINT xx="1" yy="0" zz="-1" ww="1"/>
+                <CPOINT xx="2" yy="-1" zz="0" ww="3"/>
+                <CPOINT xx="1" yy="0" zz="1" ww="1"/>
+               </CPLINE>
+               <CPLINE>
+                <CPOINT xx="0" yy="0" zz="-1" ww="1"/>
+                <CPOINT xx="0" yy="5" zz="0" ww="3"/>
+                <CPOINT xx="0" yy="0" zz="1" ww="1"/>
+               </CPLINE>
+               <CPLINE>
+                <CPOINT xx="-1" yy="0" zz="-1" ww="1"/>
+                <CPOINT xx="-2" yy="-1" zz="0" ww="3"/>
+                <CPOINT xx="-1" yy="0" zz="1" ww="1"/>
+               </CPLINE>
+             </LEAF>
         </DESCENDANTS>
     </NODE>
 
