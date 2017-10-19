@@ -6,7 +6,7 @@
 function NURBSPatch(scene, args) {
 	this.scene = scene;
   this.obj = null;
-  this.uv = args.attributes[1].nodeValue.split(" ").map(Number);
+  this.uv = args.attributes["args"].nodeValue.split(" ").map(Number);
   this.points = [];
   for(var i = 0; i < args.children.length; i++){
     let uArray = [];
