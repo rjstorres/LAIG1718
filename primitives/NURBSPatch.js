@@ -6,7 +6,7 @@
 function NURBSPatch(scene, args) {
 	this.scene = scene;
   this.obj = null;
-  this.uv = args.attributes["args"].nodeValue.split(" ").map(Number);
+  this.divisionsuv = args.attributes["args"].nodeValue.split(" ").map(Number);
   this.points = [];
   for(var i = 0; i < args.children.length; i++){
     let uArray = [];
@@ -23,6 +23,8 @@ function NURBSPatch(scene, args) {
     }
     this.points.push(uArray);
   }
+	this.udegree = this.points.length - 1;
+	this.vdegree = this.points[0].length - 1;
 	this.init();
 };
 
@@ -31,8 +33,8 @@ NURBSPatch.prototype.constructor=NURBSPatch;
 NURBSPatch.prototype.init = function () {
   console.log(this.points);
   this.makeSurface(
-    this.uv[0],
-    this.uv[1],
+    this.udegree,
+    this.vdegree,
     this.points
   );
 };
@@ -45,7 +47,7 @@ NURBSPatch.prototype.makeSurface = function(degree1, degree2, controlvertexes){
 	getSurfacePoint = function(u, v) {
 		return nurbsSurface.getPoint(u, v);
 	};
-  this.obj = new CGFnurbsObject(this.scene, getSurfacePoint, 20, 20 );
+  this.obj = new CGFnurbsObject(this.scene, getSurfacePoint, this.divisionsuv[0], this.divisionsuv[1]);
 }
 
 NURBSPatch.prototype.getKnotsVector = function(degree){
