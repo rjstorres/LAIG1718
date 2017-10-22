@@ -29,7 +29,6 @@ function MyGraphLeaf(graph, xmlelem) {
 			this.primitive = new Rectangle(this.graph.scene, this.args);
 			break;
 		case 'patch':
-			console.log(this.args);	
 			this.primitive = new NURBSPatch(this.graph.scene, this.args);
 		default:
 			break;

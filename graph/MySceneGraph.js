@@ -1521,7 +1521,7 @@ MySceneGraph.prototype.displayScene = function() {
 }
 
 MySceneGraph.prototype.processGraph = function(node, parentMaterial, amplifFactor){
-  var material = parentMaterial;
+  var material = Object.create(parentMaterial);
   var amplif = amplifFactor;
   if(node.nodeID != null){
     //Processar material
@@ -1538,11 +1538,11 @@ MySceneGraph.prototype.processGraph = function(node, parentMaterial, amplifFacto
     }else if(node.textureID != 'null'){
       material.setTexture(this.textures[node.textureID][0]);
       amplif = this.textures[node.textureID].slice(1); //s e t
-      material.setTextureWrap('REPEAT','REPEAT');// acho eu este?
+      material.setTextureWrap('REPEAT','REPEAT');
     }
     //Processa Matrix
-    this.scene.multMatrix(node.transformMatrix);
     material.apply();
+    this.scene.multMatrix(node.transformMatrix);
     for(var i = 0; i < node.children.length; i++){
       this.scene.pushMatrix();
         //material.apply();

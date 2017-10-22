@@ -31,7 +31,6 @@ function NURBSPatch(scene, args) {
 NURBSPatch.prototype.constructor=NURBSPatch;
 
 NURBSPatch.prototype.init = function () {
-  console.log(this.points);
   this.makeSurface(
     this.udegree,
     this.vdegree,
