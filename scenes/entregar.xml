@@ -90,6 +90,11 @@
         <amplif_factor s="2" t="2" />
     </TEXTURE>
 
+    <TEXTURE id="capeText">
+        <file path="latrunculiImages/cape.jpg" />
+        <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
 
 </TEXTURES>
 
@@ -313,7 +318,7 @@
         <MATERIAL id="trunkTreeMaterial" />
         <TEXTURE id="shieldTexture" />
 
-        <TRANSLATION x="0" y="-2.8" z="8.3" />
+        <TRANSLATION x="0" y="-2.5" z="8.3" />
         <ROTATION axis="x" angle="-5" />
         <TRANSLATION x="20" y="5" z="7" />
         <SCALE sx="1" sy="0.8" sz="0.1" />
@@ -363,6 +368,37 @@
         <DESCENDANTS>
           <NODEREF id="parteSuperiorSoldier" />
           <NODEREF id="parteInferiorSoldier" />
+          <NODEREF id="Cape" />
+        </DESCENDANTS>
+    </NODE>
+
+    <NODE id="Cape">
+        <MATERIAL id="null" />
+        <TEXTURE id="capeText" />
+        
+        <ROTATION axis="y" angle="180" />
+        <ROTATION axis="z" angle="-90" />
+        
+        <SCALE sx="0.7" sy="0.5" sz="0.5" />
+        <DESCENDANTS>
+           <LEAF  type="patch" args="20 20" >
+            <CPLINE>
+             <CPOINT xx="-1.5" yy="-1.5" zz="0.0" ww="1"/>
+              <CPOINT xx="-1.5" yy="1.5" zz="0.0" ww="1"/>
+            </CPLINE>
+          <CPLINE>
+            <CPOINT xx="0" yy="-1.5" zz="3.0" ww="1"/>
+            <CPOINT xx="0" yy="1.5" zz="3.0" ww="1"/>
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="1.5" yy="-1.5" zz="0.0" ww="1"/>
+            <CPOINT xx="1.5" yy="1.5" zz="0.0" ww="1"/>
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="2.0" yy="-2.0" zz="2.0" ww="1"/>
+            <CPOINT xx="2.0" yy="2.0" zz="2.0" ww="1"/>
+          </CPLINE>
+          </LEAF>
         </DESCENDANTS>
     </NODE>
 
