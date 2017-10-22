@@ -58,7 +58,7 @@
 <!-- Textures -->
 <TEXTURES>
 
-  <!-- Hide -->
+  <!-- Sofa -->
   <TEXTURE id="sofa">
     <file path="sceneimg/sofa.jpg" />                
     <amplif_factor s="1" t="1" />   
@@ -103,8 +103,27 @@
   <!-- Fabric -->
   <TEXTURE id="fabric">
     <file path="sceneimg/fabric.jpg" />                
-    <amplif_factor s="0.5" t="0.5" />   
+    <amplif_factor s="1" t="1" />   
   </TEXTURE>
+
+  <!-- Fabric -->
+  <TEXTURE id="fabric2">
+    <file path="sceneimg/fabric2.jpg" />                
+    <amplif_factor s="1" t="1" />   
+  </TEXTURE>
+
+  <!-- Speaker -->
+  <TEXTURE id="speaker">
+    <file path="sceneimg/speaker.jpg" />                
+    <amplif_factor s="1" t="1" />   
+  </TEXTURE>
+
+  <!-- Wax -->
+  <TEXTURE id="wax">
+    <file path="sceneimg/wax.jpg" />                
+    <amplif_factor s="1" t="1" />   
+  </TEXTURE>
+
 </TEXTURES>
 
 
@@ -113,7 +132,7 @@
   <MATERIAL id="piramideMaterial">                                  
     <shininess value="1" />
     <specular r="0" g="0" b="0" a="1" />        
-    <diffuse r="1.0" g="0.68" b="0.4" a="1" />        
+    <diffuse r="0.4" g="0.4" b="0.4" a="1" />        
     <ambient r="0.2" g="0.2" b="0.2" a="1" />         
     <emission r="0" g="0.0" b="0.0" a="1" />        
   </MATERIAL>
@@ -228,11 +247,10 @@
       <NODEREF id="table" />
       <NODEREF id="pillows" />
       <NODEREF id="curtains" />
+      <NODEREF id="candle" />
     </DESCENDANTS>
 
   </NODE>
-
-
 
   <!-- The floor -->
   <NODE id="floor">      
@@ -550,6 +568,63 @@
 
 
 <!-- The decorative pillows of sofa -->
+
+  <NODE id="curvaAlmofada" >
+    <MATERIAL id="null" />
+    <TEXTURE id="null" />
+
+    <TRANSLATION x="-4.5" y="0" z="0" />
+
+    <DESCENDANTS>
+       <LEAF type="patch" args="20 20" >
+        <CPLINE>
+          <CPOINT xx="0" yy="0" zz="0" ww="1" />
+          <CPOINT xx="3" yy="1" zz="0" ww="1" />
+          <CPOINT xx="6" yy="1" zz="0" ww="1" />
+          <CPOINT xx="9" yy="0" zz="0" ww="1" />
+        </CPLINE>
+        <CPLINE>
+          <CPOINT xx="1" yy="3" zz="0" ww="1" />
+          <CPOINT xx="3" yy="2" zz="-2" ww="3" />
+           <CPOINT xx="6" yy="3" zz="-2" ww="3" />
+          <CPOINT xx="8" yy="3" zz="0" ww="1" />
+        </CPLINE>
+        <CPLINE>
+          <CPOINT xx="1" yy="6" zz="0" ww="1" />
+          <CPOINT xx="3" yy="6" zz="-2" ww="3" />
+           <CPOINT xx="6" yy="6" zz="-2" ww="3" />
+          <CPOINT xx="8" yy="6" zz="0" ww="1" />
+        </CPLINE>
+          <CPLINE>
+          <CPOINT xx="0" yy="9" zz="0" ww="1" />
+          <CPOINT xx="3" yy="8" zz="0" ww="1" />
+           <CPOINT xx="6" yy="8" zz="0" ww="1" />
+          <CPOINT xx="9" yy="9" zz="0" ww="1" />
+        </CPLINE>
+      </LEAF>
+     </DESCENDANTS>
+   </NODE>
+
+   <NODE id="faceAlmofada1" >
+    <MATERIAL id="null" />
+    <TEXTURE id="null" />
+
+    <ROTATION axis="y" angle="-180" />
+
+    <DESCENDANTS>
+        <NODEREF id="curvaAlmofada" />
+     </DESCENDANTS>
+   </NODE>
+
+      <NODE id="faceAlmofada2" >
+    <MATERIAL id="null" />
+    <TEXTURE id="null" />
+
+    <DESCENDANTS>
+        <NODEREF id="curvaAlmofada" />
+     </DESCENDANTS>
+   </NODE>
+
 <NODE id="pillows">      
   <MATERIAL id="defaultMaterial" />    
   <TEXTURE id="fabric" />     
@@ -569,34 +644,44 @@
   <ROTATION axis="y" angle="-180" />  
 
   <DESCENDANTS>
-   <NODEREF id="pillowSofa1" />
-   <NODEREF id="pillowSofa2" />
+   <NODEREF id="pillowsSet"/> 
+ </DESCENDANTS>
+</NODE>
+
+<NODE id="pillowsSofa2">      
+  <MATERIAL id="defaultMaterial" />    
+  <TEXTURE id="null" />  
+
+  <DESCENDANTS>
+   <NODEREF id="pillowsSet"/> 
  </DESCENDANTS>
 </NODE>
 
 
-<NODE id="pillowsSofa2">      
+<NODE id="pillowsSet">      
   <MATERIAL id="defaultMaterial" />    
-  <TEXTURE id="null" />   
+  <TEXTURE id="null" />  
 
   <DESCENDANTS>
    <NODEREF id="pillowSofa1" />
    <NODEREF id="pillowSofa2" />
+    <NODEREF id="pillowSofa3" />
+    <NODEREF id="pillowSofa4" />
  </DESCENDANTS>
 </NODE>
-
 
 <NODE id="pillowSofa1">      
   <MATERIAL id="null" />    
   <TEXTURE id="null" />                 
 
-  <TRANSLATION x="2.4" y="3.2" z="16.2" />
-  <ROTATION axis="z" angle="-45" /> 
-  <ROTATION axis="x" angle="-45" /> 
-  <SCALE sx="0.7" sy="0.3" sz="0.7" /> 
+  <TRANSLATION x="3" y="2.2" z="15.9" />
+  <ROTATION axis="y" angle="-50" /> 
+  <ROTATION axis="x" angle="20" /> 
+  <SCALE sx="0.28" sy="0.28" sz="0.28" /> 
   
   <DESCENDANTS>
-   <LEAF id="sphere1" type="sphere" args="1.5 20 20" />
+     <NODEREF id="faceAlmofada1" />
+   <NODEREF id="faceAlmofada2" />
  </DESCENDANTS>
 </NODE>
 
@@ -605,10 +690,40 @@
   <MATERIAL id="null" />    
   <TEXTURE id="null" />                 
 
-  <TRANSLATION x="2.4" y="3.2" z="9.8" />
+  <TRANSLATION x="3" y="2.2" z="10.1" />
+  <ROTATION axis="y" angle="50" /> 
+  <ROTATION axis="x" angle="-20" /> 
+  <SCALE sx="0.28" sy="0.28" sz="0.28" /> 
+  
+  <DESCENDANTS>
+  <NODEREF id="faceAlmofada1" />
+   <NODEREF id="faceAlmofada2" />
+ </DESCENDANTS>
+</NODE>
+
+<NODE id="pillowSofa3">      
+    <MATERIAL id="null" />    
+  <TEXTURE id="fabric2" />                 
+
+  <TRANSLATION x="2.4" y="3.2" z="11" />
   <ROTATION axis="z" angle="-45" /> 
   <ROTATION axis="x" angle="45" /> 
   <SCALE sx="0.7" sy="0.3" sz="0.7" /> 
+  
+  <DESCENDANTS>
+   <LEAF id="sphere1" type="sphere" args="1.5 20 20" />
+ </DESCENDANTS>
+
+</NODE>
+
+ <NODE id="pillowSofa4">      
+    <MATERIAL id="null" />    
+  <TEXTURE id="fabric2" />                 
+
+    <TRANSLATION x="2.4" y="3.2" z="15" />
+  <ROTATION axis="z" angle="-45" /> 
+  <ROTATION axis="x" angle="-45" /> 
+  <SCALE sx="0.7" sy="0.3" sz="0.7"/> 
   
   <DESCENDANTS>
    <LEAF id="sphere1" type="sphere" args="1.5 20 20" />
@@ -822,7 +937,7 @@
   <TRANSLATION x="0" y="-0.05" z="-0.05" />
 
   <DESCENDANTS>
-   <LEAF id="sphere1" type="sphere" args="0.17 20 20 1 1" />
+   <LEAF id="sphere1" type="sphere" args="0.17 20 20" />
  </DESCENDANTS>
 </NODE>
 
@@ -1645,9 +1760,9 @@
 
   <DESCENDANTS>
     <NODEREF id="cube"/>
+    <NODEREF id="speakerFront"/>
   </DESCENDANTS>
 </NODE>
-
 
 <NODE id="soundColumn2" >
   <MATERIAL id="null" />
@@ -1658,9 +1773,18 @@
 
   <DESCENDANTS>
     <NODEREF id="cube"/>
+    <NODEREF id="speakerFront"/>
   </DESCENDANTS>
 </NODE>
 
+<NODE id="speakerFront" >
+  <MATERIAL id="null" />
+  <TEXTURE id="speaker" />
+
+  <DESCENDANTS>
+    <NODEREF id="facecube1" />
+  </DESCENDANTS>
+</NODE>
 
 <!-- The led tv -->
 <NODE id="tv" >
@@ -1756,14 +1880,111 @@
 <!-- The box of tv -->
 <NODE id="box" >
   <MATERIAL id="blackMaterial" />
-  <TEXTURE id="boxTexture" />
+  <TEXTURE id="null" />
 
   <TRANSLATION x="9" y="1.5" z="-0.2" />
   <SCALE sx="2.5" sy="0.8" sz="0.7" />
 
   <DESCENDANTS>
     <NODEREF id="cube" />
+    <NODEREF id="boxFront" />
   </DESCENDANTS>
+</NODE>
+
+<NODE id="boxFront" >
+  <MATERIAL id="null" />
+  <TEXTURE id="boxTexture" />
+
+  <DESCENDANTS>
+    <NODEREF id="facecube1" />
+  </DESCENDANTS>
+</NODE>
+
+
+<!-- A decorative candle -->
+<NODE id="candle">       
+
+    <MATERIAL id="piramideMaterial" />      
+    <TEXTURE id="wax" />       			
+
+    <TRANSLATION x="9.5" y="1.6" z="12" />
+    <SCALE sx="1" sy="2" sz="1" />
+
+    <DESCENDANTS>
+       <NODEREF id="candlehalf1" /> 
+       <NODEREF id="candlehalf2" />       
+       <NODEREF id="candlebase" />   
+   </DESCENDANTS>
+
+</NODE>
+
+<NODE id="candlebase">       
+    <MATERIAL id="null" />     
+    <TEXTURE id="null" />       			
+
+    <ROTATION axis="x" angle="90" />
+
+    <DESCENDANTS>
+       <LEAF  type="rectangle" args="0 1 1 0" />        
+   </DESCENDANTS>
+
+</NODE>
+
+<NODE id="candlehalf1">       
+    <MATERIAL id="null" />      
+    <TEXTURE id="null" />       			
+
+    <DESCENDANTS>
+        <NODEREF id="candlehalf" />      
+    </DESCENDANTS>
+
+</NODE>
+
+<NODE id="candlehalf2">       
+    <MATERIAL id="null" />      
+    <TEXTURE id="null" />       			
+
+    <TRANSLATION x="1" y="0" z="1" />
+    <ROTATION axis="y" angle="180" />
+
+    <DESCENDANTS>
+        <NODEREF id="candlehalf" />       
+    </DESCENDANTS>
+
+</NODE>
+
+<NODE id="candlehalf">       
+    <MATERIAL id="null" />      
+    <TEXTURE id="null" />       			
+
+    <DESCENDANTS>
+        <NODEREF id="candleface1" />       
+        <NODEREF id="candleface2" />
+    </DESCENDANTS>
+
+</NODE>
+
+<NODE id="candleface1">       
+    <MATERIAL id="null" />      
+    <TEXTURE id="null" />       			
+
+    <DESCENDANTS>
+       <LEAF id="triangle1" type="triangle" args="0 0 0 0 0 1 0.5 1 0.5" />
+   </DESCENDANTS>
+
+</NODE>
+
+<NODE id="candleface2">      
+    <MATERIAL id="null" />      
+    <TEXTURE id="null" />       			
+    
+    <TRANSLATION x="0" y="0" z="1" />
+    <ROTATION axis="y" angle="90" />    
+
+    <DESCENDANTS>
+       <LEAF id="triangle1" type="triangle" args="0 0 0 0 0 1 0.5 1 0.5" />
+   </DESCENDANTS>
+
 </NODE>
 
 
