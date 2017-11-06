@@ -8,7 +8,8 @@ function XMLscene(interface) {
     CGFscene.call(this);
 
     this.interface = interface;
-
+    //this.timeStart = 0
+    //this.timeNow = 0
     this.lightValues = {};
 }
 
@@ -92,6 +93,7 @@ XMLscene.prototype.onGraphLoaded = function()
 
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
+    //this.timeStart = getTime()
 }
 
 /**
@@ -139,6 +141,7 @@ XMLscene.prototype.display = function() {
 
         // Displays the scene.
         this.graph.displayScene();
+        //this.time = getTime()-this.timeStart
 
     }
 	else
