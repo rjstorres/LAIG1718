@@ -2,12 +2,12 @@
  * BezierAnimation
  * @constructor
  */
-function BezierAnimation(args) {
+function BezierAnimation(scene, args) {
 };
 
 BezierAnimation.prototype = Object.create(Animation.prototype);
 BezierAnimation.prototype.constructor=BezierAnimation;
 
-BezierAnimation.prototype.move = function () {
+BezierAnimation.prototype.animate = function () {
 
 };

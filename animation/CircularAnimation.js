@@ -2,12 +2,14 @@
  * CircularAnimation
  * @constructor
  */
-function CircularAnimation(args) {
+function CircularAnimation(scene, args) {
 };
 
 CircularAnimation.prototype = Object.create(Animation.prototype);
 CircularAnimation.prototype.constructor=CircularAnimation;
 
-CircularAnimation.prototype.move = function () {
+CircularAnimation.prototype.animate = function (mat, t) {
 
 };
+
+
