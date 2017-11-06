@@ -107,7 +107,7 @@
     <ambient r="0.4" g="0.4" b="0.4" a="1" />
     <emission r="0.0" g="0.0" b="0.0" a="1" />
   </MATERIAL>
-	
+
 	<!-- Tree trunk material -->
 	<MATERIAL id="trunkTreeMaterial">
         <shininess value="1" />
@@ -301,7 +301,7 @@
 
     </NODE>
 
-    
+
     <NODE id="pommel">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -375,10 +375,10 @@
     <NODE id="Cape">
         <MATERIAL id="null" />
         <TEXTURE id="capeText" />
-        
+
         <ROTATION axis="y" angle="180" />
         <ROTATION axis="z" angle="-90" />
-        
+
         <SCALE sx="0.7" sy="0.5" sz="0.5" />
         <DESCENDANTS>
            <LEAF  type="patch" args="20 20" >
@@ -530,7 +530,7 @@
         <TEXTURE id="null" />
 
         <TRANSLATION x="0" y="0" z="0"/>
-        <ROTATION axis="x" angle="0" />
+        <ROTATION axis="x" angle="-10" />
 
         <DESCENDANTS>
              <NODEREF id="thigh" />

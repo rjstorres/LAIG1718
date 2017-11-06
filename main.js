@@ -15,7 +15,8 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', '../graph/MySceneGraph.js',
 			 '../graph/MyGraphNode.js', '../graph/MyGraphLeaf.js', 'MyInterface.js',
        './primitives/Rectangle.js', './primitives/Triangle.js', './primitives/Cylinder.js',
        './primitives/Sphere.js', './primitives/Circle.js', './primitives/FullCylinder.js',
-       './primitives/NURBSPatch.js',
+       './primitives/NURBSPatch.js','animation/Animation.js', 'animation/LinearAnimation.js',
+       'animation/CircularAnimation.js', 'animation/BezierAnimation.js', 'animation/ComboAnimation.js',
 
 main=function()
 {
@@ -34,7 +35,7 @@ main=function()
 	// get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml
 	// or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor)
 
-	var filename=getUrlVars()['file'] || "scene.xml"; //demo.xml
+	var filename=getUrlVars()['file'] || "entregar.xml"; //demo.xml
 
 	// create and load graph, and associate it to scene.
 	// Check console for loading errors
