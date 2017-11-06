@@ -8,5 +8,5 @@ function Animation(scene,args){
 }
 
 
-Animation.prototype.move = function(){
+Animation.prototype.animate = function(t){
 }
