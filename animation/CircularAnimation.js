@@ -7,10 +7,10 @@ function CircularAnimation(scene, args) {
         args[2] === Number && args[3] === Number && args[4] === Number) ? null : console.log("Error");
     this.center = args[0];
     this.radius = args[1];
-    this.initialAngle = this.radius(args[2]);
-    this.rotationAngle = this.radius(args[3]);
+    this.initialAngle = args[2]*MATH.PI/180;
+    this.rotationAngle = args[3]*MATH.PI/180;
     this.speed = args[4];
-    this.span=null; //calculate the total time needed
+    this.span=rotationAngle*radius/this.speed; //calculate the total time needed
 };
 
 CircularAnimation.prototype = Object.create(Animation.prototype);
