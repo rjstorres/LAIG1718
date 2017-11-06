@@ -14,13 +14,15 @@ function LinearAnimation(scene,args) {
 LinearAnimation.prototype = Object.create(Animation.prototype);
 LinearAnimation.prototype.constructor=LinearAnimation;
 
-LinearAnimation.prototype.move = function () {
+
+LinearAnimation.prototype.animate = function(mat, t){
+  //multMatrix(mat, delta*t)
 
 };
 
 LinearAnimation.prototype.calculateDelta = function(traj, speed){
   let length = 0;
-  for(var i = 0; i < traj.length - 1; i++){
+  for(var i = 0; i < traj.length - 1; i++){ //obter magnitudes de todos os control points
     v1 = traj[i];
     v2 = traj[i+1];
     var mag = Math.sqrt(
@@ -30,12 +32,12 @@ LinearAnimation.prototype.calculateDelta = function(traj, speed){
     );
     length += mag;
   }
-  return length/speed;
+  return length/speed; //Calcular distancia a percorrer por segundo
 }
 
-LinearAnimation.prototype.calculateUnits = function(traj){
+LinearAnimation.prototype.calculateUnits = function(traj){ //Obter direcções do trajeto
   let uVectors = [];
-  for(var i = 0; i < traj.length - 1; i++){
+  for(var i = 0; i < traj.length - 1; i++){ //Calcular vetor unitário para cada ponto  de controlo
     v1 = traj[i];
     v2 = traj[i+1];
     vs = [v1[0]+v2[0], v1[1]+v2[1], v1[2]+v2[2]];
@@ -48,7 +50,7 @@ LinearAnimation.prototype.calculateUnits = function(traj){
     for(var j = 0; j < 3; j++){
       uVec.push(vs[j]/mag);
     }
-    uVectors.push(uVec);
+    uVectors.push(uVec); //Adicionar vetor unitário
   }
-  return uVectors;
+  return uVectors; //Retornar lista vetores unitários
 }

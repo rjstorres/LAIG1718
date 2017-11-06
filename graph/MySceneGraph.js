@@ -1549,6 +1549,16 @@ MySceneGraph.prototype.processGraph = function(node, parentMaterial, amplifFacto
     }
     //Processa Matrix
     material.apply();
+    /**
+    TODO
+    if se tem animation node
+      faz antigamente -> this.scene.multMatrix(node.transformMatrix);
+    else
+      Buscar matriz transf. a classe animation guardada no node.
+      As classes animation vao ser instanciadas com a mat do node
+      Animation retorna uma nova nova matrix
+      this.scene.multMatrix(node.animationID(node.mat, t))
+    **/
     this.scene.multMatrix(node.transformMatrix);
     for(var i = 0; i < node.children.length; i++){
       this.scene.pushMatrix();
