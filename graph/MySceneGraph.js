@@ -30,8 +30,8 @@ function MySceneGraph(filename, scene) {
     this.axisCoords['z'] = [0, 0, 1];
 
     //test
-    this.ani = new LinearAnimation(this.scene, [[[0,0,0],[3,3,0]],1])
-    this.obj = new Sphere(this.scene,[4,10,10]);
+    this.ani = new CircularAnimation(this.scene, [[0,0,0],5,0,180,1])
+    this.obj = new Sphere(this.scene,[1,10,10]);
 
     // File reading
     this.reader = new CGFXMLreader();
@@ -1522,9 +1522,10 @@ MySceneGraph.generateRandomString = function(length) {
  */
 MySceneGraph.prototype.displayScene = function() {
     this.scene.pushMatrix()
+      this.scene.multMatrix(this.ani.animate());
       this.obj.display()
     this.scene.popMatrix()
-    this.processGraph(this.nodes['root'], this.materials[this.defaultMaterialID],[1,1]);
+    //this.processGraph(this.nodes['root'], this.materials[this.defaultMaterialID],[1,1]);
 }
 
 MySceneGraph.prototype.processGraph = function(node, parentMaterial, amplifFactor){
