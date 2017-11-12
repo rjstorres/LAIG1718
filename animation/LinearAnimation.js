@@ -4,21 +4,19 @@
  */
 function LinearAnimation(scene,args) {
   (args.length == 2 && args[0] === Array && args[1] === Number) ? null : console.log("Error");
-  this.date = scene.date;
   this.timeStart = new Date().getTime()/1000; //Conversão para segundos
-  this.time = 0;
+  this.time = 0; //Tempo (em segundos) que decorreu na animação
   this.controlPoints = args[0];
-  this.endFlag = false;
+  this.endFlag = false; //Flag para determinar se uma animação terminou
   this.speed = args[1];
   this.currentPoint = 0;
-  this.timePerPoint = [];
-  this.timeOffset = 0;
-  this.initMat = mat4.create();
-  console.log(this.controlPoints[0])
-  mat4.identity(this.initMat);
-  mat4.translate(this.initMat, this.initMat, this.controlPoints[0])
+  this.timePerPoint = []; //Quanto tempo dura cada trajeto.
+  this.timeOffset = 0; //Usado para simplificar o cálculo de distancia percorrida
+  this.endMat = mat4.create();
   this.calculateTimePerPoint(this.controlPoints, this.speed);
-  this.unitVectors = this.calculateUnits(this.controlPoints);
+  this.xDeg = []/*Estrutura de dados para guardar*/
+  this.yDeg = []/*os ângulos de cada trajeto*/
+  this.unitVectors = this.calculateUnitsDegrees(this.controlPoints);
 };
 
 LinearAnimation.prototype = Object.create(Animation.prototype);
@@ -26,37 +24,36 @@ LinearAnimation.prototype.constructor=LinearAnimation;
 
 
 LinearAnimation.prototype.animate = function(){
-  //TODO aplicar rotação
   if(!this.endFlag){ //Animação já terminou?
     if(this.time > this.timePerPoint[this.currentPoint]){ //Verificar se já excedemos o ponto de controlo atual
       this.currentPoint++;
       if(this.currentPoint == this.controlPoints.length - 1){ //Se chegamos ao fim retorna-mos a posição do ultimo ponto de controlo
         this.endFlag = true;
-        mat4.identity(this.initMat);
-        mat4.translate(this.initMat, this.initMat, this.controlPoints[this.controlPoints.length - 1]);
-        return this.initMat;
+        mat4.translate(this.endMat, this.endMat, this.controlPoints[this.controlPoints.length - 1]);
+        mat4.rotateX(this.endMat, this.endMat, this.xDeg[this.currentPoint-1])
+        mat4.rotateY(this.endMat, this.endMat, this.yDeg[this.currentPoint-1])
+        return this.endMat; //Retornar matrix com a posição final
       }
-      mat4.identity(this.initMat); // Centrar no próximo ponto de controlo
-      mat4.translate(this.initMat, this.initMat, this.controlPoints[this.currentPoint - 1]);
-
       this.timeOffset = this.timePerPoint[this.currentPoint - 1] //Apartir de cada novo ponto de controlo assumimos um deltaT inicial = 0
     }
     let cp = this.controlPoints[this.currentPoint]; //Ponto de controlo atual
     let uv = this.unitVectors[this.currentPoint]; //Vetor unitário de direcção entre os dois pontos de controlo
     var translate = [
-      cp[0]+uv[0]*(this.time - this.timeOffset),
-      cp[1]+uv[1]*(this.time - this.timeOffset),
-      cp[2]+uv[2]*(this.time - this.timeOffset)
+      cp[0]+uv[0]*this.speed*(this.time - this.timeOffset),
+      cp[1]+uv[1]*this.speed*(this.time - this.timeOffset),
+      cp[2]+uv[2]*this.speed*(this.time - this.timeOffset)
     ];
     let tMat = mat4.create();
-    mat4.translate(tMat, this.initMat, translate);
+    mat4.translate(tMat, tMat, translate);
+    mat4.rotateX(tMat, tMat, this.xDeg[this.currentPoint]);
+    mat4.rotateY(tMat, tMat, this.yDeg[this.currentPoint]);
+
     this.time = new Date().getTime()/1000 - this.timeStart;
     return tMat;
   }
   else{
-    return this.initMat; //Após o fim this.initMat tem valor igual ao ultimo ponto de controlo.
+    return this.endMat; //Após o fim this.initMat tem valor igual ao ultimo ponto de controlo.
   }
-
 };
 
 LinearAnimation.prototype.calculateTimePerPoint = function(traj, speed){
@@ -76,7 +73,7 @@ LinearAnimation.prototype.calculateTimePerPoint = function(traj, speed){
   }
 }
 
-LinearAnimation.prototype.calculateUnits = function(traj){ //Obter direcções do trajeto
+LinearAnimation.prototype.calculateUnitsDegrees = function(traj){ //Obter direcções e orientações do trajeto
   let uVectors = [];
   for(var i = 0; i < traj.length - 1; i++){ //Calcular vetor unitário para cada ponto  de controlo
     v1 = traj[i];
@@ -92,6 +89,12 @@ LinearAnimation.prototype.calculateUnits = function(traj){ //Obter direcções d
       uVec.push(vs[j]/mag);
     }
     uVectors.push(uVec); //Adicionar vetor unitário
+    var magy = Math.sqrt( //Hipotenusa no cálculo do ângulo segundo o eixo YY
+      Math.pow((vs[0]),2) +
+      Math.pow((vs[2]),2)
+    );
+    this.yDeg.push(Math.asin(vs[0]/magy));
+    this.xDeg.push(-1*Math.atan2(vs[1], vs[2]));
   }
   return uVectors; //Retornar lista vetores unitários
 }

@@ -30,8 +30,9 @@ function MySceneGraph(filename, scene) {
     this.axisCoords['z'] = [0, 0, 1];
 
     //test
-    this.ani = new CircularAnimation(this.scene, [[0,0,0],5,0,180,1])
-    this.obj = new Sphere(this.scene,[1,10,10]);
+    //this.ani = new BezierAnimation(this.scene, [[0,0,0],[6,0,6],[-5,2,10],[-10,8,10],4])
+      this.ani = new LinearAnimation(this.scene, [[[0,0,0],[-3,3,-3],[0,3,0]],2])
+    this.obj = new FullCylinder(this.scene,[1,1,0.1,10,10,1,1]);
 
     // File reading
     this.reader = new CGFXMLreader();
