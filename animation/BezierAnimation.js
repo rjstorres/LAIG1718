@@ -102,7 +102,7 @@ BezierAnimation.prototype.getDirectionAngle = function(p1,p2){ //Calcular  angul
   //Cálculo de valor unitário para x e z
   let xu = xdif/mag;
   let zu = zdif/mag;
-  var angle = Math.atan(xu/zu);
+  var angle = Math.atan2(xu,zu);
   //Retorno do angulo
   if(isNaN(angle)){
     return this.dir;
