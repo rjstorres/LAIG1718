@@ -7,7 +7,11 @@ function FullCylinder(scene, args) {
 	CGFobject.call(this,scene);
   this.scene = scene;
   this.args = args;
-	(args[5] || args[6]) ? this.cap = new Circle(scene,args[4]) : null;
+	this.cap1 = null;
+	if(args[5]){
+		this.cap1 = new Circle(scene,args[4],args[0])
+	}
+	args[6] ? this.cap2 = new Circle(scene,args[4],0) : null;
   this.cylinder = new Cylinder(scene, args);
 };
 
@@ -17,20 +21,19 @@ FullCylinder.prototype.constructor=FullCylinder;
 
 FullCylinder.prototype.display = function() {
 
+		this.cylinder.display();
     if(this.args[5]){
       this.scene.pushMatrix();
-      this.scene.translate(0,0,this.args[0]);
       this.scene.scale(this.args[2],this.args[2],1);
-      this.cap.display()
+      this.cap1.display()
       this.scene.popMatrix();
     }
     if(this.args[6]){
       this.scene.pushMatrix();
       this.scene.scale(this.args[1],this.args[1],1);
       this.scene.rotate(Math.PI,1,0,0)
-      this.cap.display()
+      this.cap2.display()
       this.scene.popMatrix();
     }
-    this.cylinder.display();
 
 };
