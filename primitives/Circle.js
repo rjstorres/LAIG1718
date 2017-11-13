@@ -3,8 +3,9 @@
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function Circle(scene, slices) {
+function Circle(scene, slices, zt) {
 	CGFobject.call(this,scene);
+	this.zt = zt;
   this.slices = slices;
 	this.initBuffers();
 };
@@ -23,7 +24,7 @@ Circle.prototype.initBuffers = function () {
     this.vertices.push(
       Math.cos(this.trig*i),
       Math.sin(this.trig*i),
-      0
+      this.zt
     );
     this.normals.push(
       0,
