@@ -88,7 +88,9 @@ BezierAnimation.prototype.deCasteljau = function(p1,p2,p3,p4){ //Algoritmo de De
 }
 
 BezierAnimation.prototype.aproximateThreshold = function(a,b,c,d){ //Otimização do threshold
-  return (this.linearDistance(a,b,c,d)/1000)*this.speed;
+  var v = this.deCasteljau(a,b,c,d);
+  return ((this.linearDistance(v[0][0],v[0][1],v[0][2],v[0][3])+
+           this.linearDistance(v[1][0],v[1][1],v[1][2],v[1][3]))/5000)*this.speed;
 }
 BezierAnimation.prototype.getDirectionAngle = function(p1,p2){ //Calcular  angulo de direccao entre dois pontos e o eixo ZZ
   //Cálculo de magnitude
