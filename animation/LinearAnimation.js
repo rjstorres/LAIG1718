@@ -14,7 +14,7 @@ function LinearAnimation(scene,args) {
   this.timeOffset = 0; //Usado para simplificar o cálculo de distancia percorrida
   this.endMat = mat4.create();
   this.calculateTimePerPoint(this.controlPoints, this.speed);
-  this.xDeg = []/*Estrutura de dados para guardar*/
+                /*Estrutura de dados para guardar*/
   this.yDeg = []/*os ângulos de cada trajeto*/
   this.unitVectors = this.calculateUnitsDegrees(this.controlPoints);
 };
@@ -30,7 +30,6 @@ LinearAnimation.prototype.animate = function(){
       if(this.currentPoint == this.controlPoints.length - 1){ //Se chegamos ao fim retorna-mos a posição do ultimo ponto de controlo
         this.endFlag = true;
         mat4.translate(this.endMat, this.endMat, this.controlPoints[this.controlPoints.length - 1]);
-        mat4.rotateX(this.endMat, this.endMat, this.xDeg[this.currentPoint-1])
         mat4.rotateY(this.endMat, this.endMat, this.yDeg[this.currentPoint-1])
         return this.endMat; //Retornar matrix com a posição final
       }
@@ -45,7 +44,6 @@ LinearAnimation.prototype.animate = function(){
     ];
     let tMat = mat4.create();
     mat4.translate(tMat, tMat, translate);
-    mat4.rotateX(tMat, tMat, this.xDeg[this.currentPoint]);
     mat4.rotateY(tMat, tMat, this.yDeg[this.currentPoint]);
 
     this.time = new Date().getTime()/1000 - this.timeStart;
@@ -89,12 +87,7 @@ LinearAnimation.prototype.calculateUnitsDegrees = function(traj){ //Obter direc�
       uVec.push(vs[j]/mag);
     }
     uVectors.push(uVec); //Adicionar vetor unitário
-    var magy = Math.sqrt( //Hipotenusa no cálculo do ângulo segundo o eixo YY
-      Math.pow((vs[0]),2) +
-      Math.pow((vs[2]),2)
-    );
-    this.yDeg.push(Math.asin(vs[0]/magy));
-    this.xDeg.push(-1*Math.atan2(vs[1], vs[2]));
+    this.yDeg.push(Math.atan2(vs[0],vs[2]));
   }
   return uVectors; //Retornar lista vetores unitários
 }
