@@ -40,15 +40,13 @@
     this.tCoord = this.tStep * i;
     for(j = 0; j <= this.partsPerSections; j ++){
       this.sCoord = this.vStep*j;
-      this.vertices.push(
-        radius*Math.cos(this.trig*j),
-        radius*Math.sin(this.trig*j),
-        i*this.partHeight
-      );
+      var x = radius*Math.cos(this.trig*j);
+      var y = radius*Math.sin(this.trig*j);
+      this.vertices.push(x,y,i*this.partHeight);
       this.normals.push(
-        Math.cos(this.trig*j),
-        Math.sin(this.trig*j),
-        Math.sin(this.trigz*j)
+        x/radius,
+        y/radius,
+        0
       );
       this.texCoords.push(
         this.sCoord, this.tCoord

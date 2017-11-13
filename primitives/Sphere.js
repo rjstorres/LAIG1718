@@ -13,7 +13,7 @@ function Sphere(scene, args){
   this.vStep = 1/this.partsPerSections;
 
   this.degStepXY = (2*Math.PI)/this.partsPerSections;
-  this.degStepZ = (Math.PI)/this.sections;
+  this.degStepZ = (Math.PI)/(this.sections);
 
  	this.initBuffers();
  };
@@ -47,16 +47,14 @@ function Sphere(scene, args){
     let latRadius = Math.sqrt(Math.pow(this.radius,2)-Math.pow(z,2));
     for(i = 0; i <= this.partsPerSections; i++){ //Adicionar vertice repetido devido a texturas
       sc = this.vStep*i;
-      this.vertices.push(
-        latRadius*Math.cos(this.degStepXY * i),
-        latRadius*Math.sin(this.degStepXY * i),
-        z
-      );
+      var x = latRadius*Math.cos(this.degStepXY * i);
+      var y = latRadius*Math.sin(this.degStepXY * i);
+      this.vertices.push(x,y,z);
       //Adicionar informação de normais
-      this.normals.push(
-        Math.cos(this.degStepXY * i),
+      this.normals.push(x/this.radius, y/this.radius, z/this.radius
+        /*Math.cos(this.degStepXY * i),
         Math.sin(this.degStepXY * i),
-        Math.sin(this.degStepZ * i)
+        -1*Math.cos(this.degStepZ * floor)*/
       );
       //[!]Informação de texturas
     this.texCoords.push(
