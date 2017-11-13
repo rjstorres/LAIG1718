@@ -28,12 +28,13 @@ function MySceneGraph(filename, scene) {
     this.axisCoords['x'] = [1, 0, 0];
     this.axisCoords['y'] = [0, 1, 0];
     this.axisCoords['z'] = [0, 0, 1];
-
-    //test
-    this.ani = new LinearAnimation(this.scene, [[[0,0,0],[-3,2,4],[4,0,0]],1])
-    //this.ani = new BezierAnimation(this.scene, [[0,0,0],[4,0,7],[-5,3,9],[-5,6,0],2])
-    this.obj = new FullCylinder(this.scene,[1,1,0.1,10,10,1,1]);
-
+    //this.ani = new LinearAnimation(this.scene, [[[0,0,0],[-3,2,4],[4,0,0]],1])
+    this.ani = new BezierAnimation(this.scene, [[0,0,0],[4,0,7],[-5,3,9],[-5,6,0],2])
+    this.sha =  new CGFshader(this.scene.gl, "shaders/uScale.vert", "shaders/uScale.frag");
+    this.sha.setUniformsValues({normScale: 20.0});
+    this.obj = new FullCylinder(this.scene,[1,1,1,10,10,1,1]);
+    //this.obj = new Sphere(this.scene, [1,10,10])
+    this.obj.primitiveType = this.scene.gl.TRIANGLES
     // File reading
     this.reader = new CGFXMLreader();
 
@@ -1523,8 +1524,10 @@ MySceneGraph.generateRandomString = function(length) {
  */
 MySceneGraph.prototype.displayScene = function() {
     this.scene.pushMatrix()
-      this.scene.multMatrix(this.ani.animate());
-      this.obj.display()
+      //this.scene.multMatrix(this.ani.animate());
+      this.scene.setActiveShader(this.sha);
+      this.obj.display();
+      this.scene.setActiveShader(this.scene.defaultShader);
     this.scene.popMatrix()
     //this.processGraph(this.nodes['root'], this.materials[this.defaultMaterialID],[1,1]);
 }
