@@ -22,19 +22,22 @@ function MySceneGraph(filename, scene) {
 
     this.nodes = [];
 
-    this.idRoot = null;                    // The id of the root element.
+    this.selectables = [];//Ids dos nodes selecionáveis
+    this.applyShader = false;
+    this.currentShader = "default"
+
+    this.idRoot = null;// The id of the root element.
 
     this.axisCoords = [];
     this.axisCoords['x'] = [1, 0, 0];
     this.axisCoords['y'] = [0, 1, 0];
     this.axisCoords['z'] = [0, 0, 1];
-    //this.ani = new LinearAnimation(this.scene, [[[0,0,0],[-3,2,4],[4,0,0]],1])
+    /*//this.ani = new LinearAnimation(this.scene, [[[0,0,0],[-3,2,4],[4,0,0]],1])
     this.ani = new BezierAnimation(this.scene, [[0,0,0],[4,0,7],[-5,3,9],[-5,6,0],2])
-    this.sha =  new CGFshader(this.scene.gl, "shaders/uScale.vert", "shaders/uScale.frag");
-    this.sha.setUniformsValues({normScale: 20.0});
-    this.obj = new FullCylinder(this.scene,[1,1,1,10,10,1,1]);
-    //this.obj = new Sphere(this.scene, [1,10,10])
-    this.obj.primitiveType = this.scene.gl.TRIANGLES
+    */this.shader =  new CGFshader(this.scene.gl, "shaders/uScale.vert", "shaders/uScale.frag");
+    this.shader.setUniformsValues({normScale: 5.0});
+    /*this.obj = new FullCylinder(this.scene,[1,1,1,10,10,1,1]);
+    this.obj = new Sphere(this.scene, [1,10,10])*/
     // File reading
     this.reader = new CGFXMLreader();
 
@@ -1269,7 +1272,22 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
             // Creates node.
             this.nodes[nodeID] = new MyGraphNode(this,nodeID);
-
+            //is the node selectable
+            var selectable = null;
+            var selectableString = this.reader.getString(children[i], 'selectable');
+            if(selectableString != null){
+              if(selectableString == "true"){
+                selectable = true;
+              }else if(selectableString == "false"){
+                selectable = false;
+              }else{
+                return "invalid selectable value"
+              }
+            }
+            this.nodes[nodeID].selectable = selectable;
+            if(selectable){
+              this.selectables.push(nodeID);
+            }
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
             var specsNames = [];
@@ -1523,13 +1541,13 @@ MySceneGraph.generateRandomString = function(length) {
  * Displays the scene, processing each node, starting in the root node.
  */
 MySceneGraph.prototype.displayScene = function() {
-    this.scene.pushMatrix()
-      //this.scene.multMatrix(this.ani.animate());
+    /*this.scene.pushMatrix()
+      this.scene.multMatrix(this.ani.animate());
       this.scene.setActiveShader(this.sha);
       this.obj.display();
       this.scene.setActiveShader(this.scene.defaultShader);
-    this.scene.popMatrix()
-    //this.processGraph(this.nodes['root'], this.materials[this.defaultMaterialID],[1,1]);
+    this.scene.popMatrix()*/
+    this.processGraph(this.nodes['root'], this.materials[this.defaultMaterialID],[1,1]);
 }
 
 MySceneGraph.prototype.processGraph = function(node, parentMaterial, amplifFactor){
@@ -1553,7 +1571,7 @@ MySceneGraph.prototype.processGraph = function(node, parentMaterial, amplifFacto
       material.setTextureWrap('REPEAT','REPEAT');
     }
     //Processa Matrix
-    material.apply();
+    //material.apply();
     /**
     TODO
     if se tem animation node
@@ -1564,14 +1582,34 @@ MySceneGraph.prototype.processGraph = function(node, parentMaterial, amplifFacto
       Animation retorna uma nova nova matrix
       this.scene.multMatrix(node.animationID(node.mat, t))
     **/
+    //Shaders
+    var shade;
+    if(node.selectable){
+      this.applyShader = this.scene.selectableNodes[node.nodeID];
+    }else if(node.selectable === false){
+      this.applyShader = false;
+    }
+    shade = this.applyShader;
     this.scene.multMatrix(node.transformMatrix);
     for(var i = 0; i < node.children.length; i++){
       this.scene.pushMatrix();
-        //material.apply();
         this.processGraph(this.nodes[node.children[i]], material, amplif);
       this.scene.popMatrix();
+      this.applyShader = shade;
     }
-
+    /*if(shade){
+      this.scene.setActiveShader(this.shader);
+    }else{
+      this.scene.setActiveShader(this.scene.defaultShader);
+    }*/
+    if(shade == false && this.currentShader == "select"){
+      this.scene.setActiveShader(this.scene.defaultShader);
+      this.currentShader = "default";
+    }else if(shade == true && this.currentShader == "default"){
+      this.scene.setActiveShader(this.shader);
+      this.currentShader = "select";
+    }
+    material.apply();
     if(node.leaves.length > 0){
       for(var i = 0; i < node.leaves.length; i++){
         node.leaves[i].display(amplif[0], amplif[1]);
