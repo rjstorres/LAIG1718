@@ -9,6 +9,8 @@ function XMLscene(interface) {
 
     this.interface = interface;
     this.lightValues = {};
+    this.selectedShader = null; //Guardar o shader escolhido
+    this.selectableNodes = {};
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -91,6 +93,8 @@ XMLscene.prototype.onGraphLoaded = function()
 
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
+    // Add Selectables Group
+    this.interface.addSelectableGroup(this.graph.selectables);
     //this.timeStart = this.date.getTime() //Obter tempo de ínicio do programa
 }
 
