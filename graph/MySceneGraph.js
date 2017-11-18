@@ -14,7 +14,7 @@ var NODES_INDEX = 6;
  * @constructor
  */
 function MySceneGraph(filename, scene) {
-    this.loadedOk = null ;
+    this.loadedOk = null;
 
     // Establish bidirectional references between scene and graph.
     this.scene = scene;
@@ -34,8 +34,8 @@ function MySceneGraph(filename, scene) {
     this.axisCoords['z'] = [0, 0, 1];
     /*//this.ani = new LinearAnimation(this.scene, [[[0,0,0],[-3,2,4],[4,0,0]],1])
     this.ani = new BezierAnimation(this.scene, [[0,0,0],[4,0,7],[-5,3,9],[-5,6,0],2])
-    */this.shader =  new CGFshader(this.scene.gl, "shaders/uScale.vert", "shaders/uScale.frag");
-    this.shader.setUniformsValues({normScale: 5.0});
+    */this.shader = new CGFshader(this.scene.gl, "shaders/uScale.vert", "shaders/uScale.frag");
+    this.shader.setUniformsValues({ normScale: 5.0 });
     /*this.obj = new FullCylinder(this.scene,[1,1,1,10,10,1,1]);
     this.obj = new Sphere(this.scene, [1,10,10])*/
     // File reading
@@ -53,15 +53,14 @@ function MySceneGraph(filename, scene) {
 /*
  * Callback to be executed after successful reading
  */
-MySceneGraph.prototype.onXMLReady = function()
-{
+MySceneGraph.prototype.onXMLReady = function () {
     console.log("XML Loading finished.");
     var rootElement = this.reader.xmlDoc.documentElement;
 
     // Here should go the calls for different functions to parse the various blocks
     var error = this.parseLSXFile(rootElement);
 
-    if (error != null ) {
+    if (error != null) {
         this.onXMLError(error);
         return;
     }
@@ -75,7 +74,7 @@ MySceneGraph.prototype.onXMLReady = function()
 /**
  * Parses the LSX file, processing each block.
  */
-MySceneGraph.prototype.parseLSXFile = function(rootElement) {
+MySceneGraph.prototype.parseLSXFile = function (rootElement) {
     if (rootElement.nodeName != "SCENE")
         return "root tag <SCENE> missing";
 
@@ -100,7 +99,7 @@ MySceneGraph.prototype.parseLSXFile = function(rootElement) {
         if (index != INITIALS_INDEX)
             this.onXMLMinorError("tag <INITIALS> out of order");
 
-        if ((error = this.parseInitials(nodes[index])) != null )
+        if ((error = this.parseInitials(nodes[index])) != null)
             return error;
     }
 
@@ -111,7 +110,7 @@ MySceneGraph.prototype.parseLSXFile = function(rootElement) {
         if (index != ILLUMINATION_INDEX)
             this.onXMLMinorError("tag <ILLUMINATION> out of order");
 
-        if ((error = this.parseIllumination(nodes[index])) != null )
+        if ((error = this.parseIllumination(nodes[index])) != null)
             return error;
     }
 
@@ -122,7 +121,7 @@ MySceneGraph.prototype.parseLSXFile = function(rootElement) {
         if (index != LIGHTS_INDEX)
             this.onXMLMinorError("tag <LIGHTS> out of order");
 
-        if ((error = this.parseLights(nodes[index])) != null )
+        if ((error = this.parseLights(nodes[index])) != null)
             return error;
     }
 
@@ -133,7 +132,7 @@ MySceneGraph.prototype.parseLSXFile = function(rootElement) {
         if (index != TEXTURES_INDEX)
             this.onXMLMinorError("tag <TEXTURES> out of order");
 
-        if ((error = this.parseTextures(nodes[index])) != null )
+        if ((error = this.parseTextures(nodes[index])) != null)
             return error;
     }
 
@@ -144,7 +143,19 @@ MySceneGraph.prototype.parseLSXFile = function(rootElement) {
         if (index != MATERIALS_INDEX)
             this.onXMLMinorError("tag <MATERIALS> out of order");
 
-        if ((error = this.parseMaterials(nodes[index])) != null )
+        if ((error = this.parseMaterials(nodes[index])) != null)
+            return error;
+    }
+
+    //ADDED
+    // <ANIMATIONS>
+    if ((index = nodeNames.indexOf("ANIMATIONS")) == -1)
+        return "tag <ANIMATIONS> missing";
+    else {
+        if (index != ANIMATIONS_INDEX)
+            this.onXMLMinorError("tag <ANIMATIONS> out of order");
+
+        if ((error = this.parseAnimations(nodes[index])) != null)
             return error;
     }
 
@@ -155,7 +166,7 @@ MySceneGraph.prototype.parseLSXFile = function(rootElement) {
         if (index != NODES_INDEX)
             this.onXMLMinorError("tag <NODES> out of order");
 
-        if ((error = this.parseNodes(nodes[index])) != null )
+        if ((error = this.parseNodes(nodes[index])) != null)
             return error;
     }
 
@@ -164,7 +175,7 @@ MySceneGraph.prototype.parseLSXFile = function(rootElement) {
 /**
  * Parses the <INITIALS> block.
  */
-MySceneGraph.prototype.parseInitials = function(initialsNode) {
+MySceneGraph.prototype.parseInitials = function (initialsNode) {
 
     var children = initialsNode.children;
 
@@ -184,11 +195,11 @@ MySceneGraph.prototype.parseInitials = function(initialsNode) {
         this.near = this.reader.getFloat(children[indexFrustum], 'near');
         this.far = this.reader.getFloat(children[indexFrustum], 'far');
 
-        if (this.near == null ) {
+        if (this.near == null) {
             this.near = 0.1;
             this.onXMLMinorError("unable to parse value for near plane; assuming 'near = 0.1'");
         }
-        else if (this.far == null ) {
+        else if (this.far == null) {
             this.far = 500;
             this.onXMLMinorError("unable to parse value for far plane; assuming 'far = 500'");
         }
@@ -242,7 +253,7 @@ MySceneGraph.prototype.parseInitials = function(initialsNode) {
         var ty = this.reader.getFloat(children[translationIndex], 'y');
         var tz = this.reader.getFloat(children[translationIndex], 'z');
 
-        if (tx == null ) {
+        if (tx == null) {
             tx = 0;
             this.onXMLMinorError("failed to parse x-coordinate of initial translation; assuming tx = 0");
         }
@@ -251,7 +262,7 @@ MySceneGraph.prototype.parseInitials = function(initialsNode) {
             this.onXMLMinorError("found non-numeric value for x-coordinate of initial translation; assuming tx = 0");
         }
 
-        if (ty == null ) {
+        if (ty == null) {
             ty = 0;
             this.onXMLMinorError("failed to parse y-coordinate of initial translation; assuming ty = 0");
         }
@@ -260,7 +271,7 @@ MySceneGraph.prototype.parseInitials = function(initialsNode) {
             this.onXMLMinorError("found non-numeric value for y-coordinate of initial translation; assuming ty = 0");
         }
 
-        if (tz == null ) {
+        if (tz == null) {
             tz = 0;
             this.onXMLMinorError("failed to parse z-coordinate of initial translation; assuming tz = 0");
         }
@@ -292,7 +303,7 @@ MySceneGraph.prototype.parseInitials = function(initialsNode) {
     // Third rotation (first rotation defined).
     if (thirdRotationIndex != -1) {
         axis = this.reader.getItem(children[thirdRotationIndex], 'axis', ['x', 'y', 'z']);
-        if (axis != null ) {
+        if (axis != null) {
             var angle = this.reader.getFloat(children[thirdRotationIndex], 'angle');
             if (angle != null && !isNaN(angle)) {
                 initialRotations[axis] += angle;
@@ -307,7 +318,7 @@ MySceneGraph.prototype.parseInitials = function(initialsNode) {
     // Second rotation.
     if (secondRotationIndex != -1) {
         axis = this.reader.getItem(children[secondRotationIndex], 'axis', ['x', 'y', 'z']);
-        if (axis != null ) {
+        if (axis != null) {
             var angle = this.reader.getFloat(children[secondRotationIndex], 'angle');
             if (angle != null && !isNaN(angle)) {
                 initialRotations[axis] += angle;
@@ -322,7 +333,7 @@ MySceneGraph.prototype.parseInitials = function(initialsNode) {
     // First rotation.
     if (firstRotationIndex != -1) {
         axis = this.reader.getItem(children[firstRotationIndex], 'axis', ['x', 'y', 'z']);
-        if (axis != null ) {
+        if (axis != null) {
             var angle = this.reader.getFloat(children[firstRotationIndex], 'angle');
             if (angle != null && !isNaN(angle)) {
                 initialRotations[axis] += angle;
@@ -354,7 +365,7 @@ MySceneGraph.prototype.parseInitials = function(initialsNode) {
         var sy = this.reader.getFloat(children[scalingIndex], 'sy');
         var sz = this.reader.getFloat(children[scalingIndex], 'sz');
 
-        if (sx == null ) {
+        if (sx == null) {
             sx = 1;
             this.onXMLMinorError("failed to parse x parameter of initial scaling; assuming sx = 1");
         }
@@ -363,7 +374,7 @@ MySceneGraph.prototype.parseInitials = function(initialsNode) {
             this.onXMLMinorError("found non-numeric value for x parameter of initial scaling; assuming sx = 1");
         }
 
-        if (sy == null ) {
+        if (sy == null) {
             sy = 1;
             this.onXMLMinorError("failed to parse y parameter of initial scaling; assuming sy = 1");
         }
@@ -372,7 +383,7 @@ MySceneGraph.prototype.parseInitials = function(initialsNode) {
             this.onXMLMinorError("found non-numeric value for y parameter of initial scaling; assuming sy = 1");
         }
 
-        if (sz == null ) {
+        if (sz == null) {
             sz = 1;
             this.onXMLMinorError("failed to parse z parameter of initial scaling; assuming sz = 1");
         }
@@ -398,7 +409,7 @@ MySceneGraph.prototype.parseInitials = function(initialsNode) {
         // Reads the reference length.
         var length = this.reader.getFloat(children[indexReference], 'length');
 
-        if (length != null ) {
+        if (length != null) {
             if (isNaN(length))
                 this.onXMLMinorError("found non-numeric value for reference length; assuming 'length = 1'");
             else if (length <= 0)
@@ -413,13 +424,13 @@ MySceneGraph.prototype.parseInitials = function(initialsNode) {
 
     console.log("Parsed initials");
 
-    return null ;
+    return null;
 }
 
 /**
  * Parses the <ILLUMINATION> block.
  */
-MySceneGraph.prototype.parseIllumination = function(illuminationNode) {
+MySceneGraph.prototype.parseIllumination = function (illuminationNode) {
 
     // Reads the ambient and background values.
     var children = illuminationNode.children;
@@ -433,7 +444,7 @@ MySceneGraph.prototype.parseIllumination = function(illuminationNode) {
     if (ambientIndex != -1) {
         // R.
         var r = this.reader.getFloat(children[ambientIndex], 'r');
-        if (r != null ) {
+        if (r != null) {
             if (isNaN(r))
                 return "ambient 'r' is a non numeric value on the ILLUMINATION block";
             else if (r < 0 || r > 1)
@@ -446,7 +457,7 @@ MySceneGraph.prototype.parseIllumination = function(illuminationNode) {
 
         // G.
         var g = this.reader.getFloat(children[ambientIndex], 'g');
-        if (g != null ) {
+        if (g != null) {
             if (isNaN(g))
                 return "ambient 'g' is a non numeric value on the ILLUMINATION block";
             else if (g < 0 || g > 1)
@@ -459,7 +470,7 @@ MySceneGraph.prototype.parseIllumination = function(illuminationNode) {
 
         // B.
         var b = this.reader.getFloat(children[ambientIndex], 'b');
-        if (b != null ) {
+        if (b != null) {
             if (isNaN(b))
                 return "ambient 'b' is a non numeric value on the ILLUMINATION block";
             else if (b < 0 || b > 1)
@@ -472,7 +483,7 @@ MySceneGraph.prototype.parseIllumination = function(illuminationNode) {
 
         // A.
         var a = this.reader.getFloat(children[ambientIndex], 'a');
-        if (a != null ) {
+        if (a != null) {
             if (isNaN(a))
                 return "ambient 'a' is a non numeric value on the ILLUMINATION block";
             else if (a < 0 || a > 1)
@@ -492,7 +503,7 @@ MySceneGraph.prototype.parseIllumination = function(illuminationNode) {
     if (backgroundIndex != -1) {
         // R.
         var r = this.reader.getFloat(children[backgroundIndex], 'r');
-        if (r != null ) {
+        if (r != null) {
             if (isNaN(r))
                 return "background 'r' is a non numeric value on the ILLUMINATION block";
             else if (r < 0 || r > 1)
@@ -505,7 +516,7 @@ MySceneGraph.prototype.parseIllumination = function(illuminationNode) {
 
         // G.
         var g = this.reader.getFloat(children[backgroundIndex], 'g');
-        if (g != null ) {
+        if (g != null) {
             if (isNaN(g))
                 return "background 'g' is a non numeric value on the ILLUMINATION block";
             else if (g < 0 || g > 1)
@@ -518,7 +529,7 @@ MySceneGraph.prototype.parseIllumination = function(illuminationNode) {
 
         // B.
         var b = this.reader.getFloat(children[backgroundIndex], 'b');
-        if (b != null ) {
+        if (b != null) {
             if (isNaN(b))
                 return "background 'b' is a non numeric value on the ILLUMINATION block";
             else if (b < 0 || b > 1)
@@ -531,7 +542,7 @@ MySceneGraph.prototype.parseIllumination = function(illuminationNode) {
 
         // A.
         var a = this.reader.getFloat(children[backgroundIndex], 'a');
-        if (a != null ) {
+        if (a != null) {
             if (isNaN(a))
                 return "background 'a' is a non numeric value on the ILLUMINATION block";
             else if (a < 0 || a > 1)
@@ -545,15 +556,15 @@ MySceneGraph.prototype.parseIllumination = function(illuminationNode) {
     else
         this.onXMLMinorError("background clear colour undefined; assuming (R, G, B, A) = (0, 0, 0, 1)");
 
-   console.log("Parsed illumination");
+    console.log("Parsed illumination");
 
-    return null ;
+    return null;
 }
 
 /**
  * Parses the <LIGHTS> node.
  */
-MySceneGraph.prototype.parseLights = function(lightsNode) {
+MySceneGraph.prototype.parseLights = function (lightsNode) {
 
     var children = lightsNode.children;
 
@@ -573,11 +584,11 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
 
         // Get id of the current light.
         var lightId = this.reader.getString(children[i], 'id');
-        if (lightId == null )
+        if (lightId == null)
             return "no ID defined for light";
 
         // Checks for repeated IDs.
-        if (this.lights[lightId] != null )
+        if (this.lights[lightId] != null)
             return "ID must be unique for each light (conflict: ID = " + lightId + ")";
 
         grandChildren = children[i].children;
@@ -603,12 +614,12 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
         }
         else {
             var aux = this.reader.getFloat(grandChildren[enableIndex], 'value');
-            if (aux == null ) {
+            if (aux == null) {
                 this.onXMLMinorError("unable to parse value component of the 'enable light' field for ID = " + lightId + "; assuming 'value = 1'");
             }
             else if (isNaN(aux))
                 return "'enable value' is a non numeric value on the LIGHTS block";
-            else if (aux != 0 &&     aux != 1)
+            else if (aux != 0 && aux != 1)
                 return "'enable value' must be 0 or 1 on the LIGHTS block"
             else
                 enableLight = aux == 0 ? false : true;
@@ -619,7 +630,7 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
         if (positionIndex != -1) {
             // x
             var x = this.reader.getFloat(grandChildren[positionIndex], 'x');
-            if (x != null ) {
+            if (x != null) {
                 if (isNaN(x))
                     return "'x' is a non numeric value on the LIGHTS block";
                 else
@@ -630,7 +641,7 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
 
             // y
             var y = this.reader.getFloat(grandChildren[positionIndex], 'y');
-            if (y != null ) {
+            if (y != null) {
                 if (isNaN(y))
                     return "'y' is a non numeric value on the LIGHTS block";
                 else
@@ -641,7 +652,7 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
 
             // z
             var z = this.reader.getFloat(grandChildren[positionIndex], 'z');
-            if (z != null ) {
+            if (z != null) {
                 if (isNaN(z))
                     return "'z' is a non numeric value on the LIGHTS block";
                 else
@@ -652,7 +663,7 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
 
             // w
             var w = this.reader.getFloat(grandChildren[positionIndex], 'w');
-            if (w != null ) {
+            if (w != null) {
                 if (isNaN(w))
                     return "'w' is a non numeric value on the LIGHTS block";
                 else if (w < 0 || w > 1)
@@ -671,7 +682,7 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
         if (ambientIndex != -1) {
             // R
             var r = this.reader.getFloat(grandChildren[ambientIndex], 'r');
-            if (r != null ) {
+            if (r != null) {
                 if (isNaN(r))
                     return "ambient 'r' is a non numeric value on the LIGHTS block";
                 else if (r < 0 || r > 1)
@@ -684,7 +695,7 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
 
             // G
             var g = this.reader.getFloat(grandChildren[ambientIndex], 'g');
-            if (g != null ) {
+            if (g != null) {
                 if (isNaN(g))
                     return "ambient 'g' is a non numeric value on the LIGHTS block";
                 else if (g < 0 || g > 1)
@@ -697,7 +708,7 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
 
             // B
             var b = this.reader.getFloat(grandChildren[ambientIndex], 'b');
-            if (b != null ) {
+            if (b != null) {
                 if (isNaN(b))
                     return "ambient 'b' is a non numeric value on the LIGHTS block";
                 else if (b < 0 || b > 1)
@@ -710,7 +721,7 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
 
             // A
             var a = this.reader.getFloat(grandChildren[ambientIndex], 'a');
-            if (a != null ) {
+            if (a != null) {
                 if (isNaN(a))
                     return "ambient 'a' is a non numeric value on the LIGHTS block";
                 else if (a < 0 || a > 1)
@@ -728,7 +739,7 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
         if (diffuseIndex != -1) {
             // R
             var r = this.reader.getFloat(grandChildren[diffuseIndex], 'r');
-            if (r != null ) {
+            if (r != null) {
                 if (isNaN(r))
                     return "diffuse 'r' is a non numeric value on the LIGHTS block";
                 else if (r < 0 || r > 1)
@@ -741,7 +752,7 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
 
             // G
             var g = this.reader.getFloat(grandChildren[diffuseIndex], 'g');
-            if (g != null ) {
+            if (g != null) {
                 if (isNaN(g))
                     return "diffuse 'g' is a non numeric value on the LIGHTS block";
                 else if (g < 0 || g > 1)
@@ -754,7 +765,7 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
 
             // B
             var b = this.reader.getFloat(grandChildren[diffuseIndex], 'b');
-            if (b != null ) {
+            if (b != null) {
                 if (isNaN(b))
                     return "diffuse 'b' is a non numeric value on the LIGHTS block";
                 else if (b < 0 || b > 1)
@@ -767,7 +778,7 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
 
             // A
             var a = this.reader.getFloat(grandChildren[diffuseIndex], 'a');
-            if (a != null ) {
+            if (a != null) {
                 if (isNaN(a))
                     return "diffuse 'a' is a non numeric value on the LIGHTS block";
                 else if (a < 0 || a > 1)
@@ -786,7 +797,7 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
         if (specularIndex != -1) {
             // R
             var r = this.reader.getFloat(grandChildren[specularIndex], 'r');
-            if (r != null ) {
+            if (r != null) {
                 if (isNaN(r))
                     return "specular 'r' is a non numeric value on the LIGHTS block";
                 else if (r < 0 || r > 1)
@@ -799,7 +810,7 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
 
             // G
             var g = this.reader.getFloat(grandChildren[specularIndex], 'g');
-            if (g != null ) {
+            if (g != null) {
                 if (isNaN(g))
                     return "specular 'g' is a non numeric value on the LIGHTS block";
                 else if (g < 0 || g > 1)
@@ -812,7 +823,7 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
 
             // B
             var b = this.reader.getFloat(grandChildren[specularIndex], 'b');
-            if (b != null ) {
+            if (b != null) {
                 if (isNaN(b))
                     return "specular 'b' is a non numeric value on the LIGHTS block";
                 else if (b < 0 || b > 1)
@@ -825,7 +836,7 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
 
             // A
             var a = this.reader.getFloat(grandChildren[specularIndex], 'a');
-            if (a != null ) {
+            if (a != null) {
                 if (isNaN(a))
                     return "specular 'a' is a non numeric value on the LIGHTS block";
                 else if (a < 0 || a > 1)
@@ -851,13 +862,133 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
 
     console.log("Parsed lights");
 
-    return null ;
+    return null;
+}
+
+MySceneGraph.prototype.parseAnimations = function (animationsNode) {
+    this.animations = [];
+
+    var children = animationsNode.children;
+
+    for (var i = 0; i < children.length; i++) {
+        if (children[i].nodeName != "ANIMATION") {
+            this.onXMLMinorError("unknown tag name <" + children[i].nodeName + ">");
+            continue;
+        }
+
+        //ID
+        var animationID = this.reader.getString(children[i], 'id');
+        if (animationID == null)
+            return "no ID defined for animation";
+
+        if (this.animations[animationID] != null)
+            return "ID must be unique for each animation (conflict: ID = " + animationID + ")";
+
+        //speed
+        var speed = this.reader.getString(children[i], 'speed');
+        if (speed != null)
+            speed = Number(speed);
+
+        //type
+        var type = this.reader.getString(children[i], 'type');
+        if (type == null)
+            return "no type defined for animation";
+        if (type != "linear" && type != "circular" && type != "bezier" && type != "combo")
+            return "unknown animation type";
+
+        //linear animations
+        if (type == "linear") {
+            var linearSpecs = children[i].children;
+            var controlPoints = [];
+
+            //getting animation control points
+            for (var j = 0; j < linearSpecs.length; j++) {
+                var controlPoint = [];
+
+                var controlX = Number(this.reader.getString(linearSpecs[j], 'xx'));
+                var controlY = Number(this.reader.getString(linearSpecs[j], 'yy'));
+                var controlZ = Number(this.reader.getString(linearSpecs[j], 'zz'));
+
+                controlPoint.push(controlX, controlY, controlZ);
+                controlPoints.push(controlPoint);
+            }
+            if (speed == null)
+                return "no speed defined for animation";
+            this.animations[animationID] = new LinearAnimation(this.scene, [controlPoints, speed]);
+        }
+
+        //circular animations
+        if (type == "circular") {
+            var centerX = Number(this.reader.getString(children[i], 'centerx'));
+            var centerY = Number(this.reader.getString(children[i], 'centery'));
+            var centerZ = Number(this.reader.getString(children[i], 'centerz'));
+            var radius = Number(this.reader.getString(children[i], 'radius'));
+            var initialAngle = Number(this.reader.getString(children[i], 'startang'));
+            var rotationAngle = Number(this.reader.getString(children[i], 'rotang'));
+
+            if (speed == null)
+                return "no speed defined for animation";
+            this.animations[animationID] = new CircularAnimation(this.scene, [[centerX, centerY, centerZ], radius, initialAngle, rotationAngle, speed]);
+        }
+
+        if (type == "bezier") {
+            var bezierSpecs = children[i].children;
+            var bezierControlPoints = [];
+            var counter = 0;
+
+
+            for (var j = 0; j < bezierSpecs.length; j++) {
+                var controlPointBezier = [];
+
+                var controlX = Number(this.reader.getString(bezierSpecs[j], 'xx'));
+                var controlY = Number(this.reader.getString(bezierSpecs[j], 'yy'));
+                var controlZ = Number(this.reader.getString(bezierSpecs[j], 'zz'));
+
+                controlPointBezier.push(controlX, controlY, controlZ);
+                bezierControlPoints.push(controlPoint);
+                counter++;
+            }
+
+            if (counter == 4) {
+                if (speed == null)
+                    return "no speed defined for animation";
+                this.animations[animationID] = new BezierAnimation(this.scene, [bezierControlPoints, speed]);
+            }
+            else {
+                return "A bezier animation has 4 points!";
+            }
+        }
+
+        if (type == "combo") {
+            var comboSpecs = children[i].children;
+            var animationsCombo = [];
+            if (comboSpecs.length < 1)
+                return "A combo animation has atleast 1 animation!";
+
+            for (var j = 0; j < comboSpecs.length; j++) {
+                var controlPointBezier = [];
+
+                var idAnimationinCombo = this.reader.getString(comboSpecs[j], 'id');
+
+                if (this.animations[idAnimationinCombo] == null)
+                    return "This animation is not defined";
+                animationsCombo.push(this.animations[idAnimationinCombo]);
+            }
+
+            if (speed == null)
+                this.animations[animationID] = new ComboAnimation(this.scene, animationsCombo);
+            else
+                return "A combo animation has no speed";
+        }
+
+    }
+    console.log("Parsed animations");
 }
 
 /**
  * Parses the <TEXTURES> block.
  */
-MySceneGraph.prototype.parseTextures = function(texturesNode) {
+MySceneGraph.prototype.parseTextures = function (texturesNode) {
 
     this.textures = [];
 
@@ -871,35 +1002,35 @@ MySceneGraph.prototype.parseTextures = function(texturesNode) {
         if (nodeName == "TEXTURE") {
             // Retrieves texture ID.
             var textureID = this.reader.getString(eachTexture[i], 'id');
-            if (textureID == null )
+            if (textureID == null)
                 return "failed to parse texture ID";
             // Checks if ID is valid.
-            if (this.textures[textureID] != null )
+            if (this.textures[textureID] != null)
                 return "texture ID must unique (conflict with ID = " + textureID + ")";
 
             var texSpecs = eachTexture[i].children;
-            var filepath = null ;
-            var amplifFactorS = null ;
-            var amplifFactorT = null ;
+            var filepath = null;
+            var amplifFactorS = null;
+            var amplifFactorT = null;
             // Retrieves texture specifications.
             for (var j = 0; j < texSpecs.length; j++) {
                 var name = texSpecs[j].nodeName;
                 if (name == "file") {
-                    if (filepath != null )
+                    if (filepath != null)
                         return "duplicate file paths in texture with ID = " + textureID;
 
                     filepath = this.reader.getString(texSpecs[j], 'path');
-                    if (filepath == null )
+                    if (filepath == null)
                         return "unable to parse texture file path for ID = " + textureID;
                 }
                 else if (name == "amplif_factor") {
-                    if (amplifFactorS != null  || amplifFactorT != null )
+                    if (amplifFactorS != null || amplifFactorT != null)
                         return "duplicate amplification factors in texture with ID = " + textureID;
 
                     amplifFactorS = this.reader.getFloat(texSpecs[j], 's');
                     amplifFactorT = this.reader.getFloat(texSpecs[j], 't');
 
-                    if (amplifFactorS == null  || amplifFactorT == null )
+                    if (amplifFactorS == null || amplifFactorT == null)
                         return "unable to parse texture amplification factors for ID = " + textureID;
                     else if (isNaN(amplifFactorS))
                         return "'amplifFactorS' is a non numeric value";
@@ -912,14 +1043,14 @@ MySceneGraph.prototype.parseTextures = function(texturesNode) {
                     this.onXMLMinorError("unknown tag name <" + name + ">");
             }
 
-            if (filepath == null )
+            if (filepath == null)
                 return "file path undefined for texture with ID = " + textureID;
-            else if (amplifFactorS == null )
+            else if (amplifFactorS == null)
                 return "s amplification factor undefined for texture with ID = " + textureID;
-            else if (amplifFactorT == null )
+            else if (amplifFactorT == null)
                 return "t amplification factor undefined for texture with ID = " + textureID;
 
-            var texture = new CGFtexture(this.scene,"./scenes/" + filepath);
+            var texture = new CGFtexture(this.scene, "./scenes/" + filepath);
 
             this.textures[textureID] = [texture, amplifFactorS, amplifFactorT];
             oneTextureDefined = true;
@@ -937,7 +1068,7 @@ MySceneGraph.prototype.parseTextures = function(texturesNode) {
 /**
  * Parses the <MATERIALS> node.
  */
-MySceneGraph.prototype.parseMaterials = function(materialsNode) {
+MySceneGraph.prototype.parseMaterials = function (materialsNode) {
 
     var children = materialsNode.children;
     // Each material.
@@ -953,10 +1084,10 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
         }
 
         var materialID = this.reader.getString(children[i], 'id');
-        if (materialID == null )
+        if (materialID == null)
             return "no ID defined for material";
 
-        if (this.materials[materialID] != null )
+        if (this.materials[materialID] != null)
             return "ID must be unique for each material (conflict: ID = " + materialID + ")";
 
         var materialSpecs = children[i].children;
@@ -972,7 +1103,7 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
         if (shininessIndex == -1)
             return "no shininess value defined for material with ID = " + materialID;
         var shininess = this.reader.getFloat(materialSpecs[shininessIndex], 'value');
-        if (shininess == null )
+        if (shininess == null)
             return "unable to parse shininess value for material with ID = " + materialID;
         else if (isNaN(shininess))
             return "'shininess' is a non numeric value";
@@ -986,7 +1117,7 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
         var specularComponent = [];
         // R.
         var r = this.reader.getFloat(materialSpecs[specularIndex], 'r');
-        if (r == null )
+        if (r == null)
             return "unable to parse R component of specular reflection for material with ID = " + materialID;
         else if (isNaN(r))
             return "specular 'r' is a non numeric value on the MATERIALS block";
@@ -995,16 +1126,16 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
         specularComponent.push(r);
         // G.
         var g = this.reader.getFloat(materialSpecs[specularIndex], 'g');
-        if (g == null )
-           return "unable to parse G component of specular reflection for material with ID = " + materialID;
+        if (g == null)
+            return "unable to parse G component of specular reflection for material with ID = " + materialID;
         else if (isNaN(g))
-           return "specular 'g' is a non numeric value on the MATERIALS block";
+            return "specular 'g' is a non numeric value on the MATERIALS block";
         else if (g < 0 || g > 1)
-           return "specular 'g' must be a value between 0 and 1 on the MATERIALS block";
+            return "specular 'g' must be a value between 0 and 1 on the MATERIALS block";
         specularComponent.push(g);
         // B.
         var b = this.reader.getFloat(materialSpecs[specularIndex], 'b');
-        if (b == null )
+        if (b == null)
             return "unable to parse B component of specular reflection for material with ID = " + materialID;
         else if (isNaN(b))
             return "specular 'b' is a non numeric value on the MATERIALS block";
@@ -1013,7 +1144,7 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
         specularComponent.push(b);
         // A.
         var a = this.reader.getFloat(materialSpecs[specularIndex], 'a');
-        if (a == null )
+        if (a == null)
             return "unable to parse A component of specular reflection for material with ID = " + materialID;
         else if (isNaN(a))
             return "specular 'a' is a non numeric value on the MATERIALS block";
@@ -1028,7 +1159,7 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
         var diffuseComponent = [];
         // R.
         r = this.reader.getFloat(materialSpecs[diffuseIndex], 'r');
-        if (r == null )
+        if (r == null)
             return "unable to parse R component of diffuse reflection for material with ID = " + materialID;
         else if (isNaN(r))
             return "diffuse 'r' is a non numeric value on the MATERIALS block";
@@ -1037,7 +1168,7 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
         diffuseComponent.push(r);
         // G.
         g = this.reader.getFloat(materialSpecs[diffuseIndex], 'g');
-        if (g == null )
+        if (g == null)
             return "unable to parse G component of diffuse reflection for material with ID = " + materialID;
         else if (isNaN(g))
             return "diffuse 'g' is a non numeric value on the MATERIALS block";
@@ -1046,7 +1177,7 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
         diffuseComponent.push(g);
         // B.
         b = this.reader.getFloat(materialSpecs[diffuseIndex], 'b');
-        if (b == null )
+        if (b == null)
             return "unable to parse B component of diffuse reflection for material with ID = " + materialID;
         else if (isNaN(b))
             return "diffuse 'b' is a non numeric value on the MATERIALS block";
@@ -1055,7 +1186,7 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
         diffuseComponent.push(b);
         // A.
         a = this.reader.getFloat(materialSpecs[diffuseIndex], 'a');
-        if (a == null )
+        if (a == null)
             return "unable to parse A component of diffuse reflection for material with ID = " + materialID;
         else if (isNaN(a))
             return "diffuse 'a' is a non numeric value on the MATERIALS block";
@@ -1070,7 +1201,7 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
         var ambientComponent = [];
         // R.
         r = this.reader.getFloat(materialSpecs[ambientIndex], 'r');
-        if (r == null )
+        if (r == null)
             return "unable to parse R component of ambient reflection for material with ID = " + materialID;
         else if (isNaN(r))
             return "ambient 'r' is a non numeric value on the MATERIALS block";
@@ -1079,7 +1210,7 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
         ambientComponent.push(r);
         // G.
         g = this.reader.getFloat(materialSpecs[ambientIndex], 'g');
-        if (g == null )
+        if (g == null)
             return "unable to parse G component of ambient reflection for material with ID = " + materialID;
         else if (isNaN(g))
             return "ambient 'g' is a non numeric value on the MATERIALS block";
@@ -1088,16 +1219,16 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
         ambientComponent.push(g);
         // B.
         b = this.reader.getFloat(materialSpecs[ambientIndex], 'b');
-        if (b == null )
-             return "unable to parse B component of ambient reflection for material with ID = " + materialID;
+        if (b == null)
+            return "unable to parse B component of ambient reflection for material with ID = " + materialID;
         else if (isNaN(b))
-             return "ambient 'b' is a non numeric value on the MATERIALS block";
+            return "ambient 'b' is a non numeric value on the MATERIALS block";
         else if (b < 0 || b > 1)
-             return "ambient 'b' must be a value between 0 and 1 on the MATERIALS block";
+            return "ambient 'b' must be a value between 0 and 1 on the MATERIALS block";
         ambientComponent.push(b);
         // A.
         a = this.reader.getFloat(materialSpecs[ambientIndex], 'a');
-        if (a == null )
+        if (a == null)
             return "unable to parse A component of ambient reflection for material with ID = " + materialID;
         else if (isNaN(a))
             return "ambient 'a' is a non numeric value on the MATERIALS block";
@@ -1112,7 +1243,7 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
         var emissionComponent = [];
         // R.
         r = this.reader.getFloat(materialSpecs[emissionIndex], 'r');
-        if (r == null )
+        if (r == null)
             return "unable to parse R component of emission for material with ID = " + materialID;
         else if (isNaN(r))
             return "emisson 'r' is a non numeric value on the MATERIALS block";
@@ -1121,7 +1252,7 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
         emissionComponent.push(r);
         // G.
         g = this.reader.getFloat(materialSpecs[emissionIndex], 'g');
-        if (g == null )
+        if (g == null)
             return "unable to parse G component of emission for material with ID = " + materialID;
         if (isNaN(g))
             return "emisson 'g' is a non numeric value on the MATERIALS block";
@@ -1130,7 +1261,7 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
         emissionComponent.push(g);
         // B.
         b = this.reader.getFloat(materialSpecs[emissionIndex], 'b');
-        if (b == null )
+        if (b == null)
             return "unable to parse B component of emission for material with ID = " + materialID;
         else if (isNaN(b))
             return "emisson 'b' is a non numeric value on the MATERIALS block";
@@ -1139,7 +1270,7 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
         emissionComponent.push(b);
         // A.
         a = this.reader.getFloat(materialSpecs[emissionIndex], 'a');
-        if (a == null )
+        if (a == null)
             return "unable to parse A component of emission for material with ID = " + materialID;
         else if (isNaN(a))
             return "emisson 'a' is a non numeric value on the MATERIALS block";
@@ -1241,7 +1372,7 @@ MySceneGraph.prototype.parseLeaves = function(leavesNode) {
 /**
  * Parses the <NODES> block.
  */
-MySceneGraph.prototype.parseNodes = function(nodesNode) {
+MySceneGraph.prototype.parseNodes = function (nodesNode) {
 
     // Traverses nodes.
     var children = nodesNode.children;
@@ -1250,11 +1381,11 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
         var nodeName;
         if ((nodeName = children[i].nodeName) == "ROOT") {
             // Retrieves root node.
-            if (this.idRoot != null )
+            if (this.idRoot != null)
                 return "there can only be one root node";
             else {
                 var root = this.reader.getString(children[i], 'id');
-                if (root == null )
+                if (root == null)
                     return "failed to retrieve root node ID";
                 this.idRoot = root;
             }
@@ -1262,36 +1393,36 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
         else if (nodeName == "NODE") {
             // Retrieves node ID.
             var nodeID = this.reader.getString(children[i], 'id');
-            if (nodeID == null )
+            if (nodeID == null)
                 return "failed to retrieve node ID";
             // Checks if ID is valid.
-            if (this.nodes[nodeID] != null )
+            if (this.nodes[nodeID] != null)
                 return "node ID must be unique (conflict: ID = " + nodeID + ")";
 
-            this.log("Processing node "+nodeID);
+            this.log("Processing node " + nodeID);
 
             // Creates node.
-            this.nodes[nodeID] = new MyGraphNode(this,nodeID);
+            this.nodes[nodeID] = new MyGraphNode(this, nodeID);
             //is the node selectable
             var selectable = null;
             var selectableString = this.reader.getString(children[i], 'selectable');
-            if(selectableString != null){
-              if(selectableString == "true"){
-                selectable = true;
-              }else if(selectableString == "false"){
-                selectable = false;
-              }else{
-                return "invalid selectable value"
-              }
+            if (selectableString != null) {
+                if (selectableString == "true") {
+                    selectable = true;
+                } else if (selectableString == "false") {
+                    selectable = false;
+                } else {
+                    return "invalid selectable value"
+                }
             }
             this.nodes[nodeID].selectable = selectable;
-            if(selectable){
-              this.selectables.push(nodeID);
+            if (selectable) {
+                this.selectables.push(nodeID);
             }
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
             var specsNames = [];
-            var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS"];
+            var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS", "ANIMATIONREFS"];
             for (var j = 0; j < nodeSpecs.length; j++) {
                 var name = nodeSpecs[j].nodeName;
                 specsNames.push(nodeSpecs[j].nodeName);
@@ -1306,9 +1437,9 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
             if (materialIndex == -1)
                 return "material must be defined (node ID = " + nodeID + ")";
             var materialID = this.reader.getString(nodeSpecs[materialIndex], 'id');
-            if (materialID == null )
+            if (materialID == null)
                 return "unable to parse material ID (node ID = " + nodeID + ")";
-            if (materialID != "null" && this.materials[materialID] == null )
+            if (materialID != "null" && this.materials[materialID] == null)
                 return "ID does not correspond to a valid material (node ID = " + nodeID + ")";
 
             this.nodes[nodeID].materialID = materialID;
@@ -1318,9 +1449,9 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
             if (textureIndex == -1)
                 return "texture must be defined (node ID = " + nodeID + ")";
             var textureID = this.reader.getString(nodeSpecs[textureIndex], 'id');
-            if (textureID == null )
+            if (textureID == null)
                 return "unable to parse texture ID (node ID = " + nodeID + ")";
-            if (textureID != "null" && textureID != "clear" && this.textures[textureID] == null )
+            if (textureID != "null" && textureID != "clear" && this.textures[textureID] == null)
                 return "ID does not correspond to a valid texture (node ID = " + nodeID + ")";
 
             this.nodes[nodeID].textureID = textureID;
@@ -1328,81 +1459,81 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
             // Retrieves possible transformations.
             for (var j = 0; j < nodeSpecs.length; j++) {
                 switch (nodeSpecs[j].nodeName) {
-                case "TRANSLATION":
-                    // Retrieves translation parameters.
-                    var x = this.reader.getFloat(nodeSpecs[j], 'x');
-                    if (x == null ) {
-                        this.onXMLMinorError("unable to parse x-coordinate of translation; discarding transform");
-                        break;
-                    }
-                    else if (isNaN(x))
-                        return "non-numeric value for x-coordinate of translation (node ID = " + nodeID + ")";
+                    case "TRANSLATION":
+                        // Retrieves translation parameters.
+                        var x = this.reader.getFloat(nodeSpecs[j], 'x');
+                        if (x == null) {
+                            this.onXMLMinorError("unable to parse x-coordinate of translation; discarding transform");
+                            break;
+                        }
+                        else if (isNaN(x))
+                            return "non-numeric value for x-coordinate of translation (node ID = " + nodeID + ")";
 
-                    var y = this.reader.getFloat(nodeSpecs[j], 'y');
-                    if (y == null ) {
-                        this.onXMLMinorError("unable to parse y-coordinate of translation; discarding transform");
-                        break;
-                    }
-                    else if (isNaN(y))
-                        return "non-numeric value for y-coordinate of translation (node ID = " + nodeID + ")";
+                        var y = this.reader.getFloat(nodeSpecs[j], 'y');
+                        if (y == null) {
+                            this.onXMLMinorError("unable to parse y-coordinate of translation; discarding transform");
+                            break;
+                        }
+                        else if (isNaN(y))
+                            return "non-numeric value for y-coordinate of translation (node ID = " + nodeID + ")";
 
-                    var z = this.reader.getFloat(nodeSpecs[j], 'z');
-                    if (z == null ) {
-                        this.onXMLMinorError("unable to parse z-coordinate of translation; discarding transform");
-                        break;
-                    }
-                    else if (isNaN(z))
-                        return "non-numeric value for z-coordinate of translation (node ID = " + nodeID + ")";
+                        var z = this.reader.getFloat(nodeSpecs[j], 'z');
+                        if (z == null) {
+                            this.onXMLMinorError("unable to parse z-coordinate of translation; discarding transform");
+                            break;
+                        }
+                        else if (isNaN(z))
+                            return "non-numeric value for z-coordinate of translation (node ID = " + nodeID + ")";
 
-                    mat4.translate(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, [x, y, z]);
-                    break;
-                case "ROTATION":
-                    // Retrieves rotation parameters.
-                    var axis = this.reader.getItem(nodeSpecs[j], 'axis', ['x', 'y', 'z']);
-                    if (axis == null ) {
-                        this.onXMLMinorError("unable to parse rotation axis; discarding transform");
+                        mat4.translate(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, [x, y, z]);
                         break;
-                    }
-                    var angle = this.reader.getFloat(nodeSpecs[j], 'angle');
-                    if (angle == null ) {
-                        this.onXMLMinorError("unable to parse rotation angle; discarding transform");
-                        break;
-                    }
-                    else if (isNaN(angle))
-                        return "non-numeric value for rotation angle (node ID = " + nodeID + ")";
+                    case "ROTATION":
+                        // Retrieves rotation parameters.
+                        var axis = this.reader.getItem(nodeSpecs[j], 'axis', ['x', 'y', 'z']);
+                        if (axis == null) {
+                            this.onXMLMinorError("unable to parse rotation axis; discarding transform");
+                            break;
+                        }
+                        var angle = this.reader.getFloat(nodeSpecs[j], 'angle');
+                        if (angle == null) {
+                            this.onXMLMinorError("unable to parse rotation angle; discarding transform");
+                            break;
+                        }
+                        else if (isNaN(angle))
+                            return "non-numeric value for rotation angle (node ID = " + nodeID + ")";
 
-                    mat4.rotate(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, angle * DEGREE_TO_RAD, this.axisCoords[axis]);
-                    break;
-                case "SCALE":
-                    // Retrieves scale parameters.
-                    var sx = this.reader.getFloat(nodeSpecs[j], 'sx');
-                    if (sx == null ) {
-                        this.onXMLMinorError("unable to parse x component of scaling; discarding transform");
+                        mat4.rotate(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, angle * DEGREE_TO_RAD, this.axisCoords[axis]);
                         break;
-                    }
-                    else if (isNaN(sx))
-                        return "non-numeric value for x component of scaling (node ID = " + nodeID + ")";
+                    case "SCALE":
+                        // Retrieves scale parameters.
+                        var sx = this.reader.getFloat(nodeSpecs[j], 'sx');
+                        if (sx == null) {
+                            this.onXMLMinorError("unable to parse x component of scaling; discarding transform");
+                            break;
+                        }
+                        else if (isNaN(sx))
+                            return "non-numeric value for x component of scaling (node ID = " + nodeID + ")";
 
-                    var sy = this.reader.getFloat(nodeSpecs[j], 'sy');
-                    if (sy == null ) {
-                        this.onXMLMinorError("unable to parse y component of scaling; discarding transform");
+                        var sy = this.reader.getFloat(nodeSpecs[j], 'sy');
+                        if (sy == null) {
+                            this.onXMLMinorError("unable to parse y component of scaling; discarding transform");
+                            break;
+                        }
+                        else if (isNaN(sy))
+                            return "non-numeric value for y component of scaling (node ID = " + nodeID + ")";
+
+                        var sz = this.reader.getFloat(nodeSpecs[j], 'sz');
+                        if (sz == null) {
+                            this.onXMLMinorError("unable to parse z component of scaling; discarding transform");
+                            break;
+                        }
+                        else if (isNaN(sz))
+                            return "non-numeric value for z component of scaling (node ID = " + nodeID + ")";
+
+                        mat4.scale(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, [sx, sy, sz]);
                         break;
-                    }
-                    else if (isNaN(sy))
-                        return "non-numeric value for y component of scaling (node ID = " + nodeID + ")";
-
-                    var sz = this.reader.getFloat(nodeSpecs[j], 'sz');
-                    if (sz == null ) {
-                        this.onXMLMinorError("unable to parse z component of scaling; discarding transform");
+                    default:
                         break;
-                    }
-                    else if (isNaN(sz))
-                        return "non-numeric value for z component of scaling (node ID = " + nodeID + ")";
-
-                    mat4.scale(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, [sx, sy, sz]);
-                    break;
-                default:
-                    break;
                 }
             }
 
@@ -1415,14 +1546,13 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
             var sizeChildren = 0;
             for (var j = 0; j < descendants.length; j++) {
-                if (descendants[j].nodeName == "NODEREF")
-				{
+                if (descendants[j].nodeName == "NODEREF") {
 
-					var curId = this.reader.getString(descendants[j], 'id');
+                    var curId = this.reader.getString(descendants[j], 'id');
 
-					this.log("   Descendant: "+curId);
+                    this.log("   Descendant: " + curId);
 
-                    if (curId == null )
+                    if (curId == null)
                         this.onXMLMinorError("unable to parse descendant id");
                     else if (curId == nodeID)
                         return "a node may not be a child of its own";
@@ -1432,46 +1562,45 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                     }
                 }
                 else
-					if (descendants[j].nodeName == "LEAF")
-					{
-						var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle', 'patch']);
+                    if (descendants[j].nodeName == "LEAF") {
+                        var type = this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle', 'patch']);
 
-						if (type != null)
-							this.log("   Leaf: "+ type);
-						else
-							this.warn("Error in leaf");
+                        if (type != null)
+                            this.log("   Leaf: " + type);
+                        else
+                            this.warn("Error in leaf");
 
-            if(type == "patch"){
-              let cplines = descendants[j].children;
-              for(var line = 0; line < cplines.length; line++){
-                if(cplines[line].nodeName != "CPLINE")
-                  this.onXMLMinorError("Unknown patch tag child "+cplines[lines].nodeName);
-                else if(cplines[line].length == 0){
-                  this.onXMLMinorError("CPLINE tag must have atleast one child ");
-                }
-                else{
-                  let cpoints = cplines[line].children;
-                  for(var point = 0; point < cpoints.length; point++){
-                    if(cpoints[point].nodeName != "CPOINT")
-                      this.onXMLMinorError("Unknown patch tag child "+cpoints[point].nodeName);
-                    else if(cpoints[point].children.length != 0)
-                      this.onXMLMinorError("CPOINT must not have any child node ");
-                    else if(cpoints[point].attributes.length != 4)
-                      this.onXMLMinorError("CPOINT must have 4 arguments (xx yy zz ww) ");
-                  }
-                }
-              }
-              console.log("patch leaf processed")
-            }
-            this.nodes[nodeID].addLeaf(new MyGraphLeaf(this,descendants[j]));
+                        if (type == "patch") {
+                            let cplines = descendants[j].children;
+                            for (var line = 0; line < cplines.length; line++) {
+                                if (cplines[line].nodeName != "CPLINE")
+                                    this.onXMLMinorError("Unknown patch tag child " + cplines[lines].nodeName);
+                                else if (cplines[line].length == 0) {
+                                    this.onXMLMinorError("CPLINE tag must have atleast one child ");
+                                }
+                                else {
+                                    let cpoints = cplines[line].children;
+                                    for (var point = 0; point < cpoints.length; point++) {
+                                        if (cpoints[point].nodeName != "CPOINT")
+                                            this.onXMLMinorError("Unknown patch tag child " + cpoints[point].nodeName);
+                                        else if (cpoints[point].children.length != 0)
+                                            this.onXMLMinorError("CPOINT must not have any child node ");
+                                        else if (cpoints[point].attributes.length != 4)
+                                            this.onXMLMinorError("CPOINT must have 4 arguments (xx yy zz ww) ");
+                                    }
+                                }
+                            }
+                            console.log("patch leaf processed")
+                        }
+                        this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, descendants[j]));
 
 
-						//parse leaf
+                        //parse leaf
 
-            sizeChildren++;
-					}
-					else
-						this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
+                        sizeChildren++;
+                    }
+                    else
+                        this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
 
             }
             if (sizeChildren == 0)
@@ -1481,14 +1610,44 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
             this.onXMLMinorError("unknown tag name <" + nodeName);
     }
 
-    console.log("Parsed nodes");
-    return null ;
+    // Retrieves Animations ID's.
+    var animationsIndex = specsNames.indexOf("ANIMATIONREFS");
+
+    if (animationsIndex != -1) {
+        var nodeAnimations = nodeSpecs[animationsIndex].children;
+
+        var sizeAnimations = 0;
+        for (var j = 0; j < nodeAnimations.length; j++) {
+            if (descendants[j].nodeName == "ANIMATIONREF") {
+
+                var curId = this.reader.getString(descendants[j], 'id');
+
+                this.log("   Descendant: " + curId);
+
+                if (curId == null)
+                    this.onXMLMinorError("unable to parse descendant id");
+                else {
+                    this.animationID.push(curId)
+                    sizeChildren++;
+                }
+            }
+                else
+                    this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
+        }
+        if (sizeChildren == 0)
+            return "at least one animation must be defined for each intermediate node";
+    }
+    else
+        this.onXMLMinorError("unknown tag name <" + nodeName);
+        
+console.log("Parsed nodes");
+return null;
 }
 
 /*
  * Callback to be executed on any read error
  */
-MySceneGraph.prototype.onXMLError = function(message) {
+MySceneGraph.prototype.onXMLError = function (message) {
     console.error("XML Loading Error: " + message);
     this.loadedOk = false;
 }
@@ -1496,11 +1655,11 @@ MySceneGraph.prototype.onXMLError = function(message) {
 /**
  * Callback to be executed on any minor error, showing a warning on the console.
  */
-MySceneGraph.prototype.onXMLMinorError = function(message) {
+MySceneGraph.prototype.onXMLMinorError = function (message) {
     console.warn("Warning: " + message);
 }
 
-MySceneGraph.prototype.log = function(message) {
+MySceneGraph.prototype.log = function (message) {
     console.log("   " + message);
 }
 
@@ -1508,7 +1667,7 @@ MySceneGraph.prototype.log = function(message) {
  * Generates a default material, with a random name. This material will be passed onto the root node, which
  * may override it.
  */
-MySceneGraph.prototype.generateDefaultMaterial = function() {
+MySceneGraph.prototype.generateDefaultMaterial = function () {
     var materialDefault = new CGFappearance(this.scene);
     materialDefault.setShininess(1);
     materialDefault.setSpecular(0, 0, 0, 1);
@@ -1527,7 +1686,7 @@ MySceneGraph.prototype.generateDefaultMaterial = function() {
 /**
  * Generates a random string of the specified length.
  */
-MySceneGraph.generateRandomString = function(length) {
+MySceneGraph.generateRandomString = function (length) {
     // Generates an array of random integer ASCII codes of the specified length
     // and returns a string of the specified length.
     var numbers = [];
@@ -1540,83 +1699,83 @@ MySceneGraph.generateRandomString = function(length) {
 /**
  * Displays the scene, processing each node, starting in the root node.
  */
-MySceneGraph.prototype.displayScene = function() {
+MySceneGraph.prototype.displayScene = function () {
     /*this.scene.pushMatrix()
       this.scene.multMatrix(this.ani.animate());
       this.scene.setActiveShader(this.sha);
       this.obj.display();
       this.scene.setActiveShader(this.scene.defaultShader);
     this.scene.popMatrix()*/
-    this.processGraph(this.nodes['root'], this.materials[this.defaultMaterialID],[1,1]);
+    this.processGraph(this.nodes['root'], this.materials[this.defaultMaterialID], [1, 1]);
 }
 
-MySceneGraph.prototype.processGraph = function(node, parentMaterial, amplifFactor){
-  var material = Object.create(parentMaterial);
-  var amplif = amplifFactor;
-  if(node.nodeID != null){
-    //Processar material
-    if(node.materialID == 'clear'){
-      material = this.materials[this.defaultMaterialID];
-    }
-    else if(node.materialID != 'null'){
-      material = this.materials[node.materialID];
-    }
-    //Apply Texture
+MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFactor) {
+    var material = Object.create(parentMaterial);
+    var amplif = amplifFactor;
+    if (node.nodeID != null) {
+        //Processar material
+        if (node.materialID == 'clear') {
+            material = this.materials[this.defaultMaterialID];
+        }
+        else if (node.materialID != 'null') {
+            material = this.materials[node.materialID];
+        }
+        //Apply Texture
 
-    if(node.textureID == 'clear'){
-      material.setTexture(null);
-    }else if(node.textureID != 'null'){
-      material.setTexture(this.textures[node.textureID][0]);
-      amplif = this.textures[node.textureID].slice(1); //s e t
-      material.setTextureWrap('REPEAT','REPEAT');
+        if (node.textureID == 'clear') {
+            material.setTexture(null);
+        } else if (node.textureID != 'null') {
+            material.setTexture(this.textures[node.textureID][0]);
+            amplif = this.textures[node.textureID].slice(1); //s e t
+            material.setTextureWrap('REPEAT', 'REPEAT');
+        }
+        //Processa Matrix
+        //material.apply();
+        /**
+        TODO
+        if se tem animation node
+          faz antigamente -> this.scene.multMatrix(node.transformMatrix);
+        else
+          Buscar matriz transf. a classe animation guardada no node.
+          As classes animation vao ser instanciadas com a mat do node
+          Animation retorna uma nova nova matrix
+          this.scene.multMatrix(node.animationID(node.mat, t))
+        **/
+        //Shaders
+        var shade;
+        if (node.selectable) {
+            this.applyShader = this.scene.selectableNodes[node.nodeID];
+        } else if (node.selectable === false) {
+            this.applyShader = false;
+        }
+        shade = this.applyShader;
+        this.scene.multMatrix(node.transformMatrix);
+        for (var i = 0; i < node.children.length; i++) {
+            this.scene.pushMatrix();
+            this.processGraph(this.nodes[node.children[i]], material, amplif);
+            this.scene.popMatrix();
+            this.applyShader = shade;
+        }
+        /*if(shade){
+          this.scene.setActiveShader(this.shader);
+        }else{
+          this.scene.setActiveShader(this.scene.defaultShader);
+        }*/
+        if (shade == false && this.currentShader == "select") {
+            this.scene.setActiveShader(this.scene.defaultShader);
+            this.currentShader = "default";
+        } else if (shade == true && this.currentShader == "default") {
+            this.scene.setActiveShader(this.shader);
+            this.currentShader = "select";
+        }
+        material.apply();
+        if (node.leaves.length > 0) {
+            for (var i = 0; i < node.leaves.length; i++) {
+                node.leaves[i].display(amplif[0], amplif[1]);
+            }
+        }
+    } else {
+        console.log("Erro: nodeID == null")
     }
-    //Processa Matrix
-    //material.apply();
-    /**
-    TODO
-    if se tem animation node
-      faz antigamente -> this.scene.multMatrix(node.transformMatrix);
-    else
-      Buscar matriz transf. a classe animation guardada no node.
-      As classes animation vao ser instanciadas com a mat do node
-      Animation retorna uma nova nova matrix
-      this.scene.multMatrix(node.animationID(node.mat, t))
-    **/
-    //Shaders
-    var shade;
-    if(node.selectable){
-      this.applyShader = this.scene.selectableNodes[node.nodeID];
-    }else if(node.selectable === false){
-      this.applyShader = false;
-    }
-    shade = this.applyShader;
-    this.scene.multMatrix(node.transformMatrix);
-    for(var i = 0; i < node.children.length; i++){
-      this.scene.pushMatrix();
-        this.processGraph(this.nodes[node.children[i]], material, amplif);
-      this.scene.popMatrix();
-      this.applyShader = shade;
-    }
-    /*if(shade){
-      this.scene.setActiveShader(this.shader);
-    }else{
-      this.scene.setActiveShader(this.scene.defaultShader);
-    }*/
-    if(shade == false && this.currentShader == "select"){
-      this.scene.setActiveShader(this.scene.defaultShader);
-      this.currentShader = "default";
-    }else if(shade == true && this.currentShader == "default"){
-      this.scene.setActiveShader(this.shader);
-      this.currentShader = "select";
-    }
-    material.apply();
-    if(node.leaves.length > 0){
-      for(var i = 0; i < node.leaves.length; i++){
-        node.leaves[i].display(amplif[0], amplif[1]);
-      }
-    }
-  }else{
-    console.log("Erro: nodeID == null")
-  }
 
 }
