@@ -6,8 +6,9 @@ var ILLUMINATION_INDEX = 1;
 var LIGHTS_INDEX = 2;
 var TEXTURES_INDEX = 3;
 var MATERIALS_INDEX = 4;
-var LEAVES_INDEX = 5;
-var NODES_INDEX = 6;
+var ANIMATIONS_INDEX = 5;
+var LEAVES_INDEX = 6;
+var NODES_INDEX = 7;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -945,14 +946,14 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
                 var controlZ = Number(this.reader.getString(bezierSpecs[j], 'zz'));
 
                 controlPointBezier.push(controlX, controlY, controlZ);
-                bezierControlPoints.push(controlPoint);
+                bezierControlPoints.push(controlPointBezier);
                 counter++;
             }
 
             if (counter == 4) {
                 if (speed == null)
                     return "no speed defined for animation";
-                this.animations[animationID] = new BezierAnimation(this.scene, [bezierControlPoints, speed]);
+                this.animations[animationID] = new BezierAnimation(this.scene, [bezierControlPoints[0],bezierControlPoints[1],bezierControlPoints[2],bezierControlPoints[3], speed]);
             }
             else {
                 return "A bezier animation has 4 points!";
@@ -1395,6 +1396,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
             var nodeID = this.reader.getString(children[i], 'id');
             if (nodeID == null)
                 return "failed to retrieve node ID";
+
             // Checks if ID is valid.
             if (this.nodes[nodeID] != null)
                 return "node ID must be unique (conflict: ID = " + nodeID + ")";
@@ -1605,43 +1607,41 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
             }
             if (sizeChildren == 0)
                 return "at least one descendant must be defined for each intermediate node";
+
+            // Retrieves Animations ID's.
+            var animationsIndex = specsNames.indexOf("ANIMATIONREFS");
+
+            if (animationsIndex != -1) {
+                var nodeAnimations = nodeSpecs[animationsIndex].children;
+
+                var sizeAnimations = 0;
+                for (var j = 0; j < nodeAnimations.length; j++) {
+                    if (nodeAnimations[j].nodeName == "ANIMATIONREF") {
+
+                        var curId = this.reader.getString(nodeAnimations[j], 'id');
+
+                        this.log("   Animation: " + curId);
+
+                        if (curId == null)
+                            this.onXMLMinorError("unable to parse descendant id");
+                        else {
+                            this.nodes[nodeID].animationID.push(curId);
+                            sizeAnimations++;
+                        }
+                    }
+                    else
+                        this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
+                }
+                if (sizeAnimations == 0)
+                    return "at least one animation must be defined for each intermediate node";
+            }
         }
         else
             this.onXMLMinorError("unknown tag name <" + nodeName);
     }
 
-    // Retrieves Animations ID's.
-    var animationsIndex = specsNames.indexOf("ANIMATIONREFS");
-
-    if (animationsIndex != -1) {
-        var nodeAnimations = nodeSpecs[animationsIndex].children;
-
-        var sizeAnimations = 0;
-        for (var j = 0; j < nodeAnimations.length; j++) {
-            if (descendants[j].nodeName == "ANIMATIONREF") {
-
-                var curId = this.reader.getString(descendants[j], 'id');
-
-                this.log("   Descendant: " + curId);
-
-                if (curId == null)
-                    this.onXMLMinorError("unable to parse descendant id");
-                else {
-                    this.animationID.push(curId)
-                    sizeChildren++;
-                }
-            }
-                else
-                    this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
-        }
-        if (sizeChildren == 0)
-            return "at least one animation must be defined for each intermediate node";
-    }
-    else
-        this.onXMLMinorError("unknown tag name <" + nodeName);
-        
-console.log("Parsed nodes");
-return null;
+    console.log("Parsed nodes");
+    return null;
 }
 
 /*
@@ -1706,7 +1706,9 @@ MySceneGraph.prototype.displayScene = function () {
       this.obj.display();
       this.scene.setActiveShader(this.scene.defaultShader);
     this.scene.popMatrix()*/
-    this.processGraph(this.nodes['root'], this.materials[this.defaultMaterialID], [1, 1]);
+    console.log(this.animations);
+    console.log(this.nodes);
+    //this.processGraph(this.nodes['root'], this.materials[this.defaultMaterialID], [1, 1]);
 }
 
 MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFactor) {

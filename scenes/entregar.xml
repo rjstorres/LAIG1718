@@ -137,7 +137,31 @@
 
 </MATERIALS>
 
+<ANIMATIONS>
 
+<ANIMATION id="1" speed="10" type="linear">
+<controlpoint xx="0" yy="0" zz="0" /> 
+<controlpoint xx="1" yy="0" zz="0" /> 
+</ANIMATION>
+
+<ANIMATION id="2" speed="10" type="circular"
+centerx="10" centery="10" centerz="10"
+radius="5" startang="40" rotang="20"/>
+
+<ANIMATION id="3" speed="10" type="bezier">
+<controlpoint xx="0" yy="0" zz="0" /> 
+<controlpoint xx="1" yy="0" zz="0" /> 
+<controlpoint xx="1" yy="1" zz="0" /> 
+<controlpoint xx="0" yy="1" zz="0" /> 
+</ANIMATION>
+
+<ANIMATION id="4" type="combo">
+<SPANREF id="1" />
+<SPANREF id="2" />
+
+</ANIMATION>
+
+</ANIMATIONS>
 <!-- The leaves -->
 <LEAVES>
 </LEAVES>
@@ -161,6 +185,11 @@
             <NODEREF id="soldier" />
         </DESCENDANTS>
 
+        <ANIMATIONREFS>
+            <ANIMATIONREF id="1" />
+            <ANIMATIONREF id="2" />
+            <ANIMATIONREF id="4" />
+        </ANIMATIONREFS>
     </NODE>
 
     <!-- The floor -->
@@ -174,8 +203,14 @@
 
         <DESCENDANTS>
 					<LEAF  type="rectangle" args="0 4 5 0" />
-				</DESCENDANTS>
+		</DESCENDANTS>
 
+        <ANIMATIONREFS>
+            <ANIMATIONREF id="1" />
+            <ANIMATIONREF id="2" />
+            <ANIMATIONREF id="3" />
+            <ANIMATIONREF id="4" />
+        </ANIMATIONREFS>
     </NODE>
 
         <NODE id="sword">
