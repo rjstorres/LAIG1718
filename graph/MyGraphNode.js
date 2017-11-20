@@ -23,9 +23,14 @@ function MyGraphNode(graph, nodeID) {
     //Animation ID.
     this.animationID = [];
 
+    this.currAnimation=null;
+
+    this.counterAnimations=0;
     //Is Selectable
     //Poderá ter 3 valores: true, false, null. Onde null herda o valor do seu ascendente
     this.selectable = null;
+
+    this.endAnimationMatrix=null;
 
     this.transformMatrix = mat4.create();
     mat4.identity(this.transformMatrix);

@@ -852,7 +852,129 @@ MySceneGraph.prototype.parseLights = function(lightsNode) {
 
     console.log("Parsed lights");
 
-    return null ;
+
+    return null;
+}
+
+MySceneGraph.prototype.parseAnimations = function (animationsNode) {
+    this.animations = [];
+
+    var children = animationsNode.children;
+
+    for (var i = 0; i < children.length; i++) {
+        if (children[i].nodeName != "ANIMATION") {
+            this.onXMLMinorError("unknown tag name <" + children[i].nodeName + ">");
+            continue;
+        }
+
+        //ID
+        var animationID = this.reader.getString(children[i], 'id');
+        if (animationID == null)
+            return "no ID defined for animation";
+
+        if (this.animations[animationID] != null)
+            return "ID must be unique for each animation (conflict: ID = " + animationID + ")";
+
+        //speed
+        var speed = this.reader.getString(children[i], 'speed');
+        if (speed != null)
+            speed = Number(speed);
+
+        //type
+        var type = this.reader.getString(children[i], 'type');
+        if (type == null)
+            return "no type defined for animation";
+        if (type != "linear" && type != "circular" && type != "bezier" && type != "combo")
+            return "unknown animation type";
+
+        //linear animations
+        if (type == "linear") {
+            var linearSpecs = children[i].children;
+            var controlPoints = [];
+
+            //getting animation control points
+            for (var j = 0; j < linearSpecs.length; j++) {
+                var controlPoint = [];
+
+                var controlX = Number(this.reader.getString(linearSpecs[j], 'xx'));
+                var controlY = Number(this.reader.getString(linearSpecs[j], 'yy'));
+                var controlZ = Number(this.reader.getString(linearSpecs[j], 'zz'));
+
+                controlPoint.push(controlX, controlY, controlZ);
+                controlPoints.push(controlPoint);
+            }
+            if (speed == null)
+                return "no speed defined for animation";
+            this.animations[animationID] = new LinearAnimation(this.scene, [controlPoints, speed]);
+        }
+
+        //circular animations
+        if (type == "circular") {
+            var centerX = Number(this.reader.getString(children[i], 'centerx'));
+            var centerY = Number(this.reader.getString(children[i], 'centery'));
+            var centerZ = Number(this.reader.getString(children[i], 'centerz'));
+            var radius = Number(this.reader.getString(children[i], 'radius'));
+            var initialAngle = Number(this.reader.getString(children[i], 'startang'));
+            var rotationAngle = Number(this.reader.getString(children[i], 'rotang'));
+
+            if (speed == null)
+                return "no speed defined for animation";
+            this.animations[animationID] = new CircularAnimation(this.scene, [[centerX, centerY, centerZ], radius, initialAngle, rotationAngle, speed]);
+        }
+
+        if (type == "bezier") {
+            var bezierSpecs = children[i].children;
+            var bezierControlPoints = [];
+            var counter = 0;
+
+
+            for (var j = 0; j < bezierSpecs.length; j++) {
+                var controlPointBezier = [];
+
+                var controlX = Number(this.reader.getString(bezierSpecs[j], 'xx'));
+                var controlY = Number(this.reader.getString(bezierSpecs[j], 'yy'));
+                var controlZ = Number(this.reader.getString(bezierSpecs[j], 'zz'));
+
+                controlPointBezier.push(controlX, controlY, controlZ);
+                bezierControlPoints.push(controlPointBezier);
+                counter++;
+            }
+
+            if (counter == 4) {
+                if (speed == null)
+                    return "no speed defined for animation";
+                this.animations[animationID] = new BezierAnimation(this.scene, [bezierControlPoints[0], bezierControlPoints[1], bezierControlPoints[2], bezierControlPoints[3], speed]);
+            }
+            else {
+                return "A bezier animation has 4 points!";
+            }
+        }
+
+        if (type == "combo") {
+            var comboSpecs = children[i].children;
+            var animationsCombo = [];
+            if (comboSpecs.length < 1)
+                return "A combo animation has atleast 1 animation!";
+
+            for (var j = 0; j < comboSpecs.length; j++) {
+                var controlPointBezier = [];
+
+                var idAnimationinCombo = this.reader.getString(comboSpecs[j], 'id');
+
+                if (this.animations[idAnimationinCombo] == null)
+                    return "This animation is not defined";
+                animationsCombo.push(idAnimationinCombo);
+            }
+
+            if (speed == null)
+                this.animations[animationID] = new ComboAnimation(this.scene, animationsCombo);
+            else
+                return "A combo animation has no speed";
+        }
+
+    }
+    console.log("Parsed animations");
+>>>>>>> 1d237221b1e13dcfc4466d4be1f967366960135b
 }
 
 /**
@@ -1548,77 +1670,101 @@ MySceneGraph.prototype.displayScene = function() {
       this.obj.display();
       this.scene.setActiveShader(this.scene.defaultShader);
     this.scene.popMatrix()*/
+
     this.shader.setUniformsValues({normScale: this.normScale});
-    this.processGraph(this.nodes['root'], this.materials[this.defaultMaterialID],[1,1]);
+    this.processGraph(this.nodes['root'], this.materials[this.defaultMaterialID], [1, 1]);
 }
 
-MySceneGraph.prototype.processGraph = function(node, parentMaterial, amplifFactor){
-  var material = Object.create(parentMaterial);
-  var amplif = amplifFactor;
-  if(node.nodeID != null){
-    //Processar material
-    if(node.materialID == 'clear'){
-      material = this.materials[this.defaultMaterialID];
-    }
-    else if(node.materialID != 'null'){
-      material = this.materials[node.materialID];
-    }
-    //Apply Texture
+MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFactor) {
+    var material = Object.create(parentMaterial);
+    var amplif = amplifFactor;
+    if (node.nodeID != null) {
+        //Processar material
+        if (node.materialID == 'clear') {
+            material = this.materials[this.defaultMaterialID];
+        }
+        else if (node.materialID != 'null') {
+            material = this.materials[node.materialID];
+        }
+        //Apply Texture
 
-    if(node.textureID == 'clear'){
-      material.setTexture(null);
-    }else if(node.textureID != 'null'){
-      material.setTexture(this.textures[node.textureID][0]);
-      amplif = this.textures[node.textureID].slice(1); //s e t
-      material.setTextureWrap('REPEAT','REPEAT');
+        if (node.textureID == 'clear') {
+            material.setTexture(null);
+        } else if (node.textureID != 'null') {
+            material.setTexture(this.textures[node.textureID][0]);
+            amplif = this.textures[node.textureID].slice(1); //s e t
+            material.setTextureWrap('REPEAT', 'REPEAT');
+        }
+        //Processa Matrix
+        //material.apply();
+        /**
+        TODO
+        if()
+        if se tem animation node
+          faz antigamente -> this.scene.multMatrix(node.transformMatrix);
+        else
+          Buscar matriz transf. a classe animation guardada no node.
+          As classes animation vao ser instanciadas com a mat do node
+          Animation retorna uma nova nova matrix
+          this.scene.multMatrix(node.animationID(node.mat, t))
+        **/
+        //Shaders
+        var shade;
+        if (node.selectable) {
+            this.applyShader = this.scene.selectableNodes[node.nodeID];
+        } else if (node.selectable === false) {
+            this.applyShader = false;
+        }
+        shade = this.applyShader;
+
+
+        this.scene.multMatrix(node.transformMatrix);
+
+        if (node.counterAnimations >= node.animationID.length && node.animationID.length > 0)
+            this.scene.multMatrix(node.endAnimationMatrix);
+        else if (node.animationID.length > 0) {
+            if (node.currAnimation == null) {
+                node.currAnimation = Object.assign({},this.animations[node.animationID[node.counterAnimations]]);
+            }
+
+            var matAnimation = node.currAnimation.animate();
+            this.scene.multMatrix(matAnimation);
+
+            if (node.currAnimation.endFlag) {
+                node.currAnimation = null;
+                node.counterAnimations++;
+                node.endAnimationMatrix = matAnimation;
+            }
+
+        }
+
+
+        for (var i = 0; i < node.children.length; i++) {
+            this.scene.pushMatrix();
+            this.processGraph(this.nodes[node.children[i]], material, amplif);
+            this.scene.popMatrix();
+            this.applyShader = shade;
+        }
+        /*if(shade){
+          this.scene.setActiveShader(this.shader);
+        }else{
+          this.scene.setActiveShader(this.scene.defaultShader);
+        }*/
+        if (shade == false && this.currentShader == "select") {
+            this.scene.setActiveShader(this.scene.defaultShader);
+            this.currentShader = "default";
+        } else if (shade == true && this.currentShader == "default") {
+            this.scene.setActiveShader(this.shader);
+            this.currentShader = "select";
+        }
+        material.apply();
+        if (node.leaves.length > 0) {
+            for (var i = 0; i < node.leaves.length; i++) {
+                node.leaves[i].display(amplif[0], amplif[1]);
+            }
+        }
+    } else {
+        console.log("Erro: nodeID == null")
     }
-    //Processa Matrix
-    //material.apply();
-    /**
-    TODO
-    if se tem animation node
-      faz antigamente -> this.scene.multMatrix(node.transformMatrix);
-    else
-      Buscar matriz transf. a classe animation guardada no node.
-      As classes animation vao ser instanciadas com a mat do node
-      Animation retorna uma nova nova matrix
-      this.scene.multMatrix(node.animationID(node.mat, t))
-    **/
-    //Shaders
-    var shade;
-    if(node.selectable){
-      this.applyShader = this.scene.selectableNodes[node.nodeID];
-    }else if(node.selectable === false){
-      this.applyShader = false;
-    }
-    shade = this.applyShader;
-    this.scene.multMatrix(node.transformMatrix);
-    for(var i = 0; i < node.children.length; i++){
-      this.scene.pushMatrix();
-        this.processGraph(this.nodes[node.children[i]], material, amplif);
-      this.scene.popMatrix();
-      this.applyShader = shade;
-    }
-    /*if(shade){
-      this.scene.setActiveShader(this.shader);
-    }else{
-      this.scene.setActiveShader(this.scene.defaultShader);
-    }*/
-    if(shade == false && this.currentShader == "select"){
-      this.scene.setActiveShader(this.scene.defaultShader);
-      this.currentShader = "default";
-    }else if(shade == true && this.currentShader == "default"){
-      this.scene.setActiveShader(this.shader);
-      this.currentShader = "select";
-    }
-    material.apply();
-    if(node.leaves.length > 0){
-      for(var i = 0; i < node.leaves.length; i++){
-        node.leaves[i].display(amplif[0], amplif[1]);
-      }
-    }
-  }else{
-    console.log("Erro: nodeID == null")
-  }
 
 }
