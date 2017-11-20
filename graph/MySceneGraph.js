@@ -1625,7 +1625,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
                         if (curId == null)
                             this.onXMLMinorError("unable to parse descendant id");
                         else {
-                            this.nodes[nodeID].animationID.push(curId);
+                            this.nodes[nodeID].animationID.push(Object.assign({},this.animations[curId]));
                             sizeAnimations++;
                         }
                     }
