@@ -953,7 +953,7 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
             if (counter == 4) {
                 if (speed == null)
                     return "no speed defined for animation";
-                this.animations[animationID] = new BezierAnimation(this.scene, [bezierControlPoints[0],bezierControlPoints[1],bezierControlPoints[2],bezierControlPoints[3], speed]);
+                this.animations[animationID] = new BezierAnimation(this.scene, [bezierControlPoints[0], bezierControlPoints[1], bezierControlPoints[2], bezierControlPoints[3], speed]);
             }
             else {
                 return "A bezier animation has 4 points!";
@@ -973,7 +973,7 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
 
                 if (this.animations[idAnimationinCombo] == null)
                     return "This animation is not defined";
-                animationsCombo.push(Object.assign({},this.animations[idAnimationinCombo]));
+                animationsCombo.push(idAnimationinCombo);
             }
 
             if (speed == null)
@@ -1625,7 +1625,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
                         if (curId == null)
                             this.onXMLMinorError("unable to parse descendant id");
                         else {
-                            this.nodes[nodeID].animationID.push(Object.assign({},this.animations[curId]));
+                            this.nodes[nodeID].animationID.push(curId);
                             sizeAnimations++;
                         }
                     }
@@ -1706,9 +1706,8 @@ MySceneGraph.prototype.displayScene = function () {
       this.obj.display();
       this.scene.setActiveShader(this.scene.defaultShader);
     this.scene.popMatrix()*/
-    console.log(this.animations);
-    console.log(this.nodes);
-    //this.processGraph(this.nodes['root'], this.materials[this.defaultMaterialID], [1, 1]);
+
+    this.processGraph(this.nodes['root'], this.materials[this.defaultMaterialID], [1, 1]);
 }
 
 MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFactor) {
@@ -1735,6 +1734,7 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
         //material.apply();
         /**
         TODO
+        if()
         if se tem animation node
           faz antigamente -> this.scene.multMatrix(node.transformMatrix);
         else
@@ -1751,7 +1751,24 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
             this.applyShader = false;
         }
         shade = this.applyShader;
+
+
         this.scene.multMatrix(node.transformMatrix);
+
+        if (node.animationID.length > 0 && node.counterAnimations < node.animationID.length) {
+            if (node.currAnimation == null) {
+                node.currAnimation = this.animations[node.animationID[node.counterAnimations]];
+            }
+
+            this.scene.multMatrix(node.currAnimation.animate());
+
+            if (node.currAnimation.endFlag) {
+                node.currAnimation = null;
+                node.counterAnimations++;
+            }
+
+        }
+
         for (var i = 0; i < node.children.length; i++) {
             this.scene.pushMatrix();
             this.processGraph(this.nodes[node.children[i]], material, amplif);
