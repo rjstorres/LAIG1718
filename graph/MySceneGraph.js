@@ -1755,19 +1755,24 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
 
         this.scene.multMatrix(node.transformMatrix);
 
-        if (node.animationID.length > 0 && node.counterAnimations < node.animationID.length) {
+        if (node.counterAnimations >= node.animationID.length && node.animationID.length > 0)
+            this.scene.multMatrix(node.endAnimationMatrix);
+        else if (node.animationID.length > 0) {
             if (node.currAnimation == null) {
-                node.currAnimation = this.animations[node.animationID[node.counterAnimations]];
+                node.currAnimation = Object.assign({},this.animations[node.animationID[node.counterAnimations]]);
             }
 
-            this.scene.multMatrix(node.currAnimation.animate());
+            var matAnimation = node.currAnimation.animate();
+            this.scene.multMatrix(matAnimation);
 
             if (node.currAnimation.endFlag) {
                 node.currAnimation = null;
                 node.counterAnimations++;
+                node.endAnimationMatrix = matAnimation;
             }
 
         }
+
 
         for (var i = 0; i < node.children.length; i++) {
             this.scene.pushMatrix();

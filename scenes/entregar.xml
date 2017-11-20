@@ -139,16 +139,16 @@
 
 <ANIMATIONS>
 
-<ANIMATION id="1" speed="10" type="linear">
+<ANIMATION id="1" speed="1" type="linear">
 <controlpoint xx="0" yy="0" zz="0" /> 
-<controlpoint xx="1" yy="0" zz="0" /> 
+<controlpoint xx="0" yy="10" zz="0" /> 
 </ANIMATION>
 
-<ANIMATION id="2" speed="10" type="circular"
+<ANIMATION id="2" speed="1" type="circular"
 centerx="10" centery="10" centerz="10"
 radius="5" startang="40" rotang="20"/>
 
-<ANIMATION id="3" speed="10" type="bezier">
+<ANIMATION id="3" speed="1" type="bezier">
 <controlpoint xx="0" yy="0" zz="0" /> 
 <controlpoint xx="1" yy="0" zz="0" /> 
 <controlpoint xx="1" yy="1" zz="0" /> 
@@ -157,7 +157,7 @@ radius="5" startang="40" rotang="20"/>
 
 <ANIMATION id="4" type="combo">
 <SPANREF id="1" />
-<SPANREF id="2" />
+<SPANREF id="1" />
 
 </ANIMATION>
 
@@ -184,12 +184,6 @@ radius="5" startang="40" rotang="20"/>
             <NODEREF id="pedestal" />
             <NODEREF id="soldier" />
         </DESCENDANTS>
-
-        <ANIMATIONREFS>
-            <ANIMATIONREF id="1" />
-            <ANIMATIONREF id="2" />
-            <ANIMATIONREF id="4" />
-        </ANIMATIONREFS>
     </NODE>
 
     <!-- The floor -->
@@ -206,9 +200,6 @@ radius="5" startang="40" rotang="20"/>
 		</DESCENDANTS>
 
         <ANIMATIONREFS>
-            <ANIMATIONREF id="1" />
-            <ANIMATIONREF id="2" />
-            <ANIMATIONREF id="3" />
             <ANIMATIONREF id="4" />
         </ANIMATIONREFS>
     </NODE>
