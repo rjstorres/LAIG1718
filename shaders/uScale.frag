@@ -5,6 +5,7 @@ precision highp float;
 varying vec4 coords;
 varying vec4 normal;
 uniform float normScale;
+uniform float normScaleMax;
 
 void main() {
 	/*if (coords.x > 0.0)
@@ -14,5 +15,5 @@ void main() {
 		gl_FragColor.rgb = abs(coords.xyz);
 		gl_FragColor.a = 1.0;
 	}*/
-	gl_FragColor = vec4((normScale-0.8)/0.5,coords.y - coords.y*(normScale/1.3),coords.z - coords.z*(normScale/1.3),1.0);
+	gl_FragColor = vec4(cos(coords.x)/4.0 + (normScale/normScaleMax),coords.y - coords.y*(normScale/normScaleMax),coords.z - coords.z*(normScale/normScaleMax),1.0);
 }

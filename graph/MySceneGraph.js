@@ -26,6 +26,7 @@ function MySceneGraph(filename, scene) {
     this.applyShader = false;
     this.currentShader = "default"
     this.normScale = 0
+    this.normScaleMax = this.scene.getNorm(Math.PI/2);
 
     this.idRoot = null;// The id of the root element.
 
@@ -1670,7 +1671,7 @@ MySceneGraph.prototype.displayScene = function() {
       this.scene.setActiveShader(this.scene.defaultShader);
     this.scene.popMatrix()*/
 
-    this.shader.setUniformsValues({normScale: this.normScale});
+    this.shader.setUniformsValues({normScale: this.normScale, normScaleMax: this.normScaleMax});
     this.processGraph(this.nodes['root'], this.materials[this.defaultMaterialID], [1, 1]);
 }
 

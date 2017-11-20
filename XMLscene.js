@@ -146,7 +146,7 @@ XMLscene.prototype.display = function() {
 
         // Displays the scene.
         this.counter += 0.05;
-        this.graph.normScale = ((Math.sin(this.counter) + 1)/4) + 0.8;
+        this.graph.normScale = this.getNorm(this.counter);
         this.graph.displayScene();
         //this.timeNow = this.date.getTime()-this.timeStart
 
@@ -162,4 +162,8 @@ XMLscene.prototype.display = function() {
 
     // ---- END Background, camera and axis setup
 
+}
+
+XMLscene.prototype.getNorm = function(x){
+  return ((Math.sin(x) + 1)/4) + 0.8;
 }
