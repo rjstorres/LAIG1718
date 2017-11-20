@@ -11,6 +11,9 @@ function XMLscene(interface) {
     this.lightValues = {};
     this.selectedShader = null; //Guardar o shader escolhido
     this.selectableNodes = {};
+    this.normScale = 0;
+    this.counter = 0;
+    this.oldTime = new Date().getTime()
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -142,6 +145,8 @@ XMLscene.prototype.display = function() {
         }
 
         // Displays the scene.
+        this.counter += 0.05;
+        this.graph.normScale = ((Math.sin(this.counter) + 1)/4) + 0.8;
         this.graph.displayScene();
         //this.timeNow = this.date.getTime()-this.timeStart
 
