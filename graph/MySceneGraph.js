@@ -973,7 +973,7 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
 
                 if (this.animations[idAnimationinCombo] == null)
                     return "This animation is not defined";
-                animationsCombo.push(this.animations[idAnimationinCombo]);
+                animationsCombo.push(Object.assign({},this.animations[idAnimationinCombo]));
             }
 
             if (speed == null)
@@ -1630,7 +1630,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
                         }
                     }
                     else
-                        this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
+                        this.onXMLMinorError("unknown tag <" + nodeAnimations[j].nodeName + ">");
                 }
                 if (sizeAnimations == 0)
                     return "at least one animation must be defined for each intermediate node";
