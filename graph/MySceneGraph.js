@@ -974,7 +974,6 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
 
     }
     console.log("Parsed animations");
->>>>>>> 1d237221b1e13dcfc4466d4be1f967366960135b
 }
 
 /**
