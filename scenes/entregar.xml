@@ -200,7 +200,7 @@ radius="5" startang="0" rotang="180"/>
 
         <ANIMATIONREFS>
             <ANIMATIONREF id="4" />
-            <ANIMATIONREF id="4" />
+            <ANIMATIONREF id="1" />
         </ANIMATIONREFS>
     </NODE>
 

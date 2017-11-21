@@ -1764,6 +1764,7 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
         else if (node.animationID.length > 0) {
             if (node.currAnimation == null) {
                 node.currAnimation = this.animations[node.animationID[node.counterAnimations]].clone();
+                node.currAnimation.restartTime();
             }
 
             var matAnimation = node.currAnimation.animate();
