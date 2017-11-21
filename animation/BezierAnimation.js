@@ -4,7 +4,9 @@
  */
 function BezierAnimation(scene, args) {
     (args.length == 5 && args[0] === Array && args[1] === Array && args[2] === Array &&
-        args[3] === Array && args[4] === Number) ? null : console.log("Error");
+    args[3] === Array && args[4] === Number) ? null : console.log("Error");
+    this.scene = scene;
+    this.args = args;
     this.p4=args[3];
     this.speed=args[4];
     this.threshold = this.aproximateThreshold(args[0],args[1],args[2],args[3])//Distancia minima entre pontos
@@ -112,4 +114,8 @@ BezierAnimation.prototype.getDirectionAngle = function(p1,p2){ //Calcular  angul
     this.dir = angle;
     return angle;
   }
+}
+
+BezierAnimation.prototype.clone = function () { 
+  return new BezierAnimation(this.scene, this.args);
 }

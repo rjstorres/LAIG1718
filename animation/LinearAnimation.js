@@ -4,6 +4,8 @@
  */
 function LinearAnimation(scene,args) {
   (args.length == 2 && args[0] === Array && args[1] === Number) ? null : console.log("Error");
+  this.scene = scene;
+  this.args = args;
   this.timeStart = new Date().getTime()/1000; //Conversão para segundos
   this.time = 0; //Tempo (em segundos) que decorreu na animação
   this.controlPoints = args[0];
@@ -90,4 +92,9 @@ LinearAnimation.prototype.calculateUnitsDegrees = function(traj){ //Obter direc�
     this.yDeg.push(Math.atan2(vs[0],vs[2]));
   }
   return uVectors; //Retornar lista vetores unitários
+}
+
+LinearAnimation.prototype.clone = function () { 
+  animationClone = new LinearAnimation(this.scene, this.args);
+  return animationClone;
 }

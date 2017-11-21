@@ -3,7 +3,8 @@
  * @constructor
  */
 function ComboAnimation(scene, args) {
-    this.scene=scene;
+    this.scene = scene;
+    this.args = args;
     this.ComboAnimationsID = args;
     this.currAnimation=null;
     this.endFlag=false;
@@ -15,7 +16,7 @@ ComboAnimation.prototype.constructor=ComboAnimation;
 
 ComboAnimation.prototype.animate = function () {
     if(this.currAnimation==null){
-        this.currAnimation=Object.assign({},this.scene.graph.animations[this.ComboAnimationsID[this.counter]]);
+        this.currAnimation=this.scene.graph.animations[this.ComboAnimationsID[this.counter]].clone();
     }
 
     var mat= this.currAnimation.animate();
@@ -30,3 +31,7 @@ ComboAnimation.prototype.animate = function () {
     
     return mat;
 };
+
+ComboAnimation.prototype.clone = function () { 
+    return new ComboAnimation(this.scene, this.args);
+}
