@@ -141,12 +141,12 @@
 
 <ANIMATION id="1" speed="1" type="linear">
 <controlpoint xx="0" yy="0" zz="0" /> 
-<controlpoint xx="0" yy="10" zz="0" /> 
+<controlpoint xx="0" yy="2" zz="0" /> 
 </ANIMATION>
 
 <ANIMATION id="2" speed="1" type="circular"
-centerx="10" centery="10" centerz="10"
-radius="5" startang="40" rotang="20"/>
+centerx="0" centery="-5" centerz="0"
+radius="5" startang="0" rotang="180"/>
 
 <ANIMATION id="3" speed="1" type="bezier">
 <controlpoint xx="0" yy="0" zz="0" /> 
@@ -158,7 +158,6 @@ radius="5" startang="40" rotang="20"/>
 <ANIMATION id="4" type="combo">
 <SPANREF id="1" />
 <SPANREF id="1" />
-
 </ANIMATION>
 
 </ANIMATIONS>
@@ -200,6 +199,7 @@ radius="5" startang="40" rotang="20"/>
 		</DESCENDANTS>
 
         <ANIMATIONREFS>
+            <ANIMATIONREF id="4" />
             <ANIMATIONREF id="4" />
         </ANIMATIONREFS>
     </NODE>

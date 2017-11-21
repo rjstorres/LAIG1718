@@ -19,7 +19,7 @@ function CircularAnimation(scene, args) {
       Guardar tempo de animação*/
     this.timeStart = new Date().getTime()/1000 /*Conversão para segundos*/
     this.time = 0; /*Tempo da animação em segundos*/
-};
+}
 
 CircularAnimation.prototype = Object.create(Animation.prototype);
 CircularAnimation.prototype.constructor=CircularAnimation;
@@ -27,8 +27,8 @@ CircularAnimation.prototype.constructor=CircularAnimation;
 CircularAnimation.prototype.animate = function () {
     var matAnimation= mat4.create();
 
-    if(endFlag)
-        return endMat;
+    if(this.endFlag)
+        return this.endMat;
 
     if (this.time>this.span){
         this.time=this.span;
@@ -42,12 +42,16 @@ CircularAnimation.prototype.animate = function () {
     if(this.rotationAngle>0)
         mat4.rotateY(matAnimation,matAnimation,Math.PI);
     
-    this.time = new Date().getTime()/1000 - this.timeStart
+    this.time = new Date().getTime() / 1000 - this.timeStart;
     this.endMat=matAnimation;
     
     return matAnimation;
-};
+}
 
-CircularAnimation.prototype.clone = function () { 
+CircularAnimation.prototype.clone = function () {
     return new CircularAnimation(this.scene, this.args);
-  }
+}
+
+CircularAnimation.prototype.restartTime = function () {
+    this.timeStart = new Date().getTime() / 1000;
+}

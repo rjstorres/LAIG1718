@@ -1767,12 +1767,13 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
             }
 
             var matAnimation = node.currAnimation.animate();
+            this.scene.multMatrix(node.endAnimationMatrix);
             this.scene.multMatrix(matAnimation);
 
             if (node.currAnimation.endFlag) {
                 node.currAnimation = null;
                 node.counterAnimations++;
-                node.endAnimationMatrix = matAnimation;
+                mat4.multiply(node.endAnimationMatrix, node.endAnimationMatrix,matAnimation);
             }
 
         }
