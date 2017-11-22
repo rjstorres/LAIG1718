@@ -19,7 +19,6 @@ ComboAnimation.prototype.constructor = ComboAnimation;
 ComboAnimation.prototype.animate = function () {
     if (this.endFlag)
         return this.endAnimationMatrix;
-
     else if (this.ComboAnimationsID.length > 0) {
         if (this.currAnimation == null) {
             this.currAnimation = this.scene.graph.animations[this.ComboAnimationsID[this.counter]].clone();
@@ -27,7 +26,8 @@ ComboAnimation.prototype.animate = function () {
         }
 
         var mat = this.currAnimation.animate();
-        
+        var matToReturn = mat4.create();
+        mat4.multiply(matToReturn, this.endAnimationMatrix, mat);
 
         if (this.currAnimation.endFlag) {
             this.currAnimation = null;
@@ -38,8 +38,8 @@ ComboAnimation.prototype.animate = function () {
         if (this.counter >= this.ComboAnimationsID.length)
             this.endFlag = true;
 
-        mat4.multiply(mat, this.endAnimationMatrix, mat);
-        return mat;
+       
+        return matToReturn;
     }
 }
 
