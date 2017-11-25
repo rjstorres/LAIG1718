@@ -139,29 +139,53 @@
 
 <ANIMATIONS>
 
-<ANIMATION id="1" speed="1" type="linear">
+<ANIMATION id="1" speed="6" type="linear">
 <controlpoint xx="0" yy="0" zz="0" />
-<controlpoint xx="0" yy="0" zz="3" />  
-<controlpoint xx="-3" yy="0" zz="3" />  
+<controlpoint xx="0" yy="0" zz="15" />   
 </ANIMATION>
 
-<ANIMATION id="2" speed="5" type="circular"
+
+
+<ANIMATION id="2" speed="10" type="circular"
 centerx="12" centery="0" centerz="0"
-radius="12" startang="180" rotang="46"/>
+radius="12" startang="180" rotang="90"/>
 
-
-
-<ANIMATION id="3" speed="1" type="bezier">
-<controlpoint xx="0" yy="0" zz="0" /> 
-<controlpoint xx="1" yy="0" zz="0" /> 
-<controlpoint xx="1" yy="1" zz="0" /> 
-<controlpoint xx="0" yy="1" zz="0" /> 
+<ANIMATION id="3" speed="0.0023" type="linear">
+<controlpoint xx="0" yy="0" zz="0" />
+<controlpoint xx="0" yy="0" zz="0.01" />   
 </ANIMATION>
 
-<ANIMATION id="4" type="combo">
-<SPANREF id="1" />
-<SPANREF id="1" />
+
+
+<ANIMATION id="4" speed="1.5" type="linear">
+<controlpoint xx="0" yy="0" zz="0" />
+<controlpoint xx="0" yy="-3.5" zz="0" />   
 </ANIMATION>
+
+<ANIMATION id="5" speed="0.42" type="linear">
+<controlpoint xx="0" yy="0" zz="0" />
+<controlpoint xx="1.05" yy="0" zz="0" />
+<controlpoint xx="1.05" yy="0" zz="0.01" />    
+</ANIMATION>
+
+<ANIMATION id="6" speed="0.5" type="linear">
+<controlpoint xx="0" yy="0" zz="0" />
+<controlpoint xx="0" yy="2.0" zz="0" />    
+</ANIMATION>
+
+<ANIMATION id="7" speed="2" type="linear">
+<controlpoint xx="0" yy="0" zz="0" />
+<controlpoint xx="0" yy="0" zz="4.7" />    
+</ANIMATION>
+
+<ANIMATION id="8" speed="3" type="linear">
+<controlpoint xx="0" yy="0" zz="0" />
+<controlpoint xx="0" yy="5" zz="0" />    
+</ANIMATION>
+
+
+
+
 
 </ANIMATIONS>
 <!-- The leaves -->
@@ -181,10 +205,9 @@ radius="12" startang="180" rotang="46"/>
 
         <DESCENDANTS>
             <NODEREF id="chao" />
-            <NODEREF id="sword" />
             <NODEREF id="shieldAni" />
             <NODEREF id="pedestal" />
-            <NODEREF id="soldier" />
+            <NODEREF id="soldier+sword" />
         </DESCENDANTS>
     </NODE>
 
@@ -202,7 +225,18 @@ radius="12" startang="180" rotang="46"/>
 		</DESCENDANTS>
     </NODE>
 
-        <NODE id="sword">
+    <NODE id="soldier+sword">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <DESCENDANTS>
+            <NODEREF id="sword" />
+            <NODEREF id="soldier" />
+        </DESCENDANTS>
+    </NODE>
+
+
+    <NODE id="sword">
         <MATERIAL id="lightMaterial" />
         <TEXTURE id="null" />
 
@@ -214,6 +248,12 @@ radius="12" startang="180" rotang="46"/>
        		<NODEREF id="blade" />
             <NODEREF id="handle" />
         </DESCENDANTS>
+
+        <ANIMATIONREFS>
+            <ANIMATIONREF id="3" />
+            <ANIMATIONREF id="7" /> 
+        </ANIMATIONREFS>
+
     </NODE>
 
     <NODE id="blade">
@@ -348,10 +388,11 @@ radius="12" startang="180" rotang="46"/>
             
         </DESCENDANTS>
 
-        <ANIMATIONREFS>
+       <ANIMATIONREFS>
             <ANIMATIONREF id="1" />
+            <ANIMATIONREF id="8" />
             <ANIMATIONREF id="2" />
-        </ANIMATIONREFS>
+        </ANIMATIONREFS> 
     </NODE>
 
     <NODE id="shield">
@@ -397,6 +438,11 @@ radius="12" startang="180" rotang="46"/>
         <DESCENDANTS>
        		<NODEREF id="prisma" />
         </DESCENDANTS>
+
+        <ANIMATIONREFS>
+
+            <ANIMATIONREF id="4" />
+        </ANIMATIONREFS>
     </NODE>
 
     <!-- SOLDIER START -->
@@ -411,6 +457,12 @@ radius="12" startang="180" rotang="46"/>
           <NODEREF id="parteInferiorSoldier" />
           <NODEREF id="Cape" />
         </DESCENDANTS>
+        
+        <ANIMATIONREFS>
+            <ANIMATIONREF id="5" />
+            <ANIMATIONREF id="6" />
+        </ANIMATIONREFS>
+
     </NODE>
 
     <NODE id="Cape">
