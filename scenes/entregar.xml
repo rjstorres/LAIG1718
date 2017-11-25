@@ -155,8 +155,6 @@ radius="12" startang="180" rotang="90"/>
 <controlpoint xx="0" yy="0" zz="0.01" />   
 </ANIMATION>
 
-
-
 <ANIMATION id="4" speed="1.5" type="linear">
 <controlpoint xx="0" yy="0" zz="0" />
 <controlpoint xx="0" yy="-3.5" zz="0" />   
@@ -173,14 +171,26 @@ radius="12" startang="180" rotang="90"/>
 <controlpoint xx="0" yy="2.0" zz="0" />    
 </ANIMATION>
 
-<ANIMATION id="7" speed="2" type="linear">
+<ANIMATION id="7" speed="2.5" type="linear">
 <controlpoint xx="0" yy="0" zz="0" />
 <controlpoint xx="0" yy="0" zz="4.7" />    
 </ANIMATION>
 
-<ANIMATION id="8" speed="3" type="linear">
+<ANIMATION id="8" speed="2.5" type="linear">
 <controlpoint xx="0" yy="0" zz="0" />
 <controlpoint xx="0" yy="5" zz="0" />    
+</ANIMATION>
+
+
+<ANIMATION id="9" type="combo">
+    <SPANREF id="3" />   
+    <SPANREF id="7" />    
+</ANIMATION>
+
+<ANIMATION id="10" type="combo">
+    <SPANREF id="1" />   
+    <SPANREF id="8" />    
+    <SPANREF id="2" /> 
 </ANIMATION>
 
 
@@ -205,9 +215,8 @@ radius="12" startang="180" rotang="90"/>
 
         <DESCENDANTS>
             <NODEREF id="chao" />
-            <NODEREF id="shieldAni" />
             <NODEREF id="pedestal" />
-            <NODEREF id="soldier+sword" />
+            <NODEREF id="soldier+sword+shield" />
         </DESCENDANTS>
     </NODE>
 
@@ -225,13 +234,14 @@ radius="12" startang="180" rotang="90"/>
 		</DESCENDANTS>
     </NODE>
 
-    <NODE id="soldier+sword">
+    <NODE id="soldier+sword+shield">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
         <DESCENDANTS>
             <NODEREF id="sword" />
             <NODEREF id="soldier" />
+            <NODEREF id="shieldAni" />
         </DESCENDANTS>
     </NODE>
 
@@ -250,8 +260,7 @@ radius="12" startang="180" rotang="90"/>
         </DESCENDANTS>
 
         <ANIMATIONREFS>
-            <ANIMATIONREF id="3" />
-            <ANIMATIONREF id="7" /> 
+            <ANIMATIONREF id="9" />
         </ANIMATIONREFS>
 
     </NODE>
@@ -389,9 +398,7 @@ radius="12" startang="180" rotang="90"/>
         </DESCENDANTS>
 
        <ANIMATIONREFS>
-            <ANIMATIONREF id="1" />
-            <ANIMATIONREF id="8" />
-            <ANIMATIONREF id="2" />
+            <ANIMATIONREF id="10" />
         </ANIMATIONREFS> 
     </NODE>
 
