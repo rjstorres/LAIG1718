@@ -193,7 +193,22 @@ radius="12" startang="180" rotang="90"/>
     <SPANREF id="2" />
 </ANIMATION>
 
+<ANIMATION id="11" speed="1" type="bezier">
+<controlpoint xx="0" yy="0" zz="0" />
+<controlpoint xx="0" yy="1.5" zz="1" />
+<controlpoint xx="1" yy="3" zz="1" />
+<controlpoint xx="1" yy="4.5" zz="0" />
+</ANIMATION>
 
+<ANIMATION id="12" speed="0.0015" type="linear">
+<controlpoint xx="0" yy="0" zz="0" />
+<controlpoint xx="0" yy="0" zz="0.01" />
+</ANIMATION>
+
+<ANIMATION id="13" speed="100" type="linear">
+<controlpoint xx="0" yy="0" zz="0" />
+<controlpoint xx="0" yy="0" zz="-0.01" />
+</ANIMATION>
 
 
 
@@ -243,6 +258,13 @@ radius="12" startang="180" rotang="90"/>
             <NODEREF id="soldier" />
             <NODEREF id="shieldAni" />
         </DESCENDANTS>
+
+        <ANIMATIONREFS>
+
+            <ANIMATIONREF id="12" />
+            <ANIMATIONREF id="11" />
+            <ANIMATIONREF id="11" />
+        </ANIMATIONREFS>
     </NODE>
 
 
@@ -468,6 +490,7 @@ radius="12" startang="180" rotang="90"/>
         <ANIMATIONREFS>
             <ANIMATIONREF id="5" />
             <ANIMATIONREF id="6" />
+            <ANIMATIONREF id="13" />
         </ANIMATIONREFS>
 
     </NODE>
