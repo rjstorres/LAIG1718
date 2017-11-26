@@ -1409,15 +1409,15 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
             this.nodes[nodeID] = new MyGraphNode(this, nodeID);
             //is the node selectable
             var selectable = null;
-            var selectableString = this.reader.getString(children[i], 'selectable');
-            if (selectableString != null) {
-                if (selectableString == "true") {
-                    selectable = true;
-                } else if (selectableString == "false") {
-                    selectable = false;
-                } else {
-                    return "invalid selectable value"
-                }
+            if(this.reader.hasAttribute(children[i], 'selectable')){
+              var selectableString = this.reader.getString(children[i], 'selectable')
+              if (selectableString == "true") {
+                  selectable = true;
+              } else if (selectableString == "false") {
+                  selectable = false;
+              } else {
+                  return "invalid selectable value"
+              }
             }
             this.nodes[nodeID].selectable = selectable;
             if (selectable) {
@@ -1609,8 +1609,8 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
             }
             if (sizeChildren == 0)
                 return "at least one descendant must be defined for each intermediate node";
-            
-            
+
+
             // Retrieves Animations ID's.
             var animationsIndex = specsNames.indexOf("ANIMATIONREFS");
 

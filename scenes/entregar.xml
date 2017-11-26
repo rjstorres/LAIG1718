@@ -141,7 +141,7 @@
 
 <ANIMATION id="1" speed="6" type="linear">
 <controlpoint xx="0" yy="0" zz="0" />
-<controlpoint xx="0" yy="0" zz="15" />   
+<controlpoint xx="0" yy="0" zz="15" />
 </ANIMATION>
 
 
@@ -152,45 +152,45 @@ radius="12" startang="180" rotang="90"/>
 
 <ANIMATION id="3" speed="0.0023" type="linear">
 <controlpoint xx="0" yy="0" zz="0" />
-<controlpoint xx="0" yy="0" zz="0.01" />   
+<controlpoint xx="0" yy="0" zz="0.01" />
 </ANIMATION>
 
 <ANIMATION id="4" speed="1.5" type="linear">
 <controlpoint xx="0" yy="0" zz="0" />
-<controlpoint xx="0" yy="-3.5" zz="0" />   
+<controlpoint xx="0" yy="-3.5" zz="0" />
 </ANIMATION>
 
 <ANIMATION id="5" speed="0.42" type="linear">
 <controlpoint xx="0" yy="0" zz="0" />
 <controlpoint xx="1.05" yy="0" zz="0" />
-<controlpoint xx="1.05" yy="0" zz="0.01" />    
+<controlpoint xx="1.05" yy="0" zz="0.01" />
 </ANIMATION>
 
 <ANIMATION id="6" speed="0.5" type="linear">
 <controlpoint xx="0" yy="0" zz="0" />
-<controlpoint xx="0" yy="2.0" zz="0" />    
+<controlpoint xx="0" yy="2.0" zz="0" />
 </ANIMATION>
 
 <ANIMATION id="7" speed="2.5" type="linear">
 <controlpoint xx="0" yy="0" zz="0" />
-<controlpoint xx="0" yy="0" zz="4.7" />    
+<controlpoint xx="0" yy="0" zz="4.7" />
 </ANIMATION>
 
 <ANIMATION id="8" speed="2.5" type="linear">
 <controlpoint xx="0" yy="0" zz="0" />
-<controlpoint xx="0" yy="5" zz="0" />    
+<controlpoint xx="0" yy="5" zz="0" />
 </ANIMATION>
 
 
 <ANIMATION id="9" type="combo">
-    <SPANREF id="3" />   
-    <SPANREF id="7" />    
+    <SPANREF id="3" />
+    <SPANREF id="7" />
 </ANIMATION>
 
 <ANIMATION id="10" type="combo">
-    <SPANREF id="1" />   
-    <SPANREF id="8" />    
-    <SPANREF id="2" /> 
+    <SPANREF id="1" />
+    <SPANREF id="8" />
+    <SPANREF id="2" />
 </ANIMATION>
 
 
@@ -246,7 +246,7 @@ radius="12" startang="180" rotang="90"/>
     </NODE>
 
 
-    <NODE id="sword">
+    <NODE id="sword" selectable="true">
         <MATERIAL id="lightMaterial" />
         <TEXTURE id="null" />
 
@@ -387,19 +387,19 @@ radius="12" startang="180" rotang="90"/>
         </DESCENDANTS>
     </NODE>
 
-    <NODE id="shieldAni">
+    <NODE id="shieldAni" selectable="true">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
 
-       
+
         <DESCENDANTS>
 			<NODEREF id="shield" />
-            
+
         </DESCENDANTS>
 
        <ANIMATIONREFS>
             <ANIMATIONREF id="10" />
-        </ANIMATIONREFS> 
+        </ANIMATIONREFS>
     </NODE>
 
     <NODE id="shield">
@@ -464,7 +464,7 @@ radius="12" startang="180" rotang="90"/>
           <NODEREF id="parteInferiorSoldier" />
           <NODEREF id="Cape" />
         </DESCENDANTS>
-        
+
         <ANIMATIONREFS>
             <ANIMATIONREF id="5" />
             <ANIMATIONREF id="6" />

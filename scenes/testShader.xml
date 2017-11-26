@@ -137,6 +137,14 @@
 
 </MATERIALS>
 
+<ANIMATIONS>
+  <ANIMATION id="1" speed="1" type="linear">
+    <controlpoint xx="0" yy="0" zz="0" />
+    <controlpoint xx="0" yy="0" zz="3" />
+    <controlpoint xx="-3" yy="0" zz="3" />
+  </ANIMATION>
+</ANIMATIONS>
+
 
 <!-- The leaves -->
 <LEAVES>
@@ -161,9 +169,31 @@
           <NODEREF id="node1" />
           <NODEREF id="node2" />
           <NODEREF id="triangleNode"/>
+          <NODEREF id="moverCone"/>
         </DESCENDANTS>
 
     </NODE>
+
+    <NODE id="moverCone" selectable="true">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <DESCENDANTS>
+        <LEAF  type="cylinder" args="1 1 1 10 10 1 1"/>
+        <NODEREF id="testChildMove"/>
+      </DESCENDANTS>
+      <ANIMATIONREFS>
+          <ANIMATIONREF id="1" />
+      </ANIMATIONREFS>
+    </NODE>
+    <NODE id="testChildMove">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+      <TRANSLATION x="2" y="1" z="2" />
+      <DESCENDANTS>
+        <LEAF  type="sphere" args="1 10 10"/>
+      </DESCENDANTS>
+    </NODE>
+
     <NODE id="triangleNode" selectable="true">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
