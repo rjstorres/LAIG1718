@@ -1734,19 +1734,6 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
             amplif = this.textures[node.textureID].slice(1); //s e t
             material.setTextureWrap('REPEAT', 'REPEAT');
         }
-        //Processa Matrix
-        //material.apply();
-        /**
-        TODO
-        if()
-        if se tem animation node
-          faz antigamente -> this.scene.multMatrix(node.transformMatrix);
-        else
-          Buscar matriz transf. a classe animation guardada no node.
-          As classes animation vao ser instanciadas com a mat do node
-          Animation retorna uma nova nova matrix
-          this.scene.multMatrix(node.animationID(node.mat, t))
-        **/
         //Shaders
         var shade;
         if (node.selectable) {
@@ -1786,11 +1773,6 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
             this.scene.popMatrix();
             this.applyShader = shade;
         }
-        /*if(shade){
-          this.scene.setActiveShader(this.shader);
-        }else{
-          this.scene.setActiveShader(this.scene.defaultShader);
-        }*/
         if (shade == false && this.currentShader == "select") {
             this.scene.setActiveShader(this.scene.defaultShader);
             this.currentShader = "default";
