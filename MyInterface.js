@@ -56,3 +56,6 @@ MyInterface.prototype.addSelectableGroup = function(nodes){
       group.add(this.scene.selectableNodes, nodes[i]);
   }
 }
+MyInterface.prototype.addCameraControl = function(){
+  this.gui.add(this.scene, 'ChangeCamera');
+}

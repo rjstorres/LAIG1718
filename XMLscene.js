@@ -14,6 +14,11 @@ function XMLscene(interface) {
     this.normScale = 0;
     this.counter = 0;
     this.oldTime = new Date().getTime()
+    //Camera stats
+    this.ChangeCamera = function(){this.movingCamera = true}
+    this.currentCamera = 0
+    this.cameraTimer = 0
+    this.movingCamera = false
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -28,6 +33,7 @@ XMLscene.prototype.init = function(application) {
     this.initCameras();
 
     this.enableTextures(true);
+    this.setUpdatePeriod(17);
 
     this.gl.clearDepth(100.0);
     this.gl.enable(this.gl.DEPTH_TEST);
@@ -75,7 +81,7 @@ XMLscene.prototype.initLights = function() {
  * Initializes the scene cameras.
  */
 XMLscene.prototype.initCameras = function() {
-    this.camera = new CGFcamera(0.4,0.1,500,vec3.fromValues(15, 15, 15),vec3.fromValues(0, 0, 0));
+    this.camera = new CGFcamera(0.4,0.1,500,vec3.fromValues(0, 50, 50),vec3.fromValues(0, 0, 0));
 }
 
 /* Handler called when the graph is finally loaded.
@@ -99,6 +105,7 @@ XMLscene.prototype.onGraphLoaded = function()
     // Add Selectables Group
     this.interface.addSelectableGroup(this.graph.selectables);
     //this.timeStart = this.date.getTime() //Obter tempo de ínicio do programa
+    this.interface.addCameraControl()
 }
 
 /**
@@ -145,9 +152,10 @@ XMLscene.prototype.display = function() {
         }
 
         // Displays the scene.
-        this.counter += 0.05;
+        this.counter += 0.0005;
         this.graph.normScale = this.getNorm(this.counter);
         this.graph.displayScene();
+        this.moveCamera();
         //this.timeNow = this.date.getTime()-this.timeStart
 
     }
@@ -163,7 +171,47 @@ XMLscene.prototype.display = function() {
     // ---- END Background, camera and axis setup
 
 }
+XMLscene.prototype.moveCamera = function(){
+  if(this.movingCamera){
+    switch (this.currentCamera) {
+      case 0:
+        this.cameraTimer += 1
+        this.camera.orbit(CGFcameraAxis.Y, 0.1)
+        if(this.cameraTimer > 10){
+          this.currentCamera = 1
+          this.movingCamera = false
+          this.cameraTimer = 0
+        }
+        break;
+      case 1:
+        this.cameraTimer += 1
+        this.camera.orbit(CGFcameraAxis.Y, -0.11)
+        this.camera.translate(vec4.fromValues(0,21,-18,0))
+        this.camera.setTarget(vec3.fromValues(0,0,0))
+        if(this.cameraTimer == 10){
+          this.camera.setPosition(vec3.fromValues(0,90,1))
+          console.log(this.camera.position)
+          this.currentCamera = 2
+          this.movingCamera = false
+          this.cameraTimer = 0
+        }
+        break;
+      case 2:
+        this.cameraTimer += 1
+        this.camera.setPosition(vec3.fromValues(0,90-(4*this.cameraTimer),1+(4.9*this.cameraTimer)))
+        //this.camera.setTarget(vec3.fromValues(0,0,0))
+        if(this.cameraTimer == 10){
+          this.currentCamera = 0
+          this.movingCamera = false
+          this.cameraTimer = 0
+        }
+        break;
+      default:
+        break;
 
+    }
+  }
+}
 XMLscene.prototype.getNorm = function(x){
   return ((Math.sin(x) + 1)/4) + 0.8;
 }

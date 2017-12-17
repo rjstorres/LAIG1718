@@ -4,11 +4,11 @@
   <INITIALS>
     <frustum near="0.1" far="500"/>
 
-    <rotation axis="y" angle="45" />
-    <rotation axis="x" angle="20" />
-    <translation x="0" y="0" z="0" />
+    <translation x="-1" y="1" z="0" />
+    <rotation axis="y" angle="0" />
+    <rotation axis="x" angle="0" />
     <rotation axis="z" angle="0" />
-    <scale sx="0.2" sy="0.2" sz="0.2" />
+    <scale sx="0.5" sy="0.5" sz="0.5" />
     <!--<scale sx="1" sy="1" sz="1" /> -->
     <reference length="5" />
   </INITIALS>
@@ -472,8 +472,9 @@
         <DESCENDANTS>
           <NODEREF id="hip"/>
           <NODEREF id="upperBody"/>
-          <NODEREF id="legLeft"/>
-          <NODEREF id="legRight"/>
+          <NODEREF id="block"/>
+          <!--<NODEREF id="legLeft"/>
+          <NODEREF id="legRight"/> -->
         </DESCENDANTS>
       </NODE>
       <NODE id="soldierRei">
@@ -484,6 +485,15 @@
           <NODEREF id="upperBodyRei"/>
           <NODEREF id="legLeft"/>
           <NODEREF id="legRight"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id="block">
+        <MATERIAL id="null" />
+        <TEXTURE id="tableTexture" />
+        <TRANSLATION x="0" y="-1.3" z="0"/>
+        <SCALE sx="1.7" sy="2.2" sz="1.7" />
+        <DESCENDANTS>
+          <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
       <NODE id="hip">
@@ -613,7 +623,7 @@
         <DESCENDANTS>
           <NODEREF id="core"/>
           <NODEREF id="chest"/>
-          <NODEREF id="neck"/>
+          <!--<NODEREF id="neck"/> -->
           <NODEREF id="head"/>
           <NODEREF id="armLeft"/>
           <NODEREF id="armRight"/>
@@ -680,8 +690,8 @@
         <TRANSLATION x="1" y="0.5" z="0"/>
         <DESCENDANTS>
           <NODEREF id="shoulderLeft"/>
-          <NODEREF id="bicepsLeft"/>
-          <NODEREF id="elbowLeft"/>
+        <!--  <NODEREF id="bicepsLeft"/>
+          <NODEREF id="elbowLeft"/> -->
           <NODEREF id="forearmLeft"/>
           <NODEREF id="handLeft"/>
         </DESCENDANTS>
@@ -715,8 +725,8 @@
       <NODE id="forearmLeft">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
-        <TRANSLATION x="0" y="-1.5" z="0"/>
-        <SCALE sx="0.3" sy="0.8" sz="0.3"/>
+        <TRANSLATION x="0" y="-1" z="0"/>
+        <SCALE sx="0.4" sy="1.8" sz="0.4"/>
         <DESCENDANTS>
           <NODEREF id="cube"/>
         </DESCENDANTS>
@@ -725,7 +735,7 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
         <TRANSLATION x="0" y="-1.8" z="0"/>
-        <SCALE sx="0.5" sy="0.5" sz="0.5"/>
+        <SCALE sx="0.6" sy="0.6" sz="0.6"/>
         <DESCENDANTS>
           <NODEREF id="cube"/>
         </DESCENDANTS>
@@ -736,8 +746,8 @@
         <TRANSLATION x="-1" y="0.5" z="0"/>
         <DESCENDANTS>
           <NODEREF id="shoulderRight"/>
-          <NODEREF id="bicepsRight"/>
-          <NODEREF id="elbowRight"/>
+          <!--<NODEREF id="bicepsRight"/>
+          <NODEREF id="elbowRight"/>-->
           <NODEREF id="forearmRight"/>
           <NODEREF id="handRight"/>
         </DESCENDANTS>
@@ -771,8 +781,8 @@
       <NODE id="forearmRight">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
-        <TRANSLATION x="0" y="-1.5" z="0"/>
-        <SCALE sx="0.3" sy="0.8" sz="0.3"/>
+        <TRANSLATION x="0" y="-1" z="0"/>
+        <SCALE sx="0.4" sy="1.8" sz="0.4"/>
         <DESCENDANTS>
           <NODEREF id="cube"/>
         </DESCENDANTS>
@@ -781,7 +791,7 @@
         <MATERIAL id="null" />
         <TEXTURE id="null" />
         <TRANSLATION x="0" y="-1.8" z="0"/>
-        <SCALE sx="0.5" sy="0.5" sz="0.5"/>
+        <SCALE sx="0.6" sy="0.6" sz="0.6"/>
         <DESCENDANTS>
           <NODEREF id="cube"/>
         </DESCENDANTS>
