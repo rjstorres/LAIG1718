@@ -32,6 +32,7 @@ function MySceneGraph(filename, scene) {
     //Pickstack, permitir herança do registo para pick
     this.pickstack = []
     this.pickcounter = 1 //usado para definir ids
+    this.selectablePieces = {}
 
     this.idRoot = null;// The id of the root element.
 
@@ -1756,7 +1757,7 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
         //Shaders
         var shade;
         if (node.selectable) {
-            this.applyShader = this.scene.selectableNodes[node.nodeID];
+            this.applyShader = true;//this.scene.selectableNodes[node.nodeID];
         } else if (node.selectable === false) {
             this.applyShader = false;
         }
@@ -1787,6 +1788,7 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
 
         if(node.piecetype){
           this.pickstack.unshift(++this.pickcounter)
+          this.selectablePieces[this.pickcounter] = node.nodeID
           for (var i = 0; i < node.children.length; i++) {
               this.scene.pushMatrix();
               this.processGraph(this.nodes[node.children[i]], material, amplif);

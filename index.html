@@ -19,8 +19,37 @@ canvas {
 </style>
 </head>
 <body>
+  <div style="position: absolute;
+              top:35%;
+              margin-left:35%;
+              background-color:rgba(64,64,64,0.7);
+              border-style: solid;
+              border-color: black;
+              border-width: 5px;
+              border-radius: 10px;" id="uidiv">
+    <div style="color:white; margin-left:20px;margin-right:20px; margin-bottom:20px">
+      <h3>Cenário:</h3>
+      <input type="radio" name="cen" value="c1" checked> Cenário1
+      <input type="radio" name="cen" value="c2"> Cenário2
+      <input type="radio" name="cen" value="c3"> Cenário3
+      <br />
+      <h3>Modo de jogo:</h3>
+      <input type="radio" name="modo" value="hm" checked> Humano/Máquina
+      <input type="radio" name="modo" value="hh"> Humano/Humano
+      <input type="radio" name="modo" value="mm"> Máquina/Máquina
+      <br />
+      <h3>Dificuldade:</h3>
+      <input type="radio" name="dif" value="e" checked> Simples
+      <input type="radio" name="dif" value="h"> Avançado
+      <br />
+      <br />
+      <button id="startButton" style="margin-left: 40%; height:40px; width:80px; font-size:130%"><b>Iniciar</b></button>
+      <br />
 
-<script src="main.js"></script>
+    </div>
+  </div>
+  <section id="cgf"></section>
+  <script src="main.js"></script>
 
 </body>
 </html>

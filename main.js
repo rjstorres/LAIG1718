@@ -21,10 +21,38 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', '../graph/MySceneGraph.js',
 main=function()
 {
 	// Standard application, scene and interface setup
-    var app = new CGFapplication(document.body);
+    var app = new CGFapplication(document.getElementById("cgf"));
     var myInterface = new MyInterface();
     var myScene = new XMLscene(myInterface);
 
+    var startApp = function(e){
+      console.log("start")
+      let args = [];
+      let cb = document.getElementsByName('cen');
+      for (var i=0; i<cb.length; i++){
+         if (cb[i].checked) {
+            args.push(cb[i].value);
+            break;
+         }
+      }
+      cb = document.getElementsByName('modo');
+      for (var i=0; i<cb.length; i++){
+         if (cb[i].checked) {
+            args.push(cb[i].value);
+            break;
+         }
+      }
+      cb = document.getElementsByName('dif');
+      for (var i=0; i<cb.length; i++){
+         if (cb[i].checked) {
+            args.push(cb[i].value);
+            break;
+         }
+      }
+      console.log(args)
+      document.body.removeChild(document.body.childNodes[1])
+    }
+    document.getElementById("startButton").onclick = startApp
     app.init();
 
     app.setScene(myScene);

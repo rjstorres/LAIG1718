@@ -125,6 +125,8 @@ XMLscene.prototype.logPicking = function ()
 				{
 					var customId = this.pickResults[i][1];
 					console.log("Picked object: " + obj + ", with pick id " + customId);
+          let cur = this.graph.nodes[this.graph.selectablePieces[customId]].selectable;
+          this.graph.nodes[this.graph.selectablePieces[customId]].selectable = cur ? false : true
 				}
 			}
 			this.pickResults.splice(0,this.pickResults.length);
@@ -177,7 +179,7 @@ XMLscene.prototype.display = function() {
         }
 
         // Displays the scene.
-        this.counter += 0.0005;
+        this.counter += 0.5;
         this.graph.normScale = this.getNorm(this.counter);
         this.graph.displayScene();
         this.moveCamera();
