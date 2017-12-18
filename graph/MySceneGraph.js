@@ -29,6 +29,10 @@ function MySceneGraph(filename, scene) {
     this.normScale = 0
     this.normScaleMax = this.scene.getNorm(Math.PI / 2);
 
+    //Pickstack, permitir herança do registo para pick
+    this.pickstack = []
+    this.pickcounter = 1 //usado para definir ids
+
     this.idRoot = null;// The id of the root element.
 
     this.axisCoords = [];
@@ -172,7 +176,7 @@ MySceneGraph.prototype.parseLSXFile = function (rootElement) {
         if ((error = this.parseNodes(nodes[index])) != null)
             return error;
     }
-
+    /*Set up pieces*/
 }
 
 /**
@@ -1423,6 +1427,20 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
             if (selectable) {
                 this.selectables.push(nodeID);
             }
+            //Gather initial coordinates
+            let coordinate = null;
+            if(this.reader.hasAttribute(children[i], 'coordinates')){
+              let coordinateString = this.reader.getString(children[i], 'coordinates')
+              if(this.reader.hasAttribute(children[i], 'piecetype')){
+                let typeString=this.reader.getString(children[i], 'piecetype')
+                if(typeString != '1' && typeString != '2' && typeString != 's')
+                  return "piecetype attribute must be of value 1 (player1) 2 (player2) s(boardSpot)"
+                this.nodes[nodeID].piecetype = typeString;
+                this.nodes[nodeID].coords = coordinateString;
+              }else{
+                return "Coordinates attribute must have a valid piecetype attribute"
+              }
+            }
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
             var specsNames = [];
@@ -1712,6 +1730,7 @@ MySceneGraph.prototype.displayScene = function () {
 
     this.shader.setUniformsValues({ normScale: this.normScale, normScaleMax: this.normScaleMax });
     this.processGraph(this.nodes['root'], this.materials[this.defaultMaterialID], [1, 1]);
+    this.pickcounter = 1;
 }
 
 MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFactor) {
@@ -1766,13 +1785,24 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
 
         }
 
-
-        for (var i = 0; i < node.children.length; i++) {
-            this.scene.pushMatrix();
-            this.processGraph(this.nodes[node.children[i]], material, amplif);
-            this.scene.popMatrix();
-            this.applyShader = shade;
+        if(node.piecetype){
+          this.pickstack.unshift(++this.pickcounter)
+          for (var i = 0; i < node.children.length; i++) {
+              this.scene.pushMatrix();
+              this.processGraph(this.nodes[node.children[i]], material, amplif);
+              this.scene.popMatrix();
+              this.applyShader = shade;
+          }
+          this.pickstack.shift()
+        }else{
+          for (var i = 0; i < node.children.length; i++) {
+              this.scene.pushMatrix();
+              this.processGraph(this.nodes[node.children[i]], material, amplif);
+              this.scene.popMatrix();
+              this.applyShader = shade;
+          }
         }
+
         if (shade == false && this.currentShader == "select") {
             this.scene.setActiveShader(this.scene.defaultShader);
             this.currentShader = "default";
@@ -1781,11 +1811,21 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
             this.currentShader = "select";
         }
         material.apply();
-        if (node.leaves.length > 0) {
-            for (var i = 0; i < node.leaves.length; i++) {
-                node.leaves[i].display(amplif[0], amplif[1]);
-            }
+        if(this.pickstack.length > 0){
+          if (node.leaves.length > 0) {
+              for (var i = 0; i < node.leaves.length; i++) {
+                  this.scene.registerForPick(this.pickstack[i],node.leaves[i])
+                  node.leaves[i].display(amplif[0], amplif[1]);
+              }
+          }
+        }else{
+          if (node.leaves.length > 0) {
+              for (var i = 0; i < node.leaves.length; i++) {
+                  node.leaves[i].display(amplif[0], amplif[1]);
+              }
+          }
         }
+
     } else {
         console.log("Erro: nodeID == null")
     }

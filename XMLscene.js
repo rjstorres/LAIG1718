@@ -19,6 +19,12 @@ function XMLscene(interface) {
     this.currentCamera = 0
     this.cameraTimer = 0
     this.movingCamera = false
+    //Game stats
+    /*Game State enumerator*/
+    this.state = {P1PieceSelect: 1, P1SpotSelect: 2, AIPlay: 3,P2PieceSelect: 4, P2SpotSelect: 5}
+    /*Game Coordinates enumerator*/
+    this.rows = { "1": 0,"2": -3.7,"3": -7.4,"4": -11,"5": -14.7,"6": -18.3,"7": -22.2,"8": -25.9 }
+    this.collumns = { "A":-16.6, "B":-13, "C":-9.3, "D":-5.7, "E":-2, "F":1.7, "G":5.3, "H":9, "I":12.7, "J":16.3}
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -41,6 +47,8 @@ XMLscene.prototype.init = function(application) {
     this.gl.depthFunc(this.gl.LEQUAL);
 
     this.axis = new CGFaxis(this);
+
+    this.setPickEnabled(true);
 }
 
 /**
@@ -107,11 +115,28 @@ XMLscene.prototype.onGraphLoaded = function()
     //this.timeStart = this.date.getTime() //Obter tempo de ínicio do programa
     this.interface.addCameraControl()
 }
-
+XMLscene.prototype.logPicking = function ()
+{
+	if (this.pickMode == false) {
+		if (this.pickResults != null && this.pickResults.length > 0) {
+			for (var i=0; i< this.pickResults.length; i++) {
+				var obj = this.pickResults[i][0];
+				if (obj)
+				{
+					var customId = this.pickResults[i][1];
+					console.log("Picked object: " + obj + ", with pick id " + customId);
+				}
+			}
+			this.pickResults.splice(0,this.pickResults.length);
+		}
+	}
+}
 /**
  * Displays the scene.
  */
 XMLscene.prototype.display = function() {
+    this.logPicking();
+    this.clearPickRegistration();
     // ---- BEGIN Background, camera and axis setup
 
     // Clear image and depth buffer everytime we update the scene
