@@ -19,9 +19,11 @@ function XMLscene(interface) {
     this.currentCamera = 0
     this.cameraTimer = 0
     this.movingCamera = false
-    //Game stats
+    //Game state
     /*Game State enumerator*/
-    this.state = {P1PieceSelect: 1, P1SpotSelect: 2, AIPlay: 3,P2PieceSelect: 4, P2SpotSelect: 5}
+    this.state = {P1PieceSelect: 1, P1SpotSelect: 2, AIPlay: 3,P2PieceSelect: 4, P2SpotSelect: 5, GameSetup: 6}
+    /*The current game state*/
+    this.gameState = this.state.GameSetup;
     /*Game Coordinates enumerator*/
     this.rows = { "1": 0,"2": -3.7,"3": -7.4,"4": -11,"5": -14.7,"6": -18.3,"7": -22.2,"8": -25.9 }
     this.collumns = { "A":-16.6, "B":-13, "C":-9.3, "D":-5.7, "E":-2, "F":1.7, "G":5.3, "H":9, "I":12.7, "J":16.3}
@@ -37,17 +39,13 @@ XMLscene.prototype.init = function(application) {
     CGFscene.prototype.init.call(this, application);
 
     this.initCameras();
-
     this.enableTextures(true);
     this.setUpdatePeriod(17);
-
     this.gl.clearDepth(100.0);
     this.gl.enable(this.gl.DEPTH_TEST);
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
-
     this.axis = new CGFaxis(this);
-
     this.setPickEnabled(true);
 }
 
@@ -57,41 +55,32 @@ XMLscene.prototype.init = function(application) {
 XMLscene.prototype.initLights = function() {
     var i = 0;
     // Lights index.
-
     // Reads the lights from the scene graph.
     for (var key in this.graph.lights) {
         if (i >= 8)
             break;              // Only eight lights allowed by WebGL.
-
         if (this.graph.lights.hasOwnProperty(key)) {
             var light = this.graph.lights[key];
-
             this.lights[i].setPosition(light[1][0], light[1][1], light[1][2], light[1][3]);
             this.lights[i].setAmbient(light[2][0], light[2][1], light[2][2], light[2][3]);
             this.lights[i].setDiffuse(light[3][0], light[3][1], light[3][2], light[3][3]);
             this.lights[i].setSpecular(light[4][0], light[4][1], light[4][2], light[4][3]);
-
             this.lights[i].setVisible(true);
             if (light[0])
                 this.lights[i].enable();
             else
                 this.lights[i].disable();
-
             this.lights[i].update();
-
             i++;
         }
     }
-
 }
-
 /**
  * Initializes the scene cameras.
  */
 XMLscene.prototype.initCameras = function() {
     this.camera = new CGFcamera(0.4,0.1,500,vec3.fromValues(0, 50, 50),vec3.fromValues(0, 0, 0));
 }
-
 /* Handler called when the graph is finally loaded.
  * As loading is asynchronous, this may be called already after the application has started the run loop
  */
@@ -100,19 +89,15 @@ XMLscene.prototype.onGraphLoaded = function()
     this.camera.near = this.graph.near;
     this.camera.far = this.graph.far;
     this.axis = new CGFaxis(this,this.graph.referenceLength);
-
     this.setGlobalAmbientLight(this.graph.ambientIllumination[0], this.graph.ambientIllumination[1],
     this.graph.ambientIllumination[2], this.graph.ambientIllumination[3]);
-
     this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
-
     this.initLights();
-
     // Adds lights group.
     this.interface.addLightsGroup(this.graph.lights);
     // Add Selectables Group
     this.interface.addSelectableGroup(this.graph.selectables);
-    //this.timeStart = this.date.getTime() //Obter tempo de ínicio do programa
+    //Butão de controlo da camera
     this.interface.addCameraControl()
 }
 XMLscene.prototype.logPicking = function ()
@@ -125,8 +110,10 @@ XMLscene.prototype.logPicking = function ()
 				{
 					var customId = this.pickResults[i][1];
 					console.log("Picked object: " + obj + ", with pick id " + customId);
-          let cur = this.graph.nodes[this.graph.selectablePieces[customId]].selectable;
-          this.graph.nodes[this.graph.selectablePieces[customId]].selectable = cur ? false : true
+          if(this.gameState != this.state.GameSetup){
+            let cur = this.graph.nodes[this.graph.selectablePieces[customId]].selectable;
+            this.graph.nodes[this.graph.selectablePieces[customId]].selectable = cur ? false : true
+          }
 				}
 			}
 			this.pickResults.splice(0,this.pickResults.length);

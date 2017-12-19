@@ -72,11 +72,15 @@ main=function()
       myScene.interface.gui.close();
       delete myInterface;
       myInterface = new MyInterface();
-      myScene.interface = myInterface;
+      delete myScene;
+      myScene = new XMLscene(myInterface);
+      app.setScene(myScene);
       app.setInterface(myInterface);
       myInterface.setActiveCamera(myScene.camera);
       delete myGraph;
       myGraph = new MySceneGraph(filename, myScene);
+      myScene.gameState = myScene.state.P1PieceSelect;
+      myScene.clearPickRegistration();
     }
     document.getElementById("startButton").onclick = startApp
 

@@ -1813,7 +1813,7 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
             this.currentShader = "select";
         }
         material.apply();
-        if(this.pickstack.length > 0){
+        if(this.pickstack.length > 0 && this.scene.gameState != this.scene.state.GameSetup){
           if (node.leaves.length > 0) {
               for (var i = 0; i < node.leaves.length; i++) {
                   this.scene.registerForPick(this.pickstack[i],node.leaves[i])
