@@ -35,6 +35,20 @@ main=function()
             break;
          }
       }
+      let filename
+      switch (args[0]) {
+        case 'c1':
+          filename = 'gameScene.xml'
+          break;
+        case 'c2':
+          filename = 'gameScene2.xml'
+          break;
+        case 'c3':
+          filename = 'gameScene3.xml'
+          break;
+        default:
+          break;
+      }
       cb = document.getElementsByName('modo');
       for (var i=0; i<cb.length; i++){
          if (cb[i].checked) {
@@ -51,6 +65,7 @@ main=function()
       }
       console.log(args)
       document.body.removeChild(document.body.childNodes[1])
+      myGraph = new MySceneGraph(filename, myScene);
     }
     document.getElementById("startButton").onclick = startApp
     app.init();
