@@ -1718,17 +1718,33 @@ MySceneGraph.generateRandomString = function (length) {
     return String.fromCharCode.apply(null, numbers);
 }
 
+/*
+*Adicionar a animação de movimento de peça
+*/
+MySceneGraph.prototype.addMoveAnimation = function(spot, soldier){
+  let soldierNode = this.nodes[soldier];
+  let spotNode = this.nodes[spot];
+  //Coordenadas numéricas conforme definidas para o tabuleiro
+  let soldierZ = this.scene.rows[soldierNode.coords[1]]
+  let soldierX = this.scene.collumns[soldierNode.coords[0]]
+  //Setup da posição inicial de forma a prevenir acumulo de erros
+  mat4.identity(soldierNode.transformMatrix)
+  mat4.translate(soldierNode.transformMatrix,soldierNode.transformMatrix,[soldierX,0,soldierZ])
+  let spotZ = this.scene.rows[spotNode.coords[1]]
+  let spotX = this.scene.collumns[spotNode.coords[0]]
+  soldierNode.counterAnimations = 0 //reset animation counter
+  soldierNode.animationID = [1] //reset animation queue
+  let difX = spotX-soldierX
+  let difZ = spotZ-soldierZ
+  let invertDir = soldierNode.piecetype == '1' ? true : false //usando para a inverção de rotações de direcção
+  soldierNode.currAnimation = new BezierAnimation(this.scene, [[0,0,0], [difX/3,7,difZ/3], [2*difX/3,7,2*difZ/3], [difX, 0, difZ], 8],invertDir);
+  //mat4.translate(soldierNode.transformMatrix, soldierNode.transformMatrix, [spotX-soldierX, 0, spotZ-soldierZ]);
+  soldierNode.coords = spotNode.coords
+}
 /**
  * Displays the scene, processing each node, starting in the root node.
  */
 MySceneGraph.prototype.displayScene = function () {
-    /*this.scene.pushMatrix()
-      this.scene.multMatrix(this.ani.animate());
-      this.scene.setActiveShader(this.sha);
-      this.obj.display();
-      this.scene.setActiveShader(this.scene.defaultShader);
-    this.scene.popMatrix()*/
-
     this.shader.setUniformsValues({ normScale: this.normScale, normScaleMax: this.normScaleMax });
     this.processGraph(this.nodes['root'], this.materials[this.defaultMaterialID], [1, 1]);
     this.pickcounter = 1;
@@ -1782,6 +1798,16 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
                 node.currAnimation = null;
                 node.counterAnimations++;
                 mat4.multiply(node.endAnimationMatrix, node.endAnimationMatrix,matAnimation);
+                if(node.piecetype){//Verificar se a animação é referente ao movimento de uma peça
+                  if(node.piecetype == '1'){
+                    this.scene.gameState = this.scene.state.P2PieceSelect
+                  }else if(node.piecetype == '2'){
+                    this.scene.gameState = this.scene.state.P1PieceSelect
+                  }
+                  mat4.multiply(node.transformMatrix, node.transformMatrix,node.endAnimationMatrix)
+                  mat4.identity(node.endAnimationMatrix)
+                  node.animationID.pop()
+                }
             }
 
         }

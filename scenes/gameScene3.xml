@@ -1405,7 +1405,7 @@
         </DESCENDANTS>
       </NODE>
 
-      <NODE id ="spot11" piecetype="s" coordinates="A1">
+      <NODE id ="spot11" piecetype="s" coordinates="A8">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-5" y="0" z="0"/>
@@ -1413,7 +1413,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot12" piecetype="s" coordinates="B1">
+      <NODE id ="spot12" piecetype="s" coordinates="B8">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="-3.9" y="0" z="0"/>
@@ -1421,7 +1421,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot13" piecetype="s" coordinates="C1">
+      <NODE id ="spot13" piecetype="s" coordinates="C8">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-2.8" y="0" z="0"/>
@@ -1429,7 +1429,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot14" piecetype="s" coordinates="D1">
+      <NODE id ="spot14" piecetype="s" coordinates="D8">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="-1.7" y="0" z="0"/>
@@ -1437,7 +1437,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot15" piecetype="s" coordinates="E1">
+      <NODE id ="spot15" piecetype="s" coordinates="E8">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-0.6" y="0" z="0"/>
@@ -1445,7 +1445,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot16" piecetype="s" coordinates="F1">
+      <NODE id ="spot16" piecetype="s" coordinates="F8">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="0.5" y="0" z="0"/>
@@ -1453,7 +1453,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot17" piecetype="s" coordinates="G1">
+      <NODE id ="spot17" piecetype="s" coordinates="G8">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="1.6" y="0" z="0"/>
@@ -1461,7 +1461,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot18" piecetype="s" coordinates="H1">
+      <NODE id ="spot18" piecetype="s" coordinates="H8">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="2.7" y="0" z="0"/>
@@ -1469,7 +1469,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot19" piecetype="s" coordinates="I1">
+      <NODE id ="spot19" piecetype="s" coordinates="I8">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="3.8" y="0" z="0"/>
@@ -1477,7 +1477,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot110" piecetype="s" coordinates="J1">
+      <NODE id ="spot110" piecetype="s" coordinates="J8">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="4.9" y="0" z="0"/>
@@ -1485,7 +1485,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot31" piecetype="s" coordinates="A3">
+      <NODE id ="spot31" piecetype="s" coordinates="A6">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-5" y="0" z="0"/>
@@ -1493,7 +1493,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot32" piecetype="s" coordinates="B3">
+      <NODE id ="spot32" piecetype="s" coordinates="B6">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="-3.9" y="0" z="0"/>
@@ -1501,7 +1501,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot33" piecetype="s" coordinates="C3">
+      <NODE id ="spot33" piecetype="s" coordinates="C6">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-2.8" y="0" z="0"/>
@@ -1509,7 +1509,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot34" piecetype="s" coordinates="D3">
+      <NODE id ="spot34" piecetype="s" coordinates="D6">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="-1.7" y="0" z="0"/>
@@ -1517,7 +1517,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot35" piecetype="s" coordinates="E3">
+      <NODE id ="spot35" piecetype="s" coordinates="E6">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-0.6" y="0" z="0"/>
@@ -1525,7 +1525,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot36" piecetype="s" coordinates="F3">
+      <NODE id ="spot36" piecetype="s" coordinates="F6">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="0.5" y="0" z="0"/>
@@ -1533,7 +1533,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot37" piecetype="s" coordinates="G3">
+      <NODE id ="spot37" piecetype="s" coordinates="G6">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="1.6" y="0" z="0"/>
@@ -1541,7 +1541,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot38" piecetype="s" coordinates="H3">
+      <NODE id ="spot38" piecetype="s" coordinates="H6">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="2.7" y="0" z="0"/>
@@ -1549,7 +1549,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot39" piecetype="s" coordinates="I3">
+      <NODE id ="spot39" piecetype="s" coordinates="I6">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="3.8" y="0" z="0"/>
@@ -1557,7 +1557,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot310" piecetype="s" coordinates="J3">
+      <NODE id ="spot310" piecetype="s" coordinates="J6">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="4.9" y="0" z="0"/>
@@ -1565,7 +1565,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot51" piecetype="s" coordinates="A5">
+      <NODE id ="spot51" piecetype="s" coordinates="A4">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-5" y="0" z="0"/>
@@ -1573,7 +1573,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot52" piecetype="s" coordinates="B5">
+      <NODE id ="spot52" piecetype="s" coordinates="B4">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="-3.9" y="0" z="0"/>
@@ -1581,7 +1581,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot53" piecetype="s" coordinates="C5">
+      <NODE id ="spot53" piecetype="s" coordinates="C4">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-2.8" y="0" z="0"/>
@@ -1589,7 +1589,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot54" piecetype="s" coordinates="D5">
+      <NODE id ="spot54" piecetype="s" coordinates="D4">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="-1.7" y="0" z="0"/>
@@ -1597,7 +1597,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot55" piecetype="s" coordinates="E5">
+      <NODE id ="spot55" piecetype="s" coordinates="E4">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-0.6" y="0" z="0"/>
@@ -1605,7 +1605,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot56" piecetype="s" coordinates="F5">
+      <NODE id ="spot56" piecetype="s" coordinates="F4">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="0.5" y="0" z="0"/>
@@ -1613,7 +1613,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot57" piecetype="s" coordinates="G5">
+      <NODE id ="spot57" piecetype="s" coordinates="G4">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="1.6" y="0" z="0"/>
@@ -1621,7 +1621,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot58" piecetype="s" coordinates="H5">
+      <NODE id ="spot58" piecetype="s" coordinates="H4">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="2.7" y="0" z="0"/>
@@ -1629,7 +1629,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot59" piecetype="s" coordinates="I5">
+      <NODE id ="spot59" piecetype="s" coordinates="I4">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="3.8" y="0" z="0"/>
@@ -1637,7 +1637,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot510" piecetype="s" coordinates="J5">
+      <NODE id ="spot510" piecetype="s" coordinates="J4">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="4.9" y="0" z="0"/>
@@ -1645,7 +1645,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot71" piecetype="s" coordinates="A7">
+      <NODE id ="spot71" piecetype="s" coordinates="A2">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-5" y="0" z="0"/>
@@ -1653,7 +1653,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot72" piecetype="s" coordinates="B7">
+      <NODE id ="spot72" piecetype="s" coordinates="B2">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="-3.9" y="0" z="0"/>
@@ -1661,7 +1661,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot73" piecetype="s" coordinates="C7">
+      <NODE id ="spot73" piecetype="s" coordinates="C2">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-2.8" y="0" z="0"/>
@@ -1669,7 +1669,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot74" piecetype="s" coordinates="D7">
+      <NODE id ="spot74" piecetype="s" coordinates="D2">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="-1.7" y="0" z="0"/>
@@ -1677,7 +1677,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot75" piecetype="s" coordinates="E7">
+      <NODE id ="spot75" piecetype="s" coordinates="E2">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-0.6" y="0" z="0"/>
@@ -1685,7 +1685,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot76" piecetype="s" coordinates="F7">
+      <NODE id ="spot76" piecetype="s" coordinates="F2">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="0.5" y="0" z="0"/>
@@ -1693,7 +1693,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot77" piecetype="s" coordinates="G7">
+      <NODE id ="spot77" piecetype="s" coordinates="G2">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="1.6" y="0" z="0"/>
@@ -1701,7 +1701,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot78" piecetype="s" coordinates="H7">
+      <NODE id ="spot78" piecetype="s" coordinates="H2">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="2.7" y="0" z="0"/>
@@ -1709,7 +1709,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot79" piecetype="s" coordinates="I7">
+      <NODE id ="spot79" piecetype="s" coordinates="I2">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="3.8" y="0" z="0"/>
@@ -1717,7 +1717,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot710" piecetype="s" coordinates="J7">
+      <NODE id ="spot710" piecetype="s" coordinates="J2">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="4.9" y="0" z="0"/>
@@ -1726,7 +1726,7 @@
         </DESCENDANTS>
       </NODE>
 
-      <NODE id ="spot21Inverted" piecetype="s" coordinates="A2">
+      <NODE id ="spot21Inverted" piecetype="s" coordinates="A7">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="-5" y="0" z="0"/>
@@ -1734,7 +1734,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot22Inverted" piecetype="s" coordinates="B2">
+      <NODE id ="spot22Inverted" piecetype="s" coordinates="B7">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-3.9" y="0" z="0"/>
@@ -1742,7 +1742,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot23Inverted" piecetype="s" coordinates="C2">
+      <NODE id ="spot23Inverted" piecetype="s" coordinates="C7">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="-2.8" y="0" z="0"/>
@@ -1750,7 +1750,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot24Inverted" piecetype="s" coordinates="D2">
+      <NODE id ="spot24Inverted" piecetype="s" coordinates="D7">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-1.7" y="0" z="0"/>
@@ -1758,7 +1758,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot25Inverted" piecetype="s" coordinates="E2">
+      <NODE id ="spot25Inverted" piecetype="s" coordinates="E7">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="-0.6" y="0" z="0"/>
@@ -1766,7 +1766,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot26Inverted" piecetype="s" coordinates="F2">
+      <NODE id ="spot26Inverted" piecetype="s" coordinates="F7">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="0.5" y="0" z="0"/>
@@ -1774,7 +1774,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot27Inverted" piecetype="s" coordinates="G2">
+      <NODE id ="spot27Inverted" piecetype="s" coordinates="G7">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="1.6" y="0" z="0"/>
@@ -1782,7 +1782,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot28Inverted" piecetype="s" coordinates="H2">
+      <NODE id ="spot28Inverted" piecetype="s" coordinates="H7">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="2.7" y="0" z="0"/>
@@ -1790,7 +1790,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot29Inverted" piecetype="s" coordinates="I2">
+      <NODE id ="spot29Inverted" piecetype="s" coordinates="I7">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="3.8" y="0" z="0"/>
@@ -1798,7 +1798,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot210Inverted" piecetype="s" coordinates="J2">
+      <NODE id ="spot210Inverted" piecetype="s" coordinates="J7">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="4.9" y="0" z="0"/>
@@ -1806,7 +1806,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot41Inverted" piecetype="s" coordinates="A4">
+      <NODE id ="spot41Inverted" piecetype="s" coordinates="A5">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="-5" y="0" z="0"/>
@@ -1814,7 +1814,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot42Inverted" piecetype="s" coordinates="B4">
+      <NODE id ="spot42Inverted" piecetype="s" coordinates="B5">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-3.9" y="0" z="0"/>
@@ -1822,7 +1822,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot43Inverted" piecetype="s" coordinates="C4">
+      <NODE id ="spot43Inverted" piecetype="s" coordinates="C5">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="-2.8" y="0" z="0"/>
@@ -1830,7 +1830,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot44Inverted" piecetype="s" coordinates="D4">
+      <NODE id ="spot44Inverted" piecetype="s" coordinates="D5">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-1.7" y="0" z="0"/>
@@ -1838,7 +1838,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot45Inverted" piecetype="s" coordinates="E4">
+      <NODE id ="spot45Inverted" piecetype="s" coordinates="E5">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="-0.6" y="0" z="0"/>
@@ -1846,7 +1846,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot46Inverted" piecetype="s" coordinates="F4">
+      <NODE id ="spot46Inverted" piecetype="s" coordinates="F5">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="0.5" y="0" z="0"/>
@@ -1854,7 +1854,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot47Inverted" piecetype="s" coordinates="G4">
+      <NODE id ="spot47Inverted" piecetype="s" coordinates="G5">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="1.6" y="0" z="0"/>
@@ -1862,7 +1862,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot48Inverted" piecetype="s" coordinates="H4">
+      <NODE id ="spot48Inverted" piecetype="s" coordinates="H5">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="2.7" y="0" z="0"/>
@@ -1870,7 +1870,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot49Inverted" piecetype="s" coordinates="I4">
+      <NODE id ="spot49Inverted" piecetype="s" coordinates="I5">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="3.8" y="0" z="0"/>
@@ -1878,7 +1878,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot410Inverted" piecetype="s" coordinates="J4">
+      <NODE id ="spot410Inverted" piecetype="s" coordinates="J5">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="4.9" y="0" z="0"/>
@@ -1886,7 +1886,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot61Inverted" piecetype="s" coordinates="A6">
+      <NODE id ="spot61Inverted" piecetype="s" coordinates="A3">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="-5" y="0" z="0"/>
@@ -1894,7 +1894,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot62Inverted" piecetype="s" coordinates="B6">
+      <NODE id ="spot62Inverted" piecetype="s" coordinates="B3">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-3.9" y="0" z="0"/>
@@ -1902,7 +1902,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot63Inverted" piecetype="s" coordinates="C6">
+      <NODE id ="spot63Inverted" piecetype="s" coordinates="C3">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="-2.8" y="0" z="0"/>
@@ -1910,7 +1910,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot64Inverted" piecetype="s" coordinates="D6">
+      <NODE id ="spot64Inverted" piecetype="s" coordinates="D3">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-1.7" y="0" z="0"/>
@@ -1918,7 +1918,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot65Inverted" piecetype="s" coordinates="E6">
+      <NODE id ="spot65Inverted" piecetype="s" coordinates="E3">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="-0.6" y="0" z="0"/>
@@ -1926,7 +1926,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot66Inverted" piecetype="s" coordinates="F6">
+      <NODE id ="spot66Inverted" piecetype="s" coordinates="F3">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="0.5" y="0" z="0"/>
@@ -1934,7 +1934,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot67Inverted" piecetype="s" coordinates="G6">
+      <NODE id ="spot67Inverted" piecetype="s" coordinates="G3">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="1.6" y="0" z="0"/>
@@ -1942,7 +1942,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot68Inverted" piecetype="s" coordinates="H6">
+      <NODE id ="spot68Inverted" piecetype="s" coordinates="H3">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="2.7" y="0" z="0"/>
@@ -1950,7 +1950,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot69Inverted" piecetype="s" coordinates="I6">
+      <NODE id ="spot69Inverted" piecetype="s" coordinates="I3">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="3.8" y="0" z="0"/>
@@ -1958,7 +1958,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot610Inverted" piecetype="s" coordinates="J6">
+      <NODE id ="spot610Inverted" piecetype="s" coordinates="J3">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="4.9" y="0" z="0"/>
@@ -1966,7 +1966,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot81Inverted" piecetype="s" coordinates="A8">
+      <NODE id ="spot81Inverted" piecetype="s" coordinates="A1">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="-5" y="0" z="0"/>
@@ -1974,7 +1974,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot82Inverted" piecetype="s" coordinates="B8">
+      <NODE id ="spot82Inverted" piecetype="s" coordinates="B1">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-3.9" y="0" z="0"/>
@@ -1982,7 +1982,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot83Inverted" piecetype="s" coordinates="C8">
+      <NODE id ="spot83Inverted" piecetype="s" coordinates="C1">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="-2.8" y="0" z="0"/>
@@ -1990,7 +1990,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot84Inverted" piecetype="s" coordinates="D8">
+      <NODE id ="spot84Inverted" piecetype="s" coordinates="D1">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-1.7" y="0" z="0"/>
@@ -1998,7 +1998,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot85Inverted" piecetype="s" coordinates="E8">
+      <NODE id ="spot85Inverted" piecetype="s" coordinates="E1">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="-0.6" y="0" z="0"/>
@@ -2006,7 +2006,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot86Inverted" piecetype="s" coordinates="F8">
+      <NODE id ="spot86Inverted" piecetype="s" coordinates="F1">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="0.5" y="0" z="0"/>
@@ -2014,7 +2014,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot87Inverted" piecetype="s" coordinates="G8">
+      <NODE id ="spot87Inverted" piecetype="s" coordinates="G1">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="1.6" y="0" z="0"/>
@@ -2022,7 +2022,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot88Inverted" piecetype="s" coordinates="H8">
+      <NODE id ="spot88Inverted" piecetype="s" coordinates="H1">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="2.7" y="0" z="0"/>
@@ -2030,7 +2030,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot89Inverted" piecetype="s" coordinates="I8">
+      <NODE id ="spot89Inverted" piecetype="s" coordinates="I1">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
         <TRANSLATION x="3.8" y="0" z="0"/>
@@ -2038,7 +2038,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
-      <NODE id ="spot810Inverted" piecetype="s" coordinates="J8">
+      <NODE id ="spot810Inverted" piecetype="s" coordinates="J1">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="4.9" y="0" z="0"/>

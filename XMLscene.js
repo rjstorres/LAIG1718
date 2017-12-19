@@ -21,12 +21,18 @@ function XMLscene(interface) {
     this.movingCamera = false
     //Game state
     /*Game State enumerator*/
-    this.state = {P1PieceSelect: 1, P1SpotSelect: 2, AIPlay: 3,P2PieceSelect: 4, P2SpotSelect: 5, GameSetup: 6}
+    this.state = {P1PieceSelect: 1, P1SpotSelect: 2, AIPlay: 3,P2PieceSelect: 4, P2SpotSelect: 5, GameSetup: 6, P1Animation:7, P2Animation:8}
     /*The current game state*/
     this.gameState = this.state.GameSetup;
     /*Game Coordinates enumerator*/
     this.rows = { "1": 0,"2": -3.7,"3": -7.4,"4": -11,"5": -14.7,"6": -18.3,"7": -22.2,"8": -25.9 }
     this.collumns = { "A":-16.6, "B":-13, "C":-9.3, "D":-5.7, "E":-2, "F":1.7, "G":5.3, "H":9, "I":12.7, "J":16.3}
+    /*Used to restrict piece picking*/
+    this.pickConditional = 'A' //Values: 'A' 'B' 'spot'
+    /*Current Selected soldier*/
+    this.pickedSoldier = null
+    /*Current selected spot*/
+    this.pickedSpot = null
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -111,8 +117,50 @@ XMLscene.prototype.logPicking = function ()
 					var customId = this.pickResults[i][1];
 					console.log("Picked object: " + obj + ", with pick id " + customId);
           if(this.gameState != this.state.GameSetup){
-            let cur = this.graph.nodes[this.graph.selectablePieces[customId]].selectable;
-            this.graph.nodes[this.graph.selectablePieces[customId]].selectable = cur ? false : true
+            let sId = this.graph.selectablePieces[customId];
+            console.log(sId);
+            switch (this.gameState) {
+              case this.state.P1PieceSelect:
+                if(this.graph.nodes[sId].piecetype == '1'){
+                  this.pickedSoldier = sId;
+                  this.graph.nodes[sId].selectable = true;
+                  this.gameState = this.state.P1SpotSelect;
+                }
+                break;
+              case this.state.P2PieceSelect:
+                if(this.graph.nodes[sId].piecetype == '2'){
+                  this.pickedSoldier = sId;
+                  this.graph.nodes[sId].selectable = true;
+                  this.gameState = this.state.P2SpotSelect;
+                }
+                break;
+              case this.state.P1SpotSelect:
+                if(this.graph.nodes[sId].piecetype == '1'){
+                  this.graph.nodes[this.pickedSoldier].selectable = false;
+                  this.pickedSoldier = sId;
+                  this.graph.nodes[sId].selectable = true;
+                }else if(this.graph.nodes[sId].piecetype == 's'){
+                  this.pickedSpot = sId;
+                  this.graph.nodes[this.pickedSoldier].selectable = false;
+                  this.gameState = this.state.P1Animation;
+                  this.graph.addMoveAnimation(this.pickedSpot, this.pickedSoldier)
+                }
+                break;
+              case this.state.P2SpotSelect:
+                if(this.graph.nodes[sId].piecetype == '2'){
+                  this.graph.nodes[this.pickedSoldier].selectable = false;
+                  this.pickedSoldier = sId;
+                  this.graph.nodes[sId].selectable = true;
+                }else if(this.graph.nodes[sId].piecetype == 's'){
+                  this.pickedSpot = sId;
+                  this.graph.nodes[this.pickedSoldier].selectable = false;
+                  this.gameState = this.state.P1Animation;
+                  this.graph.addMoveAnimation(this.pickedSpot, this.pickedSoldier)
+                }
+                break;
+              default:
+
+            }
           }
 				}
 			}

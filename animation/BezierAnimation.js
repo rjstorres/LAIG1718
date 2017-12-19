@@ -2,9 +2,10 @@
  * BezierAnimation
  * @constructor
  */
-function BezierAnimation(scene, args) {
+function BezierAnimation(scene, args,dir) {
     (args.length == 5 && args[0] === Array && args[1] === Array && args[2] === Array &&
     args[3] === Array && args[4] === Number) ? null : console.log("Error");
+    this.invertDir = dir ? true : false
     this.scene = scene;
     this.args = args;
     this.p4=args[3];
@@ -110,6 +111,7 @@ BezierAnimation.prototype.getDirectionAngle = function (p1, p2) { //Calcular  an
   let xu = xdif / mag;
   let zu = zdif / mag;
   var angle = Math.atan2(xu, zu);
+  if(this.invertDir) angle+=Math.PI
   //Retorno do angulo
   if (isNaN(angle)) {
     return this.dir;
