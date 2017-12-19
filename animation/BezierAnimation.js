@@ -2,9 +2,7 @@
  * BezierAnimation
  * @constructor
  */
-function BezierAnimation(scene, args,dir) {
-    (args.length == 5 && args[0] === Array && args[1] === Array && args[2] === Array &&
-    args[3] === Array && args[4] === Number) ? null : console.log("Error");
+function BezierAnimation(scene, args, dir) {
     this.invertDir = dir ? true : false
     this.scene = scene;
     this.args = args;

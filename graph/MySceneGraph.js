@@ -1000,7 +1000,7 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
 MySceneGraph.prototype.parseTextures = function (texturesNode) {
 
     this.textures = [];
-
+    this.textures['clear'] = [null,1,1];
     var eachTexture = texturesNode.children;
     // Each texture.
 
@@ -1698,9 +1698,9 @@ MySceneGraph.prototype.generateDefaultMaterial = function () {
     materialDefault.setEmission(0, 0, 0, 1);
 
     // Generates random material ID not currently in use.
-    this.defaultMaterialID = null;
-    do this.defaultMaterialID = MySceneGraph.generateRandomString(5);
-    while (this.materials[this.defaultMaterialID] != null);
+    this.defaultMaterialID = 'clear';
+    //do this.defaultMaterialID = MySceneGraph.generateRandomString(5);
+    //while (this.materials[this.defaultMaterialID] != null);
 
     this.materials[this.defaultMaterialID] = materialDefault;
 }
@@ -1755,22 +1755,16 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
     var amplif = amplifFactor;
     if (node.nodeID != null) {
         //Processar material
-        if (node.materialID == 'clear') {
-            material = this.materials[this.defaultMaterialID];
-        }
-        else if (node.materialID != 'null') {
+        if (node.materialID != 'null') {
             material = this.materials[node.materialID];
         }
         //Apply Texture
-
-        if (node.textureID == 'clear') {
-            material.setTexture(null);
-        } else if (node.textureID != 'null') {
-            material.setTexture(this.textures[node.textureID][0]);
-            amplif = this.textures[node.textureID].slice(1); //s e t
-            material.setTextureWrap('REPEAT', 'REPEAT');
+        if (node.textureID != 'null') {
+            let txt = this.textures[node.textureID]
+            material.setTexture(txt[0]);
+            amplif = [txt[1],txt[2]]; //s e t
         }
-        //Shaders
+        //TRACK SHADERS
         var shade;
         if (node.selectable) {
             this.applyShader = true;//this.scene.selectableNodes[node.nodeID];
@@ -1778,42 +1772,38 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
             this.applyShader = false;
         }
         shade = this.applyShader;
-
-
+        //Apply transformMatrix
         this.scene.multMatrix(node.transformMatrix);
-
-        if (node.counterAnimations >= node.animationID.length && node.animationID.length > 0)
-            this.scene.multMatrix(node.endAnimationMatrix);
-        else if (node.animationID.length > 0) {
+        //Handle animations
+        //if (node.counterAnimations >= node.animationID.length && node.animationID.length > 0)
+        //    this.scene.multMatrix(node.endAnimationMatrix);
+        /*else*/ if (node.animationID.length > 0 && node.counterAnimations < node.animationID.length) {
             if (node.currAnimation == null) {
                 node.currAnimation = this.animations[node.animationID[node.counterAnimations]].clone();
                 node.currAnimation.restartTime();
             }
-
             var matAnimation = node.currAnimation.animate();
-            this.scene.multMatrix(node.endAnimationMatrix);
+            //this.scene.multMatrix(node.endAnimationMatrix);
             this.scene.multMatrix(matAnimation);
-
             if (node.currAnimation.endFlag) {
                 node.currAnimation = null;
                 node.counterAnimations++;
-                mat4.multiply(node.endAnimationMatrix, node.endAnimationMatrix,matAnimation);
+                mat4.multiply(node.transformMatrix, node.transformMatrix,matAnimation);
                 if(node.piecetype){//Verificar se a animação é referente ao movimento de uma peça
                   if(node.piecetype == '1'){
                     this.scene.gameState = this.scene.state.P2PieceSelect
                   }else if(node.piecetype == '2'){
                     this.scene.gameState = this.scene.state.P1PieceSelect
                   }
-                  mat4.multiply(node.transformMatrix, node.transformMatrix,node.endAnimationMatrix)
-                  mat4.identity(node.endAnimationMatrix)
+                  //mat4.multiply(node.transformMatrix, node.transformMatrix,node.endAnimationMatrix)
+                  //mat4.identity(node.endAnimationMatrix)
                   node.animationID.pop()
                 }
             }
-
         }
-
+        //Node recursion call
         if(node.piecetype){
-          this.pickstack.unshift(++this.pickcounter)
+          this.pickstack.push(++this.pickcounter)
           this.selectablePieces[this.pickcounter] = node.nodeID
           for (var i = 0; i < node.children.length; i++) {
               this.scene.pushMatrix();
@@ -1821,7 +1811,7 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
               this.scene.popMatrix();
               this.applyShader = shade;
           }
-          this.pickstack.shift()
+          this.pickstack.pop()
         }else{
           for (var i = 0; i < node.children.length; i++) {
               this.scene.pushMatrix();
@@ -1830,7 +1820,7 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
               this.applyShader = shade;
           }
         }
-
+        //Apply shaders to leaves
         if (shade == false && this.currentShader == "select") {
             this.scene.setActiveShader(this.scene.defaultShader);
             this.currentShader = "default";
@@ -1838,19 +1828,18 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
             this.scene.setActiveShader(this.shader);
             this.currentShader = "select";
         }
-        material.apply();
-        if(this.pickstack.length > 0 && this.scene.gameState != this.scene.state.GameSetup){
-          if (node.leaves.length > 0) {
-              for (var i = 0; i < node.leaves.length; i++) {
-                  this.scene.registerForPick(this.pickstack[i],node.leaves[i])
-                  node.leaves[i].display(amplif[0], amplif[1]);
-              }
-          }
-        }else{
-          if (node.leaves.length > 0) {
-              for (var i = 0; i < node.leaves.length; i++) {
-                  node.leaves[i].display(amplif[0], amplif[1]);
-              }
+        //Draw Leaves
+        if(node.leaves.length > 0){
+          material.apply();
+          if(this.pickstack.length > 0){
+            for (var i = 0; i < node.leaves.length; i++) {
+                this.scene.registerForPick(this.pickstack[this.pickstack.length - 1],node.leaves[i])
+                node.leaves[i].display(amplif[0], amplif[1]);
+            }
+          }else{
+            for (var i = 0; i < node.leaves.length; i++) {
+                node.leaves[i].display(amplif[0], amplif[1]);
+            }
           }
         }
 
