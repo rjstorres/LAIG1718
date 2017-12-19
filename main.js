@@ -25,8 +25,11 @@ main=function()
     var myInterface = new MyInterface();
     var myScene = new XMLscene(myInterface);
 
+
+    //Função para gerir a interface inicial e setup
     var startApp = function(e){
       console.log("start")
+      //Recolha da informação
       let args = [];
       let cb = document.getElementsByName('cen');
       for (var i=0; i<cb.length; i++){
@@ -65,26 +68,30 @@ main=function()
       }
       console.log(args)
       document.body.removeChild(document.body.childNodes[1])
+      //Setup da cena segundo cenário escolhido
+      myScene.interface.gui.close();
+      delete myInterface;
+      myInterface = new MyInterface();
+      myScene.interface = myInterface;
+      app.setInterface(myInterface);
+      myInterface.setActiveCamera(myScene.camera);
+      delete myGraph;
       myGraph = new MySceneGraph(filename, myScene);
     }
     document.getElementById("startButton").onclick = startApp
-    app.init();
 
+
+
+    app.init();
     app.setScene(myScene);
     app.setInterface(myInterface);
-
-    myInterface.setActiveCamera(myScene.camera);
-
-	// get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml
-	// or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor)
-
-	var filename=getUrlVars()['file'] || "gameScene.xml"; //demo.xml
-
-	// create and load graph, and associate it to scene.
-	// Check console for loading errors
-	var myGraph = new MySceneGraph(filename, myScene);
-
-	// start
+    myInterface.setActiveCamera(myScene.camera)
+  	// get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml
+	 var filename=getUrlVars()['file'] || "gameScene.xml";
+  	// create and load graph, and associate it to scene.
+  	// Check console for loading errors
+	 var myGraph = new MySceneGraph(filename, myScene);
+  	// start
     app.run();
 }
 
