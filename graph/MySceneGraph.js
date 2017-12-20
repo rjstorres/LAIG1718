@@ -29,6 +29,9 @@ function MySceneGraph(filename, scene) {
     this.normScale = 0
     this.normScaleMax = this.scene.getNorm(Math.PI / 2);
 
+    this.materialstack=[]
+    this.texturestack=[]
+
     //Pickstack, permitir herança do registo para pick
     this.pickstack = []
     this.pickcounter = 1 //usado para definir ids
@@ -1746,26 +1749,27 @@ MySceneGraph.prototype.addMoveAnimation = function(spot, soldier){
  */
 MySceneGraph.prototype.displayScene = function () {
     this.shader.setUniformsValues({ normScale: this.normScale, normScaleMax: this.normScaleMax });
-    this.processGraph(this.nodes['root'], this.materials[this.defaultMaterialID], [1, 1]);
+    this.texturestack = ['clear']
+    this.processGraph(this.nodes['root']/*, this.materials[this.defaultMaterialID], [1, 1]*/);
     this.pickcounter = 1;
 }
 
-MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFactor) {
-    var material = Object.create(parentMaterial);
-    var amplif = amplifFactor;
+MySceneGraph.prototype.processGraph = function (node/*, parentMaterial, amplifFactor*/) {
+    //var material = Object.create(parentMaterial);
+    //var amplif = amplifFactor;
     if (node.nodeID != null) {
         //Processar material
-        if (node.materialID != 'null') {
-            material = this.materials[node.materialID];
-        }
+        //if (node.materialID != 'null') {
+        //    material = this.materials[node.materialID];
+        //}
         //Apply Texture
-        if (node.textureID != 'null') {
-            let txt = this.textures[node.textureID]
-            material.setTexture(txt[0]);
-            amplif = [txt[1],txt[2]]; //s e t
-        }
+        //if (node.textureID != 'null') {
+        //    let txt = this.textures[node.textureID]
+        //    material.setTexture(txt[0]);
+        //    amplif = [txt[1],txt[2]]; //s e t
+        //}
         //TRACK SHADERS
-        var shade;
+        let shade;
         if (node.selectable) {
             this.applyShader = true;//this.scene.selectableNodes[node.nodeID];
         } else if (node.selectable === false) {
@@ -1801,13 +1805,25 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
                 }
             }
         }
+        if(node.materialID == 'null'){
+          let ind = this.materialstack.length - 1
+          this.materialstack.push(this.materialstack[ind])
+        }else{
+          this.materialstack.push(node.materialID)
+        }
+        if(node.textureID == 'null'){
+          let ind = this.texturestack.length - 1
+          this.texturestack.push(this.texturestack[ind])
+        }else{
+          this.texturestack.push(node.textureID)
+        }
         //Node recursion call
         if(node.piecetype){
           this.pickstack.push(++this.pickcounter)
           this.selectablePieces[this.pickcounter] = node.nodeID
           for (var i = 0; i < node.children.length; i++) {
               this.scene.pushMatrix();
-              this.processGraph(this.nodes[node.children[i]], material, amplif);
+              this.processGraph(this.nodes[node.children[i]]/*, material, amplif*/);
               this.scene.popMatrix();
               this.applyShader = shade;
           }
@@ -1815,7 +1831,7 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
         }else{
           for (var i = 0; i < node.children.length; i++) {
               this.scene.pushMatrix();
-              this.processGraph(this.nodes[node.children[i]], material, amplif);
+              this.processGraph(this.nodes[node.children[i]]/*, material, amplif*/);
               this.scene.popMatrix();
               this.applyShader = shade;
           }
@@ -1830,7 +1846,12 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
         }
         //Draw Leaves
         if(node.leaves.length > 0){
-          material.apply();
+          let tex = this.textures[this.texturestack[this.texturestack.length - 1]]
+          let matter = this.materials[this.materialstack[this.materialstack.length - 1]]
+          matter.setTexture(tex[0])
+          let amplif = [tex[1],tex[2]]
+          matter.apply()
+          //material.apply();
           if(this.pickstack.length > 0){
             for (var i = 0; i < node.leaves.length; i++) {
                 this.scene.registerForPick(this.pickstack[this.pickstack.length - 1],node.leaves[i])
@@ -1842,7 +1863,8 @@ MySceneGraph.prototype.processGraph = function (node, parentMaterial, amplifFact
             }
           }
         }
-
+        this.texturestack.pop()
+        this.materialstack.pop()
     } else {
         console.log("Erro: nodeID == null")
     }
