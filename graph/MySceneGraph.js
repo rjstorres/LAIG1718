@@ -1725,6 +1725,7 @@ MySceneGraph.generateRandomString = function (length) {
 *Adicionar a animação de movimento de peça
 */
 MySceneGraph.prototype.addMoveAnimation = function(spotCoords, soldier){
+  console.log(this.scene.history)
   let soldierNode = this.nodes[soldier];
   //Coordenadas numéricas conforme definidas para o tabuleiro
   let soldierZ = this.scene.rows[soldierNode.coords[1]]

@@ -38,12 +38,10 @@ function XMLscene(interface, mode,dificulty) {
     /*Game Coordinates enumerator*/
     this.rows = { "1": 0,"2": -3.7,"3": -7.4,"4": -11,"5": -14.7,"6": -18.3,"7": -22.2,"8": -25.9 }
     this.collumns = { "A":-16.6, "B":-13, "C":-9.3, "D":-5.7, "E":-2, "F":1.7, "G":5.3, "H":9, "I":12.7, "J":16.3}
-    /*Used to restrict piece picking*/
-    this.pickConditional = 'A' //Values: 'A' 'B' 'spot'
     /*Current Selected soldier*/
     this.pickedSoldier = null
-    /*Current selected spot*/
-    this.pickedSpot = null
+    /*Movement history. Format: SoldierOrigin-SoldierDestinatio*/
+    this.history = []
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -152,8 +150,11 @@ XMLscene.prototype.hhPlay = function(){
                   this.pickedSoldier = sId;
                   this.graph.nodes[sId].selectable = true;
                 }else if(this.graph.nodes[sId].piecetype == 's'){
+                  //Validar movimento com servidor
                   this.graph.nodes[this.pickedSoldier].selectable = false;
+                  //Animação e estado dependente da resposta do servidor. Movimento, remover peça,vitoria,derrota
                   this.gameState = this.state.P1Animation;
+                  this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+this.graph.nodes[sId].coords)
                   this.graph.addMoveAnimation(this.graph.nodes[sId].coords, this.pickedSoldier)
                 }
                 break;
@@ -163,8 +164,10 @@ XMLscene.prototype.hhPlay = function(){
                   this.pickedSoldier = sId;
                   this.graph.nodes[sId].selectable = true;
                 }else if(this.graph.nodes[sId].piecetype == 's'){
+                  //Validar movimento com servidor
                   this.graph.nodes[this.pickedSoldier].selectable = false;
                   this.gameState = this.state.P2Animation;
+                  this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+this.graph.nodes[sId].coords)
                   this.graph.addMoveAnimation(this.graph.nodes[sId].coords, this.pickedSoldier)
                 }
                 break;
@@ -211,6 +214,7 @@ XMLscene.prototype.hmPlay = function(){
       this.pickedSoldier = "soldier"+ Math.trunc(Math.random() * (10) + 1) +"B"
       coords = String.fromCharCode(65+Math.trunc(Math.random() * (10))) + Math.trunc(Math.random() * (8) + 1);
       this.gameState = this.state.P2Animation;
+      this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+coords)
       this.graph.addMoveAnimation(coords, this.pickedSoldier)
       break;
     case this.state.P1SpotSelect:
@@ -231,6 +235,7 @@ XMLscene.prototype.hmPlay = function(){
                 }else if(this.graph.nodes[sId].piecetype == 's'){
                   this.graph.nodes[this.pickedSoldier].selectable = false;
                   this.gameState = this.state.P1Animation;
+                  this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+this.graph.nodes[sId].coords)
                   this.graph.addMoveAnimation(this.graph.nodes[sId].coords, this.pickedSoldier)
                 }
               }
@@ -250,17 +255,19 @@ XMLscene.prototype.hmPlay = function(){
 XMLscene.prototype.mmPlay = function(){
   switch (this.gameState) {
     case this.state.P1PieceSelect:
-    //Get a move from the server
-    this.pickedSoldier = "soldier"+ Math.trunc(Math.random() * (10) + 1) +"A"
-    coords = String.fromCharCode(65+Math.trunc(Math.random() * (10))) + Math.trunc(Math.random() * (8) + 1);
-    this.gameState = this.state.P2Animation;
-    this.graph.addMoveAnimation(coords, this.pickedSoldier)
+      //Get a move from the server
+      this.pickedSoldier = "soldier"+ Math.trunc(Math.random() * (10) + 1) +"A"
+      coords = String.fromCharCode(65+Math.trunc(Math.random() * (10))) + Math.trunc(Math.random() * (8) + 1);
+      this.gameState = this.state.P2Animation;
+      this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+coords)
+      this.graph.addMoveAnimation(coords, this.pickedSoldier)
       break;
     case this.state.P2PieceSelect:
       //Get a move from the server
       this.pickedSoldier = "soldier"+ Math.trunc(Math.random() * (10) + 1) +"B"
       coords = String.fromCharCode(65+Math.trunc(Math.random() * (10))) + Math.trunc(Math.random() * (8) + 1);
       this.gameState = this.state.P2Animation;
+      this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+coords)
       this.graph.addMoveAnimation(coords, this.pickedSoldier)
       break;
     default:
