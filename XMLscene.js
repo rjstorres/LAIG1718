@@ -4,7 +4,7 @@ var DEGREE_TO_RAD = Math.PI / 180;
  * XMLscene class, representing the scene that is to be rendered.
  * @constructor
  */
-function XMLscene(interface) {
+function XMLscene(interface, mode,dificulty) {
     CGFscene.call(this);
 
     this.interface = interface;
@@ -20,10 +20,21 @@ function XMLscene(interface) {
     this.cameraTimer = 0
     this.movingCamera = false
     //Game state
+    /*Game mode enumerator*/
+    this.mode = {HH:1,HM:2,MM:3}
     /*Game State enumerator*/
-    this.state = {P1PieceSelect: 1, P1SpotSelect: 2, AIPlay: 3,P2PieceSelect: 4, P2SpotSelect: 5, GameSetup: 6, P1Animation:7, P2Animation:8}
+    this.state = {P1PieceSelect: 1, P1SpotSelect: 2 ,P2PieceSelect: 4, P2SpotSelect: 5, GameSetup: 6, P1Animation:7, P2Animation:8}
     /*The current game state*/
     this.gameState = this.state.GameSetup;
+    /*The current game mode */
+    if(mode){
+      this.gameMode = Number(mode)
+    }else{
+      this.gameMode = this.mode.HH
+    }
+    //Dificuldade do jogo
+    this.dificulty = dificulty ? Number(dificulty) : 0
+
     /*Game Coordinates enumerator*/
     this.rows = { "1": 0,"2": -3.7,"3": -7.4,"4": -11,"5": -14.7,"6": -18.3,"7": -22.2,"8": -25.9 }
     this.collumns = { "A":-16.6, "B":-13, "C":-9.3, "D":-5.7, "E":-2, "F":1.7, "G":5.3, "H":9, "I":12.7, "J":16.3}
@@ -106,14 +117,15 @@ XMLscene.prototype.onGraphLoaded = function()
     //Butão de controlo da camera
     this.interface.addCameraControl()
 }
-XMLscene.prototype.logPicking = function ()
-{
-	if (this.pickMode == false) {
+/*
+* Gerir o modo de jogo humano-humano
+*/
+XMLscene.prototype.hhPlay = function(){
+  if (this.pickMode == false) {
 		if (this.pickResults != null && this.pickResults.length > 0) {
 			for (var i=0; i< this.pickResults.length; i++) {
 				var obj = this.pickResults[i][0];
-				if (obj)
-				{
+				if (obj){
 					var customId = this.pickResults[i][1];
 					console.log("Picked object: " + obj + ", with pick id " + customId);
           if(this.gameState != this.state.GameSetup){
@@ -140,10 +152,9 @@ XMLscene.prototype.logPicking = function ()
                   this.pickedSoldier = sId;
                   this.graph.nodes[sId].selectable = true;
                 }else if(this.graph.nodes[sId].piecetype == 's'){
-                  this.pickedSpot = sId;
                   this.graph.nodes[this.pickedSoldier].selectable = false;
                   this.gameState = this.state.P1Animation;
-                  this.graph.addMoveAnimation(this.pickedSpot, this.pickedSoldier)
+                  this.graph.addMoveAnimation(this.graph.nodes[sId].coords, this.pickedSoldier)
                 }
                 break;
               case this.state.P2SpotSelect:
@@ -152,14 +163,13 @@ XMLscene.prototype.logPicking = function ()
                   this.pickedSoldier = sId;
                   this.graph.nodes[sId].selectable = true;
                 }else if(this.graph.nodes[sId].piecetype == 's'){
-                  this.pickedSpot = sId;
                   this.graph.nodes[this.pickedSoldier].selectable = false;
-                  this.gameState = this.state.P1Animation;
-                  this.graph.addMoveAnimation(this.pickedSpot, this.pickedSoldier)
+                  this.gameState = this.state.P2Animation;
+                  this.graph.addMoveAnimation(this.graph.nodes[sId].coords, this.pickedSoldier)
                 }
                 break;
               default:
-
+                break;
             }
           }
 				}
@@ -168,11 +178,99 @@ XMLscene.prototype.logPicking = function ()
 		}
 	}
 }
+/*
+* Gerir o modo de jogo humano-maquina
+*/
+XMLscene.prototype.hmPlay = function(){
+  switch (this.gameState) {
+    case this.state.P1PieceSelect:
+      if (this.pickMode == false) {
+        if (this.pickResults != null && this.pickResults.length > 0) {
+          for (var i=0; i< this.pickResults.length; i++) {
+            var obj = this.pickResults[i][0];
+            if (obj){
+              var customId = this.pickResults[i][1];
+              console.log("Picked object: " + obj + ", with pick id " + customId);
+              if(this.gameState != this.state.GameSetup){
+                let sId = this.graph.selectablePieces[customId];
+                console.log(sId);
+                if(this.graph.nodes[sId].piecetype == '1'){
+                  this.pickedSoldier = sId;
+                  this.graph.nodes[sId].selectable = true;
+                  this.gameState = this.state.P1SpotSelect;
+                }
+              }
+            }
+          }
+          this.pickResults.splice(0,this.pickResults.length);
+        }
+      }
+      break;
+    case this.state.P2PieceSelect:
+      //Get a move from the server
+      this.pickedSoldier = "soldier"+ Math.trunc(Math.random() * (10) + 1) +"B"
+      coords = String.fromCharCode(65+Math.trunc(Math.random() * (10))) + Math.trunc(Math.random() * (8) + 1);
+      this.gameState = this.state.P2Animation;
+      this.graph.addMoveAnimation(coords, this.pickedSoldier)
+      break;
+    case this.state.P1SpotSelect:
+      if (this.pickMode == false) {
+        if (this.pickResults != null && this.pickResults.length > 0) {
+          for (var i=0; i< this.pickResults.length; i++) {
+            var obj = this.pickResults[i][0];
+            if (obj){
+              var customId = this.pickResults[i][1];
+              console.log("Picked object: " + obj + ", with pick id " + customId);
+              if(this.gameState != this.state.GameSetup){
+                let sId = this.graph.selectablePieces[customId];
+                console.log(sId);
+                if(this.graph.nodes[sId].piecetype == '1'){
+                  this.graph.nodes[this.pickedSoldier].selectable = false;
+                  this.pickedSoldier = sId;
+                  this.graph.nodes[sId].selectable = true;
+                }else if(this.graph.nodes[sId].piecetype == 's'){
+                  this.graph.nodes[this.pickedSoldier].selectable = false;
+                  this.gameState = this.state.P1Animation;
+                  this.graph.addMoveAnimation(this.graph.nodes[sId].coords, this.pickedSoldier)
+                }
+              }
+            }
+          }
+          this.pickResults.splice(0,this.pickResults.length);
+        }
+      }
+      break;
+    default:
+      break;
+  }
+}
+/*
+* Gerir o modo de jogo maquina-maquina
+*/
+XMLscene.prototype.mmPlay = function(){
+  switch (this.gameState) {
+    case this.state.P1PieceSelect:
+    //Get a move from the server
+    this.pickedSoldier = "soldier"+ Math.trunc(Math.random() * (10) + 1) +"A"
+    coords = String.fromCharCode(65+Math.trunc(Math.random() * (10))) + Math.trunc(Math.random() * (8) + 1);
+    this.gameState = this.state.P2Animation;
+    this.graph.addMoveAnimation(coords, this.pickedSoldier)
+      break;
+    case this.state.P2PieceSelect:
+      //Get a move from the server
+      this.pickedSoldier = "soldier"+ Math.trunc(Math.random() * (10) + 1) +"B"
+      coords = String.fromCharCode(65+Math.trunc(Math.random() * (10))) + Math.trunc(Math.random() * (8) + 1);
+      this.gameState = this.state.P2Animation;
+      this.graph.addMoveAnimation(coords, this.pickedSoldier)
+      break;
+    default:
+      break;
+    }
+}
 /**
  * Displays the scene.
  */
 XMLscene.prototype.display = function() {
-    this.logPicking();
     this.clearPickRegistration();
     // ---- BEGIN Background, camera and axis setup
 
@@ -212,7 +310,20 @@ XMLscene.prototype.display = function() {
                 i++;
             }
         }
-
+        //Process game cycle
+        switch (this.gameMode) {
+          case this.mode.HH:
+            this.hhPlay()
+            break;
+          case this.mode.HM:
+            this.hmPlay()
+            break;
+          case this.mode.MM:
+            this.mmPlay()
+            break;
+          default:
+            break;
+        }
         // Displays the scene.
         this.counter += 0.5;
         this.graph.normScale = this.getNorm(this.counter);

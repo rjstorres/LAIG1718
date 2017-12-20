@@ -73,7 +73,7 @@ main=function()
       delete myInterface;
       myInterface = new MyInterface();
       delete myScene;
-      myScene = new XMLscene(myInterface);
+      myScene = new XMLscene(myInterface, args[1], args[2]);
       app.setScene(myScene);
       app.setInterface(myInterface);
       myInterface.setActiveCamera(myScene.camera);

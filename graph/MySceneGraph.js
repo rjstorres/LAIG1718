@@ -1724,17 +1724,16 @@ MySceneGraph.generateRandomString = function (length) {
 /*
 *Adicionar a animação de movimento de peça
 */
-MySceneGraph.prototype.addMoveAnimation = function(spot, soldier){
+MySceneGraph.prototype.addMoveAnimation = function(spotCoords, soldier){
   let soldierNode = this.nodes[soldier];
-  let spotNode = this.nodes[spot];
   //Coordenadas numéricas conforme definidas para o tabuleiro
   let soldierZ = this.scene.rows[soldierNode.coords[1]]
   let soldierX = this.scene.collumns[soldierNode.coords[0]]
   //Setup da posição inicial de forma a prevenir acumulo de erros
   mat4.identity(soldierNode.transformMatrix)
   mat4.translate(soldierNode.transformMatrix,soldierNode.transformMatrix,[soldierX,0,soldierZ])
-  let spotZ = this.scene.rows[spotNode.coords[1]]
-  let spotX = this.scene.collumns[spotNode.coords[0]]
+  let spotZ = this.scene.rows[spotCoords[1]]
+  let spotX = this.scene.collumns[spotCoords[0]]
   soldierNode.counterAnimations = 0 //reset animation counter
   soldierNode.animationID = [1] //reset animation queue
   let difX = spotX-soldierX
@@ -1742,7 +1741,7 @@ MySceneGraph.prototype.addMoveAnimation = function(spot, soldier){
   let invertDir = soldierNode.piecetype == '1' ? true : false //usando para a inverção de rotações de direcção
   soldierNode.currAnimation = new BezierAnimation(this.scene, [[0,0,0], [difX/3,7,difZ/3], [2*difX/3,7,2*difZ/3], [difX, 0, difZ], 8],invertDir);
   //mat4.translate(soldierNode.transformMatrix, soldierNode.transformMatrix, [spotX-soldierX, 0, spotZ-soldierZ]);
-  soldierNode.coords = spotNode.coords
+  soldierNode.coords = spotCoords
 }
 /**
  * Displays the scene, processing each node, starting in the root node.
