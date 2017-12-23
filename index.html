@@ -28,6 +28,21 @@ canvas {
               border-width: 5px;
               border-radius: 10px;" id="uidiv">
     <div style="color:white; margin-left:20px;margin-right:20px; margin-bottom:20px">
+
+      <script>
+         function decreasetime(){
+          let input = document.getElementById('time');
+          if(Number(input.value) > 30){
+            input.value = Number(input.value) - 30
+          }
+        }
+         function increasetime(){
+           let input = document.getElementById('time');
+           if(Number(input.value) < 120){
+             input.value = Number(input.value) + 30
+           }
+        }
+      </script>
       <h3>Cenário:</h3>
       <input type="radio" name="cen" value="c1" checked> Cenário1
       <input type="radio" name="cen" value="c2"> Cenário2
@@ -42,11 +57,25 @@ canvas {
       <input type="radio" name="dif" value="0" checked> Simples
       <input type="radio" name="dif" value="1"> Avançado
       <br />
+      <h3>Tempo por jogada (segundos):</h3>
+      <button onclick="decreasetime()">&#8810;</button>
+      <input id="time" style="width:10%" value="30" disabled/>
+      <button onclick="increasetime()">&#8811;</button>
+      <br />
       <br />
       <button id="startButton" style="margin-left: 40%; height:40px; width:80px; font-size:130%"><b>Iniciar</b></button>
       <br />
-
     </div>
+  </div>
+  <div style="position: absolute;
+              top:-1%;
+              margin-left:45%;
+              background-color:rgba(64,64,64,0.7);
+              border-style: solid;
+              border-color: black;
+              border-width: 5px;
+              border-radius: 10px;" id="timediv">
+      <h3 style="font-size:300%; color:white; margin-top:10px;margin-bottom:0px;margin-right:10px; width:132px">&#9201; <a id="retime">0</a></h3>
   </div>
   <section id="cgf"></section>
   <script src="main.js"></script>

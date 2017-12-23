@@ -4,7 +4,7 @@ var DEGREE_TO_RAD = Math.PI / 180;
  * XMLscene class, representing the scene that is to be rendered.
  * @constructor
  */
-function XMLscene(interface, mode,dificulty) {
+function XMLscene(interface, mode,dificulty,time) {
     CGFscene.call(this);
 
     this.interface = interface;
@@ -32,6 +32,13 @@ function XMLscene(interface, mode,dificulty) {
     }else{
       this.gameMode = this.mode.HH
     }
+    if(time){
+      this.timer = Number(time)
+    }else{
+      this.timer = 30
+    }
+    this.timerTag = document.getElementById('retime')
+    this.timerTag.innerText = this.timer
     //Dificuldade do jogo
     this.dificulty = dificulty ? Number(dificulty) : 0
 
@@ -168,6 +175,7 @@ XMLscene.prototype.hhPlay = function(){
                   this.graph.nodes[this.pickedSoldier].selectable = false;
                   //Animação e estado dependente da resposta do servidor. Movimento, remover peça,vitoria,derrota
                   this.gameState = this.state.P1Animation;
+                  this.resetTimer();
                   this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+this.graph.nodes[sId].coords)
                   this.saveState(this.pickedSoldier,this.graph.nodes[this.pickedSoldier].coords,this.graph.nodes[sId].coords)
                   this.graph.addMoveAnimation(this.graph.nodes[sId].coords, this.pickedSoldier)
@@ -182,6 +190,7 @@ XMLscene.prototype.hhPlay = function(){
                   //Validar movimento com servidor
                   this.graph.nodes[this.pickedSoldier].selectable = false;
                   this.gameState = this.state.P2Animation;
+                  this.resetTimer();
                   this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+this.graph.nodes[sId].coords)
                   this.saveState(this.pickedSoldier,this.graph.nodes[this.pickedSoldier].coords,this.graph.nodes[sId].coords)
                   this.graph.addMoveAnimation(this.graph.nodes[sId].coords, this.pickedSoldier)
@@ -230,6 +239,7 @@ XMLscene.prototype.hmPlay = function(){
       this.pickedSoldier = "soldier"+ Math.trunc(Math.random() * (10) + 1) +"B"
       coords = String.fromCharCode(65+Math.trunc(Math.random() * (10))) + Math.trunc(Math.random() * (8) + 1);
       this.gameState = this.state.P2Animation;
+      this.resetTimer();
       this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+coords)
       this.saveState(this.pickedSoldier,this.graph.nodes[this.pickedSoldier].coords,coords)
       this.graph.addMoveAnimation(coords, this.pickedSoldier)
@@ -252,6 +262,7 @@ XMLscene.prototype.hmPlay = function(){
                 }else if(this.graph.nodes[sId].piecetype == 's'){
                   this.graph.nodes[this.pickedSoldier].selectable = false;
                   this.gameState = this.state.P1Animation;
+                  this.resetTimer();
                   this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+this.graph.nodes[sId].coords)
                   this.saveState(this.pickedSoldier,this.graph.nodes[this.pickedSoldier].coords,this.graph.nodes[sId].coords)
                   this.graph.addMoveAnimation(this.graph.nodes[sId].coords, this.pickedSoldier)
@@ -276,7 +287,8 @@ XMLscene.prototype.mmPlay = function(){
       //Get a move from the server
       this.pickedSoldier = "soldier"+ Math.trunc(Math.random() * (10) + 1) +"A"
       coords = String.fromCharCode(65+Math.trunc(Math.random() * (10))) + Math.trunc(Math.random() * (8) + 1);
-      this.gameState = this.state.P2Animation;
+      this.gameState = this.state.P1Animation;
+      this.resetTimer();
       this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+coords)
       this.saveState(this.pickedSoldier,this.graph.nodes[this.pickedSoldier].coords,coords)
       this.graph.addMoveAnimation(coords, this.pickedSoldier)
@@ -286,6 +298,7 @@ XMLscene.prototype.mmPlay = function(){
       this.pickedSoldier = "soldier"+ Math.trunc(Math.random() * (10) + 1) +"B"
       coords = String.fromCharCode(65+Math.trunc(Math.random() * (10))) + Math.trunc(Math.random() * (8) + 1);
       this.gameState = this.state.P2Animation;
+      this.resetTimer();
       this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+coords)
       this.saveState(this.pickedSoldier,this.graph.nodes[this.pickedSoldier].coords,coords)
       this.graph.addMoveAnimation(coords, this.pickedSoldier)
@@ -327,6 +340,45 @@ XMLscene.prototype.saveState = function(soldier, origin, destination){
   console.log(this.savedStates)
 }
 /*
+* Generate a randomMove
+*/
+XMLscene.prototype.makeRandomMove = function(){
+  if(this.gameState == this.state.P1SpotSelect || this.state.P1PieceSelect){
+    this.pickedSoldier = "soldier"+ Math.trunc(Math.random() * (10) + 1) +"A"
+    coords = String.fromCharCode(65+Math.trunc(Math.random() * (10))) + Math.trunc(Math.random() * (8) + 1);
+    this.gameState = this.state.P1Animation;
+    this.resetTimer();
+    this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+coords)
+    this.saveState(this.pickedSoldier,this.graph.nodes[this.pickedSoldier].coords,coords)
+    this.graph.addMoveAnimation(coords, this.pickedSoldier)
+  }else if(this.gameState == this.state.P2SpotSelect || this.state.P2PieceSelect){
+    this.pickedSoldier = "soldier"+ Math.trunc(Math.random() * (10) + 1) +"B"
+    coords = String.fromCharCode(65+Math.trunc(Math.random() * (10))) + Math.trunc(Math.random() * (8) + 1);
+    this.gameState = this.state.P2Animation;
+    this.resetTimer();
+    this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+coords)
+    this.saveState(this.pickedSoldier,this.graph.nodes[this.pickedSoldier].coords,coords)
+    this.graph.addMoveAnimation(coords, this.pickedSoldier)
+  }
+}
+/*
+* Manage the game timer
+*/
+XMLscene.prototype.manageTimer = function(scene){
+  if(this.gameState != this.state.P1Animation && this.gameState != this.state.P2Animation){
+      this.timerTag.innerText = Number(this.timerTag.innerText) - 1
+      if(Number(this.timerTag.innerText) < 0){
+        this.makeRandomMove()
+      }
+  }
+}
+/*
+* Reset the timer
+*/
+XMLscene.prototype.resetTimer = function(){
+    this.timerTag.innerText = this.timer
+}
+/*
 *Undo into last state
 */
 XMLscene.prototype.Undo = function(){
@@ -366,6 +418,7 @@ XMLscene.prototype.Undo = function(){
       }
     }
     this.gameState = undoState;
+    this.resetTimer();
   }
 }
 /**

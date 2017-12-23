@@ -66,6 +66,7 @@ main=function()
             break;
          }
       }
+      args.push(document.getElementById('time').value)
       console.log(args)
       document.body.removeChild(document.body.childNodes[1])
       //Setup da cena segundo cenário escolhido
@@ -73,13 +74,14 @@ main=function()
       delete myInterface;
       myInterface = new MyInterface();
       delete myScene;
-      myScene = new XMLscene(myInterface, args[1], args[2]);
+      myScene = new XMLscene(myInterface, args[1], args[2], args[3]);
       app.setScene(myScene);
       app.setInterface(myInterface);
       myInterface.setActiveCamera(myScene.camera);
       delete myGraph;
       myGraph = new MySceneGraph(filename, myScene);
       myScene.gameState = myScene.state.P1PieceSelect;
+      setInterval(myScene.manageTimer.bind(myScene), 1000);
       myScene.clearPickRegistration();
     }
     document.getElementById("startButton").onclick = startApp
