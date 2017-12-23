@@ -304,10 +304,10 @@
           <NODEREF id="soldierBaseA" />
         </DESCENDANTS>
       </NODE>
-      <NODE id="soldierReiA" coordinates="E2" piecetype="1">
+      <NODE id="soldierReiA" coordinates="F2" piecetype="1">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
-        <TRANSLATION x="-2" y="0" z="-3.7"/>
+        <TRANSLATION x="1.6" y="0" z="-3.7"/>
         <DESCENDANTS>
           <NODEREF id="soldierReiBaseA" />
         </DESCENDANTS>

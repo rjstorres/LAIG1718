@@ -42,6 +42,20 @@ function XMLscene(interface, mode,dificulty) {
     this.pickedSoldier = null
     /*Movement history. Format: SoldierOrigin-SoldierDestinatio*/
     this.history = []
+    /*Game saved States*/
+    this.savedStates = [
+      [
+        ['1w','2w','3w','4w','5w','6w','7w','8w','9w','10w','8'],
+        [' ',' ',' ',' ','W',' ',' ',' ',' ',' ','7'],
+        [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','6'],
+        [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','5'],
+        [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','4'],
+        [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','3'],
+        [' ',' ',' ',' ',' ','B',' ',' ',' ',' ','2'],
+        ['1b','2b','3b','4b','5b','6b','7b','8b','9b','10b','1'],
+        ['_a_','_b_','_c_','_d_','_e_','_f_','_g_','_h_','_i_','_j_'],
+      ],
+    ]
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -155,6 +169,7 @@ XMLscene.prototype.hhPlay = function(){
                   //Animação e estado dependente da resposta do servidor. Movimento, remover peça,vitoria,derrota
                   this.gameState = this.state.P1Animation;
                   this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+this.graph.nodes[sId].coords)
+                  this.saveState(this.pickedSoldier,this.graph.nodes[this.pickedSoldier].coords,this.graph.nodes[sId].coords)
                   this.graph.addMoveAnimation(this.graph.nodes[sId].coords, this.pickedSoldier)
                 }
                 break;
@@ -168,6 +183,7 @@ XMLscene.prototype.hhPlay = function(){
                   this.graph.nodes[this.pickedSoldier].selectable = false;
                   this.gameState = this.state.P2Animation;
                   this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+this.graph.nodes[sId].coords)
+                  this.saveState(this.pickedSoldier,this.graph.nodes[this.pickedSoldier].coords,this.graph.nodes[sId].coords)
                   this.graph.addMoveAnimation(this.graph.nodes[sId].coords, this.pickedSoldier)
                 }
                 break;
@@ -215,6 +231,7 @@ XMLscene.prototype.hmPlay = function(){
       coords = String.fromCharCode(65+Math.trunc(Math.random() * (10))) + Math.trunc(Math.random() * (8) + 1);
       this.gameState = this.state.P2Animation;
       this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+coords)
+      this.saveState(this.pickedSoldier,this.graph.nodes[this.pickedSoldier].coords,coords)
       this.graph.addMoveAnimation(coords, this.pickedSoldier)
       break;
     case this.state.P1SpotSelect:
@@ -236,6 +253,7 @@ XMLscene.prototype.hmPlay = function(){
                   this.graph.nodes[this.pickedSoldier].selectable = false;
                   this.gameState = this.state.P1Animation;
                   this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+this.graph.nodes[sId].coords)
+                  this.saveState(this.pickedSoldier,this.graph.nodes[this.pickedSoldier].coords,this.graph.nodes[sId].coords)
                   this.graph.addMoveAnimation(this.graph.nodes[sId].coords, this.pickedSoldier)
                 }
               }
@@ -260,6 +278,7 @@ XMLscene.prototype.mmPlay = function(){
       coords = String.fromCharCode(65+Math.trunc(Math.random() * (10))) + Math.trunc(Math.random() * (8) + 1);
       this.gameState = this.state.P2Animation;
       this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+coords)
+      this.saveState(this.pickedSoldier,this.graph.nodes[this.pickedSoldier].coords,coords)
       this.graph.addMoveAnimation(coords, this.pickedSoldier)
       break;
     case this.state.P2PieceSelect:
@@ -268,11 +287,86 @@ XMLscene.prototype.mmPlay = function(){
       coords = String.fromCharCode(65+Math.trunc(Math.random() * (10))) + Math.trunc(Math.random() * (8) + 1);
       this.gameState = this.state.P2Animation;
       this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+coords)
+      this.saveState(this.pickedSoldier,this.graph.nodes[this.pickedSoldier].coords,coords)
       this.graph.addMoveAnimation(coords, this.pickedSoldier)
       break;
     default:
       break;
     }
+}
+/*
+*Save the state of the current game
+*/
+XMLscene.prototype.saveState = function(soldier, origin, destination){
+  let oldState = this.savedStates[this.savedStates.length - 1].slice()
+  let newState = []
+  for(let i = 0; i < 9; i++){
+    newState.push(oldState[i].slice())
+  }
+  let row = 8 - Number(origin[1])
+  let col = origin.charCodeAt(0) - 65
+  newState[row][col] = ' '
+  let id
+  if(soldier.includes('A')){
+    if(soldier.includes('Rei'))
+      id = 'B'
+    else{
+      id = soldier.split('soldier')[1].split('A')[0] + 'b'
+    }
+  }else{
+    if(soldier.includes('Rei'))
+      id = 'W'
+    else{
+      id = soldier.split('soldier')[1].split('B')[0] + 'w'
+    }
+  }
+  row = 8 - Number(destination[1])
+  col = destination.charCodeAt(0) - 65
+  newState[row][col] = id
+  this.savedStates.push(newState)
+  console.log(this.savedStates)
+}
+/*
+*Undo into last state
+*/
+XMLscene.prototype.Undo = function(){
+  if( ((this.gameState == this.state.P1PieceSelect) || (this.gameState == this.state.P2PieceSelect)) && (this.savedStates.length > 1) ){
+    let undoState = this.gameState == this.state.P1PieceSelect ? this.state.P2PieceSelect : this.state.P1PieceSelect;
+    this.savedStates.pop();
+    let oldState = this.savedStates[this.savedStates.length - 1]
+    this.history.pop();
+    for(let i = 0; i < 8; i++){
+      for(let j = 0; j < 10; j++){
+        if (oldState[i][j] !== ' '){
+          let piece = oldState[i][j];
+          let coords = oldState[8][j][1].toUpperCase() + oldState[i][10]
+          let soldier = "";
+          switch (piece[piece.length - 1]) {
+            case 'W':
+              soldier = 'soldierReiB'
+              this.graph.nodes[soldier].coords = coords
+              break;
+            case 'B':
+              soldier = 'soldierReiA'
+              this.graph.nodes[soldier].coords = coords
+              break;
+            case 'w':
+              soldier = 'soldier'+piece.split('w')[0]+'B'
+              this.graph.nodes[soldier].coords = coords
+              break;
+            case 'b':
+              soldier = 'soldier'+piece.split('b')[0]+'A'
+              this.graph.nodes[soldier].coords = coords
+              break;
+            default:
+              break;
+          }
+          this.graph.updatePosition(soldier);
+        }
+      }
+    }
+    this.gameState = undoState;
+  }
 }
 /**
  * Displays the scene.

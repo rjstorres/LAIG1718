@@ -1744,6 +1744,16 @@ MySceneGraph.prototype.addMoveAnimation = function(spotCoords, soldier){
   //mat4.translate(soldierNode.transformMatrix, soldierNode.transformMatrix, [spotX-soldierX, 0, spotZ-soldierZ]);
   soldierNode.coords = spotCoords
 }
+/*
+*Atualizar a posição de uma peça conforme o seu estado interno
+*/
+MySceneGraph.prototype.updatePosition = function(soldier){
+  let soldierNode = this.nodes[soldier];
+  let soldierZ = this.scene.rows[soldierNode.coords[1]]
+  let soldierX = this.scene.collumns[soldierNode.coords[0]]
+  mat4.identity(soldierNode.transformMatrix)
+  mat4.translate(soldierNode.transformMatrix,soldierNode.transformMatrix,[soldierX,0,soldierZ])
+}
 /**
  * Displays the scene, processing each node, starting in the root node.
  */
