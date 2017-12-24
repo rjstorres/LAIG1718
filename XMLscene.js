@@ -21,7 +21,7 @@ function XMLscene(interface, mode,dificulty,time) {
     this.movingCamera = false
     //Game state
     /*Game mode enumerator*/
-    this.mode = {HH:1,HM:2,MM:3}
+    this.mode = {HH:1,HM:2,MM:3,R:4}
     /*Game State enumerator*/
     this.state = {P1PieceSelect: 1, P1SpotSelect: 2 ,P2PieceSelect: 4, P2SpotSelect: 5, GameSetup: 6, P1Animation:7, P2Animation:8}
     /*The current game state*/
@@ -308,6 +308,80 @@ XMLscene.prototype.mmPlay = function(){
     }
 }
 /*
+* Fazer replay do jogo
+*/
+XMLscene.prototype.rPlay = function(){
+  let action = this.history[this.rcounter].split("-")
+  let coords
+  switch (this.gameState) {
+    case this.state.P1PieceSelect:
+      this.pickedSoldier = action[0]
+      coords = action[2]
+      this.gameState = this.state.P1Animation;
+      this.resetTimer();
+      this.rcounter++
+      this.graph.addMoveAnimation(coords, this.pickedSoldier)
+      break;
+    case this.state.P2PieceSelect:
+      this.pickedSoldier = action[0]
+      coords = action[2]
+      this.gameState = this.state.P2Animation;
+      this.resetTimer();
+      this.rcounter++
+      this.graph.addMoveAnimation(coords, this.pickedSoldier)
+      break;
+    default:
+      break;
+    }
+    if(this.rcounter >= this.history.length){
+      this.gameMode = this.oldGameMode;
+    }
+}
+/*
+*Replay game
+*/
+XMLscene.prototype.Replay = function(){
+  let oldState = this.savedStates[0]
+  for(let i = 0; i < 8; i++){
+    for(let j = 0; j < 10; j++){
+      if (oldState[i][j] !== ' '){
+        let piece = oldState[i][j];
+        let coords = oldState[8][j][1].toUpperCase() + oldState[i][10]
+        let soldier = "";
+        switch (piece[piece.length - 1]) {
+          case 'W':
+            soldier = 'soldierReiB'
+            this.graph.nodes[soldier].coords = coords
+            break;
+          case 'B':
+            soldier = 'soldierReiA'
+            this.graph.nodes[soldier].coords = coords
+            break;
+          case 'w':
+            soldier = 'soldier'+piece.split('w')[0]+'B'
+            this.graph.nodes[soldier].coords = coords
+            break;
+          case 'b':
+            soldier = 'soldier'+piece.split('b')[0]+'A'
+            this.graph.nodes[soldier].coords = coords
+            break;
+          default:
+            break;
+        }
+        this.graph.updatePosition(soldier);
+      }
+    }
+  }
+  this.gameState = this.state.P1PieceSelect;
+  this.oldGameMode = this.gameMode;
+  this.gameMode = this.mode.R;
+  this.rcounter = 0;
+  this.gameState = this.state.P1PieceSelect;
+  if(this.pickedSoldier)
+    this.graph.nodes[this.pickedSoldier].selectable = false;
+  this.resetTimer();
+}
+/*
 *Save the state of the current game
 */
 XMLscene.prototype.saveState = function(soldier, origin, destination){
@@ -343,7 +417,7 @@ XMLscene.prototype.saveState = function(soldier, origin, destination){
 * Generate a randomMove
 */
 XMLscene.prototype.makeRandomMove = function(){
-  if(this.gameState == this.state.P1SpotSelect || this.state.P1PieceSelect){
+  if(this.gameState == this.state.P1SpotSelect || this.gameState == this.state.P1PieceSelect){
     this.pickedSoldier = "soldier"+ Math.trunc(Math.random() * (10) + 1) +"A"
     coords = String.fromCharCode(65+Math.trunc(Math.random() * (10))) + Math.trunc(Math.random() * (8) + 1);
     this.gameState = this.state.P1Animation;
@@ -351,7 +425,7 @@ XMLscene.prototype.makeRandomMove = function(){
     this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+coords)
     this.saveState(this.pickedSoldier,this.graph.nodes[this.pickedSoldier].coords,coords)
     this.graph.addMoveAnimation(coords, this.pickedSoldier)
-  }else if(this.gameState == this.state.P2SpotSelect || this.state.P2PieceSelect){
+  }else if(this.gameState == this.state.P2SpotSelect || this.gameState == this.state.P2PieceSelect){
     this.pickedSoldier = "soldier"+ Math.trunc(Math.random() * (10) + 1) +"B"
     coords = String.fromCharCode(65+Math.trunc(Math.random() * (10))) + Math.trunc(Math.random() * (8) + 1);
     this.gameState = this.state.P2Animation;
@@ -382,7 +456,7 @@ XMLscene.prototype.resetTimer = function(){
 *Undo into last state
 */
 XMLscene.prototype.Undo = function(){
-  if( ((this.gameState == this.state.P1PieceSelect) || (this.gameState == this.state.P2PieceSelect)) && (this.savedStates.length > 1) ){
+  if( ((this.gameState == this.state.P1PieceSelect) || (this.gameState == this.state.P2PieceSelect)) && (this.savedStates.length > 1) && (this.gameMode != this.mode.R) ){
     let undoState = this.gameState == this.state.P1PieceSelect ? this.state.P2PieceSelect : this.state.P1PieceSelect;
     this.savedStates.pop();
     let oldState = this.savedStates[this.savedStates.length - 1]
@@ -466,6 +540,9 @@ XMLscene.prototype.display = function() {
         }
         //Process game cycle
         switch (this.gameMode) {
+          case this.mode.R:
+            this.rPlay()
+            break;
           case this.mode.HH:
             this.hhPlay()
             break;
