@@ -8,14 +8,13 @@
 *moves the piece, and removes any captured pieces caused by that move
 *checks if the game is over    
 */
-aI_move(Player, 1):- 
+aI_move(Player, 1,NL):- 
 	gather_all_moves(ListOfMoves,Player),!,
 	length(ListOfMoves,X),
 	X>0,
 	random_member(NL, ListOfMoves),
         move(NL),
-        remove_captured_pieces(NL,Player),
-        is_game_over(Player).
+        remove_captured_pieces(NL,Player).
 
 /**
 *AI moves for a player passed in argument. 
@@ -23,14 +22,13 @@ aI_move(Player, 1):-
 *moves the piece, and removes any captured pieces caused by that move
 *checks if the game is over    
 */
-aI_move(Player, 2):- 
+aI_move(Player, 2,Move):- 
 	gather_all_moves(ListOfMoves,Player),!, 
 	length(ListOfMoves,X),
 	X>0,
         choose_best_move(ListOfMoves, Player, Move),
         move(Move),
-	remove_captured_pieces(Move,Player),
-        is_game_over(Player).
+	remove_captured_pieces(Move,Player).
 
 
 /**

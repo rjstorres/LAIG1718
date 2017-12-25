@@ -594,8 +594,7 @@ check_mate(Pos):-
         get_piece(Column,Line,Piece),
         player_dux(Player,Piece),
         helper_check_mate(Player,NextPiece),
-        set_piece(ColumnLetter,Line,' '),  %and sees if it's a dux
-        format('Player ~w Dux at ~w~w got immobilized ~n~n',[Player,ColumnLetter,Line]).
+        set_piece(ColumnLetter,Line,' ').
 
 check_mate(Pos):-
         add1_pos(4,Pos,NextPiece), 
@@ -605,8 +604,7 @@ check_mate(Pos):-
         get_piece(Column,Line,Piece),
         player_dux(Player,Piece),
         helper_check_mate(Player,NextPiece),
-        set_piece(ColumnLetter,Line,' '),  %and sees if it's a dux 
-        format('Player ~w Dux at ~w~w got immobilized ~n~n',[Player,ColumnLetter,Line]).                                                                                                                    
+        set_piece(ColumnLetter,Line,' ').                                                                                                                  
 
 check_mate(Pos):-
         add1_pos(2,Pos,NextPiece), 
@@ -616,8 +614,7 @@ check_mate(Pos):-
         get_piece(Column,Line,Piece),
         player_dux(Player,Piece),
         helper_check_mate(Player,NextPiece),
-        set_piece(ColumnLetter,Line,' '),  %and sees if it's a dux 
-        format('Player ~w Dux at ~w~w got immobilized ~n~n',[Player,ColumnLetter,Line]). 
+        set_piece(ColumnLetter,Line,' ').
 
 check_mate(Pos):-
         add1_pos(3,Pos,NextPiece), 
@@ -627,8 +624,7 @@ check_mate(Pos):-
         get_piece(Column,Line,Piece),
         player_dux(Player,Piece),
         helper_check_mate(Player,NextPiece),
-        set_piece(ColumnLetter,Line,' '),  %and sees if it's a dux 
-        format('Player ~w Dux at ~w~w got immobilized ~n~n',[Player,ColumnLetter,Line]).   
+        set_piece(ColumnLetter,Line,' ').  
             
 check_mate(_).
 
@@ -640,22 +636,23 @@ check_mate(_).
 */
 
 %Checks if the game ended
-is_game_over(Player):-board(Board), check_soldiers_and_Dux(Board,0,0,0,0),
+is_game_over(Player,MyReply):-board(Board), check_soldiers_and_Dux(Board,0,0,0,0,MyReply),
         playcounter(X), X>0 , 
         Y is X-1, 
         retract(playcounter(X)), 
         assert(playcounter(Y)),
-        check_possible_moves(Player). 
+        check_possible_moves(Player),
+	(nonvar(MyReply);MyReply='OK').
 
 
-is_game_over(_):-playcounter(X), X<1,
-        cls, print_board, 
-        write('\n The game ended with a draw. \n'), break.
+is_game_over(_,MyReply):-playcounter(X), X<1,
+        MyReply='DRAW',clear_global_variables.
 
-is_game_over(Player):- 
+is_game_over(Player,MyReply):- 
              opposing_player(Player,OppPlayer),
-             cls, print_board,
-             format('\n Player ~w Lost, there is possible move \n',[OppPlayer]), break.
+	     clear_global_variables,
+	     (OppPlayer==1,MyReply='Player 1 Lost, there is no possible move';
+	      OppPlayer==2,MyReply='Player 2 Lost, there is no possible move').
 
 check_possible_moves(Player):-
 	opposing_player(Player,OppPlayer),	
@@ -666,39 +663,39 @@ check_possible_moves(Player):-
 
 %checks if one of the players lost all is pieces or Dux
 
-check_soldiers_and_Dux(_,1,1,1,1).   % tudo normal continuar normalmente
+check_soldiers_and_Dux(_,1,1,1,1,_).   % tudo normal continuar normalmente
 
-check_soldiers_and_Dux(T,Pb,PB,Pw,PW):- 
+check_soldiers_and_Dux(T,Pb,PB,Pw,PW,MyReply):- 
         length(T, 1), 
         Pb=0, 
-        cls, print_board, 
-        write('\n Player 2 Lost, there is no more soldiers \n'), break;
+	clear_global_variables,
+        MyReply='Player 2 Lost, there is no more soldiers';
         length(T, 1), 
         PB=0, 
-        cls, print_board, 
-        write('\n Player 2 Lost, you lost your Dux \n'), break;
+	clear_global_variables,
+        MyReply='Player 2 Lost, you lost your dux';
         length(T, 1), 
         Pw=0, 
-        cls, print_board, 
-        write('\n Player 1 Lost, there is no more soldiers \n'), break;
+	clear_global_variables,
+        MyReply='Player 1 Lost, there is no more soldiers';
         length(T, 1), 
         PW=0,
-        cls, print_board, 
-        write('\n Player 1 Lost, you lost your Dux \n'), break.
+	clear_global_variables,
+        MyReply='Player 1 Lost, you lost your dux'.
 
-check_soldiers_and_Dux([H|T],Pb,PB,Pw,PW):-
-        check_soldiers_and_Dux_Row(H,Pb,PB,Pw,PW,T).
+check_soldiers_and_Dux([H|T],Pb,PB,Pw,PW,MyReply):-
+        check_soldiers_and_Dux_Row(H,Pb,PB,Pw,PW,T,MyReply).
 
-check_soldiers_and_Dux_Row(T,Pb,PB,Pw,PW,X):- 
+check_soldiers_and_Dux_Row(T,Pb,PB,Pw,PW,X,MyReply):- 
         length(T, 1),
-        check_soldiers_and_Dux(X,Pb,PB,Pw,PW). % acabou fila atual passa para a próima
+        check_soldiers_and_Dux(X,Pb,PB,Pw,PW,MyReply). % acabou fila atual passa para a próima
 
-check_soldiers_and_Dux_Row([H|T],Pb,PB,Pw,PW,X):-
-        H = 'b',check_soldiers_and_Dux_Row(T,1,PB,Pw,PW,X);
-        H = 'B',check_soldiers_and_Dux_Row(T,Pb,1,Pw,PW,X);
-        H = 'w',check_soldiers_and_Dux_Row(T,Pb,PB,1,PW,X);
-        H = 'W',check_soldiers_and_Dux_Row(T,Pb,PB,Pw,1,X);
-        H = ' ',check_soldiers_and_Dux_Row(T,Pb,PB,Pw,PW,X).
+check_soldiers_and_Dux_Row([H|T],Pb,PB,Pw,PW,X,MyReply):-
+        H = 'b',check_soldiers_and_Dux_Row(T,1,PB,Pw,PW,X,MyReply);
+        H = 'B',check_soldiers_and_Dux_Row(T,Pb,1,Pw,PW,X,MyReply);
+        H = 'w',check_soldiers_and_Dux_Row(T,Pb,PB,1,PW,X,MyReply);
+        H = 'W',check_soldiers_and_Dux_Row(T,Pb,PB,Pw,1,X,MyReply);
+        H = ' ',check_soldiers_and_Dux_Row(T,Pb,PB,Pw,PW,X,MyReply).
 
 % Check whether play is valid for a specific player. 
 check_if_valid(Move, Player) :- 
