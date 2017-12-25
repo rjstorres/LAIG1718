@@ -68,7 +68,8 @@ main=function()
       }
       args.push(document.getElementById('time').value)
       console.log(args)
-      document.body.removeChild(document.body.childNodes[1])
+      //document.body.removeChild(document.body.childNodes[1])
+      document.getElementById("uidiv").setAttribute("hidden","");
       //Setup da cena segundo cenário escolhido
       myScene.interface.gui.close();
       delete myInterface;
@@ -81,10 +82,15 @@ main=function()
       delete myGraph;
       myGraph = new MySceneGraph(filename, myScene);
       myScene.gameState = myScene.state.P1PieceSelect;
-      setInterval(myScene.manageTimer.bind(myScene), 1000);
+      timerInterval = setInterval(myScene.manageTimer.bind(myScene), 1000);
       myScene.clearPickRegistration();
     }
     document.getElementById("startButton").onclick = startApp
+    var restartApp = function(e){
+      document.getElementById("uidiv").removeAttribute('hidden');
+      document.getElementById("enddiv").setAttribute('hidden',"");
+    }
+    document.getElementById("restartButton").onclick = restartApp
 
 
 

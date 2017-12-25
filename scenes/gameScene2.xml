@@ -213,6 +213,8 @@
         <NODEREF id="gameBoard" />
         <!--<NODEREF id="soldierBase"/> -->
         <NODEREF id="soldierSet"/>
+        <NODEREF id="eliminatedA"/>
+        <NODEREF id="eliminatedB"/>
       </DESCENDANTS>
     </NODE>
 

@@ -24,7 +24,7 @@ function XMLscene(interface, mode,dificulty,time) {
     this.mode = {HH:1,HM:2,MM:3,R:4}
     /*Game State enumerator*/
     this.state = {P1PieceSelect: 1, P1SpotSelect: 2 ,P2PieceSelect: 4, P2SpotSelect: 5, GameSetup: 6, P1Animation:7, P2Animation:8,
-                  P1EliAnimation:9, P2EliAnimation:10, P1BoardValidate:11, P2BoardValidate:12}
+                  P1EliAnimation:9, P2EliAnimation:10, P1BoardValidate:11, P2BoardValidate:12, P1Victory:13, P2Victory:14, GameEnd:15}
     /*The current game state*/
     this.gameState = this.state.GameSetup;
     /*The current game mode */
@@ -266,6 +266,12 @@ XMLscene.prototype.hhPlay = function(){
         //TODO Chamar função de validação de tabuleiro e mudar estado para EliAnimation
         this.gameState = this.state.P1PieceSelect;
         break;
+      case this.state.P1Victory:
+        this.finalizeGame(1)
+        break;
+      case this.state.P2Victory:
+        this.finalizeGame(2)
+        break;
       default:
         break;
       }
@@ -346,6 +352,12 @@ XMLscene.prototype.hmPlay = function(){
         this.gameState = this.state.P1PieceSelect;
         break;
       break;
+    case this.state.P1Victory:
+      this.finalizeGame(1)
+      break;
+    case this.state.P2Victory:
+      this.finalizeGame(2)
+      break;
     default:
       break;
   }
@@ -383,6 +395,12 @@ XMLscene.prototype.mmPlay = function(){
       //TODO Chamar função de validação de tabuleiro e mudar estado para EliAnimation
       this.gameState = this.state.P1PieceSelect;
       break;
+    case this.state.P1Victory:
+      this.finalizeGame(1)
+      break;
+    case this.state.P2Victory:
+      this.finalizeGame(2)
+      break;
     default:
       break;
     }
@@ -410,12 +428,32 @@ XMLscene.prototype.rPlay = function(){
       this.rcounter++
       this.graph.addMoveAnimation(coords, this.pickedSoldier)
       break;
+    case this.state.P1Victory:
+      this.finalizeGame(1)
+      break;
+    case this.state.P2Victory:
+      this.finalizeGame(2)
+      break;
     default:
       break;
     }
     if(this.rcounter >= this.history.length){
       this.gameMode = this.oldGameMode;
     }
+}
+/*
+*Finalizar jogo e preparar um novo
+*/
+XMLscene.prototype.finalizeGame = function(winner){
+  if(winner == 1){
+    document.getElementById("p1score").innerText = Number(document.getElementById("p1score").innerText) + 1;
+  }else{
+    document.getElementById("p2score").innerText = Number(document.getElementById("p2score").innerText) + 1;
+  }
+  document.getElementById("winner").innerText = winner
+  this.gameState = this.state.GameEnd;
+  clearInterval(timerInterval);
+  document.getElementById("enddiv").removeAttribute('hidden');
 }
 /*
 *Replay game
@@ -525,6 +563,20 @@ XMLscene.prototype.DebugRemove = function(){
   this.graph.addRemoveAnimation(this.debugarray[this.debugarray.length - 1])
   this.debugarray.pop()
 }
+/*
+* Debug end of game states
+*/
+XMLscene.prototype.DebugWinP1 = function(){
+  console.log("Setting player 1 victory..")
+  this.gameState = this.state.P1Victory;
+}
+XMLscene.prototype.DebugWinP2 = function(){
+  console.log("Setting player 2 victory..")
+  this.gameState = this.state.P2Victory;
+}
+/*
+* Obter um index valido para guardar peças eliminadas
+*/
 XMLscene.prototype.getEliSpot = function(Player,id){
   let ar = Player == '1' ? this.removedPieces[0] : this.removedPieces[1];
   let sp = '';
