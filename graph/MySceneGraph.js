@@ -47,6 +47,9 @@ function MySceneGraph(filename, scene) {
     this.ani = new BezierAnimation(this.scene, [[0,0,0],[4,0,7],[-5,3,9],[-5,6,0],2])
     */this.shader = new CGFshader(this.scene.gl, "shaders/uScale.vert", "shaders/uScale.frag");
 
+    /*Contar o número de animações referentes ao tabuleiro*/
+    this.anims = 0;
+
     /*this.obj = new FullCylinder(this.scene,[1,1,1,10,10,1,1]);
     this.obj = new Sphere(this.scene, [1,10,10])*/
     // File reading
@@ -1742,6 +1745,31 @@ MySceneGraph.prototype.addMoveAnimation = function(spotCoords, soldier){
   let invertDir = soldierNode.piecetype == '1' ? true : false //usando para a inverção de rotações de direcção
   soldierNode.currAnimation = new BezierAnimation(this.scene, [[0,0,0], [difX/3,7,difZ/3], [2*difX/3,7,2*difZ/3], [difX, 0, difZ], 8],invertDir);
   //mat4.translate(soldierNode.transformMatrix, soldierNode.transformMatrix, [spotX-soldierX, 0, spotZ-soldierZ]);
+  this.anims++;
+  soldierNode.coords = spotCoords
+}
+/*
+*Adicionar a animação de eliminação de peça
+*/
+MySceneGraph.prototype.addRemoveAnimation = function(soldier){
+  /*Informação relevante do soldado*/
+  let soldierNode = this.nodes[soldier];
+  let soldierZ = this.scene.rows[soldierNode.coords[1]]
+  let soldierX = this.scene.collumns[soldierNode.coords[0]]
+  //Setup da posição inicial de forma a prevenir acumulo de erros
+  mat4.identity(soldierNode.transformMatrix)
+  mat4.translate(soldierNode.transformMatrix,soldierNode.transformMatrix,[soldierX,0,soldierZ])
+  /*Obter um local de eliminação vazio*/
+  let spotCoords = this.scene.getEliSpot(soldierNode.piecetype, soldier)
+  let spotZ = this.scene.rows[spotCoords[1]]
+  let spotX = this.scene.collumns[spotCoords[0]]
+  soldierNode.counterAnimations = 0 //reset animation counter
+  soldierNode.animationID = [1] //reset animation queue
+  let difX = spotX-soldierX
+  let difZ = spotZ-soldierZ
+  let invertDir = soldierNode.piecetype == '1' ? true : false //usando para a inverção de rotações de direcção
+  soldierNode.currAnimation = new BezierAnimation(this.scene, [[0,0,0], [difX/3,20,difZ/3], [2*difX/3,20,2*difZ/3], [difX, 0, difZ], 40],invertDir);
+  this.anims++;
   soldierNode.coords = spotCoords
 }
 /*
@@ -1804,10 +1832,25 @@ MySceneGraph.prototype.processGraph = function (node/*, parentMaterial, amplifFa
                 node.counterAnimations++;
                 mat4.multiply(node.transformMatrix, node.transformMatrix,matAnimation);
                 if(node.piecetype){//Verificar se a animação é referente ao movimento de uma peça
-                  if(node.piecetype == '1'){
-                    this.scene.gameState = this.scene.state.P2PieceSelect
-                  }else if(node.piecetype == '2'){
-                    this.scene.gameState = this.scene.state.P1PieceSelect
+                  this.anims--;
+                  if(this.anims == 0){
+                    console.log("Now entering a new state")
+                    switch (this.scene.gameState) {
+                      case this.scene.state.P1Animation:
+                        this.scene.gameState = this.scene.state.P1BoardValidate
+                        break;
+                      case this.scene.state.P2Animation:
+                        this.scene.gameState = this.scene.state.P2BoardValidate
+                        break;
+                      case this.scene.state.P1EliAnimation:
+                        this.scene.gameState = this.scene.state.P2PieceSelect
+                        break;
+                      case this.scene.state.P2EliAnimation:
+                        this.scene.gameState = this.scene.state.P1PieceSelect
+                        break;
+                      default:
+                        break;
+                    }
                   }
                   //mat4.multiply(node.transformMatrix, node.transformMatrix,node.endAnimationMatrix)
                   //mat4.identity(node.endAnimationMatrix)

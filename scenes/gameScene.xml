@@ -216,6 +216,8 @@
         <NODEREF id="table"/>
         <!--<NODEREF id="soldierBase"/> -->
         <NODEREF id="soldierSet"/>
+        <NODEREF id="eliminatedA"/>
+        <NODEREF id="eliminatedB"/>
       </DESCENDANTS>
     </NODE>
 
@@ -1297,6 +1299,245 @@
 
         <DESCENDANTS>
           <NODEREF id="cube" />
+        </DESCENDANTS>
+      </NODE>
+      <!--#ELIMINATED BOARD -->
+      <NODE id="eliminatedA">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <SCALE sx="5" sy="5" sz="5" />
+
+        <DESCENDANTS>
+          <NODEREF id="eliRowsA" />
+        </DESCENDANTS>
+      </NODE>
+      <NODE id="eliRowsA">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <DESCENDANTS>
+          <NODEREF id="eliRow1A"/>
+          <NODEREF id="eliRow2A"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id="eliRow1A">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+        <TRANSLATION x="0" y="0" z="3.7"/>
+        <DESCENDANTS>
+          <NODEREF id="elispot11"/>
+          <NODEREF id="elispot12"/>
+          <NODEREF id="elispot13"/>
+          <NODEREF id="elispot14"/>
+          <NODEREF id="elispot15"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id="eliRow2A">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+        <TRANSLATION x="0" y="0" z="2.6"/>
+        <DESCENDANTS>
+          <NODEREF id="elispot21"/>
+          <NODEREF id="elispot22"/>
+          <NODEREF id="elispot23"/>
+          <NODEREF id="elispot24"/>
+          <NODEREF id="elispot25"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id ="elispot11">
+        <MATERIAL id="null" />
+        <TEXTURE id="redSpot" />
+        <TRANSLATION x="7.1" y="0" z="0"/>
+        <DESCENDANTS>
+          <NODEREF id="cube"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id ="elispot12">
+        <MATERIAL id="null" />
+        <TEXTURE id="greenSpot" />
+        <TRANSLATION x="8.2" y="0" z="0"/>
+        <DESCENDANTS>
+          <NODEREF id="cube"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id ="elispot13">
+        <MATERIAL id="null" />
+        <TEXTURE id="redSpot" />
+        <TRANSLATION x="9.3" y="0" z="0"/>
+        <DESCENDANTS>
+          <NODEREF id="cube"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id ="elispot14">
+        <MATERIAL id="null" />
+        <TEXTURE id="greenSpot" />
+        <TRANSLATION x="10.4" y="0" z="0"/>
+        <DESCENDANTS>
+          <NODEREF id="cube"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id ="elispot15">
+        <MATERIAL id="null" />
+        <TEXTURE id="redSpot" />
+        <TRANSLATION x="11.5" y="0" z="0"/>
+        <DESCENDANTS>
+          <NODEREF id="cube"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id ="elispot21">
+        <MATERIAL id="null" />
+        <TEXTURE id="redSpot" />
+        <TRANSLATION x="7.1" y="0" z="0"/>
+        <DESCENDANTS>
+          <NODEREF id="cube"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id ="elispot22">
+        <MATERIAL id="null" />
+        <TEXTURE id="greenSpot" />
+        <TRANSLATION x="8.2" y="0" z="0"/>
+        <DESCENDANTS>
+          <NODEREF id="cube"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id ="elispot23">
+        <MATERIAL id="null" />
+        <TEXTURE id="redSpot" />
+        <TRANSLATION x="9.3" y="0" z="0"/>
+        <DESCENDANTS>
+          <NODEREF id="cube"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id ="elispot24">
+        <MATERIAL id="null" />
+        <TEXTURE id="greenSpot" />
+        <TRANSLATION x="10.4" y="0" z="0"/>
+        <DESCENDANTS>
+          <NODEREF id="cube"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id ="elispot25">
+        <MATERIAL id="null" />
+        <TEXTURE id="redSpot" />
+        <TRANSLATION x="11.5" y="0" z="0"/>
+        <DESCENDANTS>
+          <NODEREF id="cube"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id="eliminatedB">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <SCALE sx="5" sy="5" sz="5" />
+
+        <DESCENDANTS>
+          <NODEREF id="eliRow1B"/>
+          <NODEREF id="eliRow2B"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id="eliRow1B">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+        <TRANSLATION x="0" y="0" z="-4"/>
+        <DESCENDANTS>
+          <NODEREF id="elispot31"/>
+          <NODEREF id="elispot32"/>
+          <NODEREF id="elispot33"/>
+          <NODEREF id="elispot34"/>
+          <NODEREF id="elispot35"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id="eliRow2B">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+        <TRANSLATION x="0" y="0" z="-2.9"/>
+        <DESCENDANTS>
+          <NODEREF id="elispot41"/>
+          <NODEREF id="elispot42"/>
+          <NODEREF id="elispot43"/>
+          <NODEREF id="elispot44"/>
+          <NODEREF id="elispot45"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id="elispot31">
+        <MATERIAL id="null" />
+        <TEXTURE id="redSpot" />
+        <TRANSLATION x="7.1" y="0" z="0"/>
+        <DESCENDANTS>
+          <NODEREF id="cube"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id="elispot32">
+        <MATERIAL id="null" />
+        <TEXTURE id="greenSpot" />
+        <TRANSLATION x="8.2" y="0" z="0"/>
+        <DESCENDANTS>
+          <NODEREF id="cube"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id="elispot33">
+        <MATERIAL id="null" />
+        <TEXTURE id="redSpot" />
+        <TRANSLATION x="9.3" y="0" z="0"/>
+        <DESCENDANTS>
+          <NODEREF id="cube"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id="elispot34">
+        <MATERIAL id="null" />
+        <TEXTURE id="greenSpot" />
+        <TRANSLATION x="10.4" y="0" z="0"/>
+        <DESCENDANTS>
+          <NODEREF id="cube"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id="elispot35">
+        <MATERIAL id="null" />
+        <TEXTURE id="redSpot" />
+        <TRANSLATION x="11.5" y="0" z="0"/>
+        <DESCENDANTS>
+          <NODEREF id="cube"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id="elispot41">
+        <MATERIAL id="null" />
+        <TEXTURE id="redSpot" />
+        <TRANSLATION x="7.1" y="0" z="0"/>
+        <DESCENDANTS>
+          <NODEREF id="cube"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id="elispot42">
+        <MATERIAL id="null" />
+        <TEXTURE id="greenSpot" />
+        <TRANSLATION x="8.2" y="0" z="0"/>
+        <DESCENDANTS>
+          <NODEREF id="cube"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id="elispot43">
+        <MATERIAL id="null" />
+        <TEXTURE id="redSpot" />
+        <TRANSLATION x="9.3" y="0" z="0"/>
+        <DESCENDANTS>
+          <NODEREF id="cube"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id="elispot44">
+        <MATERIAL id="null" />
+        <TEXTURE id="greenSpot" />
+        <TRANSLATION x="10.4" y="0" z="0"/>
+        <DESCENDANTS>
+          <NODEREF id="cube"/>
+        </DESCENDANTS>
+      </NODE>
+      <NODE id="elispot45">
+        <MATERIAL id="null" />
+        <TEXTURE id="redSpot" />
+        <TRANSLATION x="11.5" y="0" z="0"/>
+        <DESCENDANTS>
+          <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
       <!--#GAMEBOARD-->
