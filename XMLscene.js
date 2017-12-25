@@ -23,7 +23,8 @@ function XMLscene(interface, mode,dificulty,time) {
     /*Game mode enumerator*/
     this.mode = {HH:1,HM:2,MM:3,R:4}
     /*Game State enumerator*/
-    this.state = {P1PieceSelect: 1, P1SpotSelect: 2 ,P2PieceSelect: 4, P2SpotSelect: 5, GameSetup: 6, P1Animation:7, P2Animation:8}
+    this.state = {P1PieceSelect: 1, P1SpotSelect: 2 ,P2PieceSelect: 4, P2SpotSelect: 5, GameSetup: 6, P1Animation:7, P2Animation:8,
+                  P1EliAnimation:9, P2EliAnimation:10, P1BoardValidate:11, P2BoardValidate:12}
     /*The current game state*/
     this.gameState = this.state.GameSetup;
     /*The current game mode */
@@ -44,7 +45,8 @@ function XMLscene(interface, mode,dificulty,time) {
 
     /*Game Coordinates enumerator*/
     this.rows = { "1": 0,"2": -3.7,"3": -7.4,"4": -11,"5": -14.7,"6": -18.3,"7": -22.2,"8": -25.9 }
-    this.collumns = { "A":-16.6, "B":-13, "C":-9.3, "D":-5.7, "E":-2, "F":1.7, "G":5.3, "H":9, "I":12.7, "J":16.3}
+    this.collumns = { "A":-16.6, "B":-13, "C":-9.3, "D":-5.7, "E":-2, "F":1.7, "G":5.3, "H":9, "I":12.7, "J":16.3,
+                      "K":23.8,"L":27.5,"M":31.2,"N":34.9,"O":38.6} /*Colunas para peças removidas*/
     /*Current Selected soldier*/
     this.pickedSoldier = null
     /*Movement history. Format: SoldierOrigin-SoldierDestinatio*/
@@ -63,6 +65,12 @@ function XMLscene(interface, mode,dificulty,time) {
         ['_a_','_b_','_c_','_d_','_e_','_f_','_g_','_h_','_i_','_j_'],
       ],
     ]
+    /*Keep track of the removed pieces and where they are stored*/
+    this.removedPieces=[
+      [['K1',null],['L1',null],['M1',null],['N1',null],['O1',null],['K2',null],['L2',null],['M2',null],['N2',null],['O2',null]], /*Player 1 pieces*/
+      [['K7',null],['L7',null],['M7',null],['N7',null],['O7',null],['K8',null],['L8',null],['M8',null],['N8',null],['O8',null]]  /*Player 2 pieces*/
+    ]
+    this.debugarray = ["soldier1B","soldier7B"];
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -140,71 +148,127 @@ XMLscene.prototype.onGraphLoaded = function()
 * Gerir o modo de jogo humano-humano
 */
 XMLscene.prototype.hhPlay = function(){
-  if (this.pickMode == false) {
-		if (this.pickResults != null && this.pickResults.length > 0) {
-			for (var i=0; i< this.pickResults.length; i++) {
-				var obj = this.pickResults[i][0];
-				if (obj){
-					var customId = this.pickResults[i][1];
-					console.log("Picked object: " + obj + ", with pick id " + customId);
-          if(this.gameState != this.state.GameSetup){
-            let sId = this.graph.selectablePieces[customId];
-            console.log(sId);
-            switch (this.gameState) {
-              case this.state.P1PieceSelect:
-                if(this.graph.nodes[sId].piecetype == '1'){
-                  this.pickedSoldier = sId;
-                  this.graph.nodes[sId].selectable = true;
-                  this.gameState = this.state.P1SpotSelect;
+    switch (this.gameState) {
+      case this.state.P1PieceSelect:
+        if (this.pickMode == false) {
+          if (this.pickResults != null && this.pickResults.length > 0) {
+            for (var i=0; i< this.pickResults.length; i++) {
+              var obj = this.pickResults[i][0];
+              if (obj){
+                var customId = this.pickResults[i][1];
+                console.log("Picked object: " + obj + ", with pick id " + customId);
+                if(this.gameState != this.state.GameSetup){
+                  let sId = this.graph.selectablePieces[customId];
+                  console.log(sId);
+                  if(this.graph.nodes[sId].piecetype == '1'){
+                    this.pickedSoldier = sId;
+                    this.graph.nodes[sId].selectable = true;
+                    this.gameState = this.state.P1SpotSelect;
+                  }
                 }
-                break;
-              case this.state.P2PieceSelect:
-                if(this.graph.nodes[sId].piecetype == '2'){
-                  this.pickedSoldier = sId;
-                  this.graph.nodes[sId].selectable = true;
-                  this.gameState = this.state.P2SpotSelect;
-                }
-                break;
-              case this.state.P1SpotSelect:
-                if(this.graph.nodes[sId].piecetype == '1'){
-                  this.graph.nodes[this.pickedSoldier].selectable = false;
-                  this.pickedSoldier = sId;
-                  this.graph.nodes[sId].selectable = true;
-                }else if(this.graph.nodes[sId].piecetype == 's'){
-                  //Validar movimento com servidor
-                  this.graph.nodes[this.pickedSoldier].selectable = false;
-                  //Animação e estado dependente da resposta do servidor. Movimento, remover peça,vitoria,derrota
-                  this.gameState = this.state.P1Animation;
-                  this.resetTimer();
-                  this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+this.graph.nodes[sId].coords)
-                  this.saveState(this.pickedSoldier,this.graph.nodes[this.pickedSoldier].coords,this.graph.nodes[sId].coords)
-                  this.graph.addMoveAnimation(this.graph.nodes[sId].coords, this.pickedSoldier)
-                }
-                break;
-              case this.state.P2SpotSelect:
-                if(this.graph.nodes[sId].piecetype == '2'){
-                  this.graph.nodes[this.pickedSoldier].selectable = false;
-                  this.pickedSoldier = sId;
-                  this.graph.nodes[sId].selectable = true;
-                }else if(this.graph.nodes[sId].piecetype == 's'){
-                  //Validar movimento com servidor
-                  this.graph.nodes[this.pickedSoldier].selectable = false;
-                  this.gameState = this.state.P2Animation;
-                  this.resetTimer();
-                  this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+this.graph.nodes[sId].coords)
-                  this.saveState(this.pickedSoldier,this.graph.nodes[this.pickedSoldier].coords,this.graph.nodes[sId].coords)
-                  this.graph.addMoveAnimation(this.graph.nodes[sId].coords, this.pickedSoldier)
-                }
-                break;
-              default:
-                break;
+              }
             }
+            this.pickResults.splice(0,this.pickResults.length);
           }
-				}
-			}
-			this.pickResults.splice(0,this.pickResults.length);
-		}
-	}
+        }
+        break;
+      case this.state.P2PieceSelect:
+        if (this.pickMode == false) {
+          if (this.pickResults != null && this.pickResults.length > 0) {
+            for (var i=0; i< this.pickResults.length; i++) {
+              var obj = this.pickResults[i][0];
+              if (obj){
+                var customId = this.pickResults[i][1];
+                console.log("Picked object: " + obj + ", with pick id " + customId);
+                if(this.gameState != this.state.GameSetup){
+                  let sId = this.graph.selectablePieces[customId];
+                  console.log(sId);
+                  if(this.graph.nodes[sId].piecetype == '2'){
+                    this.pickedSoldier = sId;
+                    this.graph.nodes[sId].selectable = true;
+                    this.gameState = this.state.P2SpotSelect;
+                  }
+                }
+              }
+            }
+            this.pickResults.splice(0,this.pickResults.length);
+          }
+        }
+        break;
+      case this.state.P1SpotSelect:
+        if (this.pickMode == false) {
+          if (this.pickResults != null && this.pickResults.length > 0) {
+            for (var i=0; i< this.pickResults.length; i++) {
+              var obj = this.pickResults[i][0];
+              if (obj){
+                var customId = this.pickResults[i][1];
+                console.log("Picked object: " + obj + ", with pick id " + customId);
+                if(this.gameState != this.state.GameSetup){
+                  let sId = this.graph.selectablePieces[customId];
+                  console.log(sId);
+                  if(this.graph.nodes[sId].piecetype == '1'){
+                    this.graph.nodes[this.pickedSoldier].selectable = false;
+                    this.pickedSoldier = sId;
+                    this.graph.nodes[sId].selectable = true;
+                  }else if(this.graph.nodes[sId].piecetype == 's'){
+                    //Validar movimento com servidor
+                    this.graph.nodes[this.pickedSoldier].selectable = false;
+                    //Animação e estado dependente da resposta do servidor. Movimento, remover peça,vitoria,derrota
+                    this.gameState = this.state.P1Animation;
+                    this.resetTimer();
+                    this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+this.graph.nodes[sId].coords)
+                    this.saveState(this.pickedSoldier,this.graph.nodes[this.pickedSoldier].coords,this.graph.nodes[sId].coords)
+                    this.graph.addMoveAnimation(this.graph.nodes[sId].coords, this.pickedSoldier)
+                  }
+                }
+              }
+            }
+          this.pickResults.splice(0,this.pickResults.length);
+          }
+        }
+        break;
+      case this.state.P2SpotSelect:
+        if (this.pickMode == false) {
+          if (this.pickResults != null && this.pickResults.length > 0) {
+            for (var i=0; i< this.pickResults.length; i++) {
+              var obj = this.pickResults[i][0];
+              if (obj){
+                var customId = this.pickResults[i][1];
+                console.log("Picked object: " + obj + ", with pick id " + customId);
+                if(this.gameState != this.state.GameSetup){
+                  let sId = this.graph.selectablePieces[customId];
+                  console.log(sId);
+                  if(this.graph.nodes[sId].piecetype == '2'){
+                    this.graph.nodes[this.pickedSoldier].selectable = false;
+                    this.pickedSoldier = sId;
+                    this.graph.nodes[sId].selectable = true;
+                  }else if(this.graph.nodes[sId].piecetype == 's'){
+                    //Validar movimento com servidor
+                    this.graph.nodes[this.pickedSoldier].selectable = false;
+                    this.gameState = this.state.P2Animation;
+                    this.resetTimer();
+                    this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+this.graph.nodes[sId].coords)
+                    this.saveState(this.pickedSoldier,this.graph.nodes[this.pickedSoldier].coords,this.graph.nodes[sId].coords)
+                    this.graph.addMoveAnimation(this.graph.nodes[sId].coords, this.pickedSoldier)
+                  }
+                }
+              }
+            }
+            this.pickResults.splice(0,this.pickResults.length);
+          }
+        }
+        break;
+      case this.state.P1BoardValidate:
+        //TODO Chamar função de validação de tabuleiro e mudar estado para EliAnimation
+        this.gameState = this.state.P2PieceSelect;
+        break;
+      case this.state.P2BoardValidate:
+        //TODO Chamar função de validação de tabuleiro e mudar estado para EliAnimation
+        this.gameState = this.state.P1PieceSelect;
+        break;
+      default:
+        break;
+      }
 }
 /*
 * Gerir o modo de jogo humano-maquina
@@ -273,6 +337,14 @@ XMLscene.prototype.hmPlay = function(){
           this.pickResults.splice(0,this.pickResults.length);
         }
       }
+      case this.state.P1BoardValidate:
+        //TODO Chamar função de validação de tabuleiro e mudar estado para EliAnimation
+        this.gameState = this.state.P2PieceSelect;
+        break;
+      case this.state.P2BoardValidate:
+        //TODO Chamar função de validação de tabuleiro e mudar estado para EliAnimation
+        this.gameState = this.state.P1PieceSelect;
+        break;
       break;
     default:
       break;
@@ -302,6 +374,14 @@ XMLscene.prototype.mmPlay = function(){
       this.history.push(this.pickedSoldier+"-"+this.graph.nodes[this.pickedSoldier].coords +"-"+coords)
       this.saveState(this.pickedSoldier,this.graph.nodes[this.pickedSoldier].coords,coords)
       this.graph.addMoveAnimation(coords, this.pickedSoldier)
+      break;
+    case this.state.P1BoardValidate:
+      //TODO Chamar função de validação de tabuleiro e mudar estado para EliAnimation
+      this.gameState = this.state.P2PieceSelect;
+      break;
+    case this.state.P2BoardValidate:
+      //TODO Chamar função de validação de tabuleiro e mudar estado para EliAnimation
+      this.gameState = this.state.P1PieceSelect;
       break;
     default:
       break;
@@ -434,6 +514,28 @@ XMLscene.prototype.makeRandomMove = function(){
     this.saveState(this.pickedSoldier,this.graph.nodes[this.pickedSoldier].coords,coords)
     this.graph.addMoveAnimation(coords, this.pickedSoldier)
   }
+}
+/*
+* Debug the removal of a piece
+*/
+
+XMLscene.prototype.DebugRemove = function(){
+  console.log("Removing a piece...")
+  this.gameState = this.state.P1EliAnimation;
+  this.graph.addRemoveAnimation(this.debugarray[this.debugarray.length - 1])
+  this.debugarray.pop()
+}
+XMLscene.prototype.getEliSpot = function(Player,id){
+  let ar = Player == '1' ? this.removedPieces[0] : this.removedPieces[1];
+  let sp = '';
+  for(let i = 0; i < 10; i++){
+    if(ar[i][1] == null){
+      sp = ar[i][0];
+      ar[i][1] = id;
+      break;
+    }
+  }
+  return sp;
 }
 /*
 * Manage the game timer

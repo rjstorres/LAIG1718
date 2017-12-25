@@ -60,4 +60,5 @@ MyInterface.prototype.addCameraControl = function(){
   this.gui.add(this.scene, 'ChangeCamera');
   this.gui.add(this.scene, 'Undo')
   this.gui.add(this.scene, 'Replay')
+  this.gui.add(this.scene, 'DebugRemove')
 }

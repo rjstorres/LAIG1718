@@ -32,13 +32,17 @@ BezierAnimation.prototype.animate = function () {
     let point = this.path[ind];
     mat = mat4.create();
     mat4.translate(mat, this.initMat, point);
-    //mat4.rotateY(mat, mat,45*(Math.PI/180));
-    mat4.rotateY(mat, mat,this.getDirectionAngle(point, this.path[ind+1]));
+    try{
+      mat4.rotateY(mat, mat,this.getDirectionAngle(point, this.path[ind+1]));
+    }catch(err){
+      mat4.rotateY(mat, mat,this.getDirectionAngle(this.path[ind-1], this.path[ind]));
+    }
     this.timeNow = new Date().getTime()/1000 - this.timeStart;
     if(this.timeNow > this.timeSpan){
       this.endFlag = true;
       mat4.translate(this.initMat,this.initMat, this.p4);
       mat4.rotateY(this.initMat,this.initMat, this.dir);
+      return this.initMat;
     }
     return mat;
   }
