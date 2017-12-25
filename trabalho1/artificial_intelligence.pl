@@ -9,26 +9,11 @@
 *checks if the game is over    
 */
 aI_move(Player, 1):- 
-	cls, nl, nl,
- 	
-	write('                                           LATRUNCULLI \n \n \n'), 
-	format('                                        Player ~w is thinking...\n', [Player]), 
-        
-	print_board, nl, nl, sleep(2),
 	gather_all_moves(ListOfMoves,Player),!,
 	length(ListOfMoves,X),
 	X>0,
 	random_member(NL, ListOfMoves),
         move(NL),
-	
-        cls, nl, nl,
-        write('                                           LATRUNCULLI              \n \n \n'),
-        write('                                   Watch it all unfold before you!    \n\n'), 
-        format('                                        Player ~w is thinking...\n', [Player]), 
-        print_board, nl, nl,  
-        format('                                           Player ~w did move :\n', [Player]),
-        write( '                                           '), write(NL), write('.'), sleep(2),
-	
         remove_captured_pieces(NL,Player),
         is_game_over(Player).
 
@@ -39,29 +24,12 @@ aI_move(Player, 1):-
 *checks if the game is over    
 */
 aI_move(Player, 2):- 
-	cls, nl, nl,
-	
-	write('                                           LATRUNCULLI \n \n \n'),
-        write('                                 Watch it all unfold before you!\n\n'), 
-        format('                                      Player ~w is thinking...\n', [Player]), 
-        
-	print_board, nl, nl, sleep(2), 
-
 	gather_all_moves(ListOfMoves,Player),!, 
 	length(ListOfMoves,X),
 	X>0,
         choose_best_move(ListOfMoves, Player, Move),
         move(Move),
-
-        cls, nl, nl,
-        write('                                           LATRUNCULLI              \n \n \n'),
-        write('                                   Watch it all unfold before you!    \n\n'), 
-        format('                                        Player ~w is thinking...\n', [Player]), 
-        print_board, nl, nl,  
-        format('                                         Player ~w did move :\n', [Player]),
-        write( '                                            '), write(Move), write('.\n'),
-	write('                                        '),
-	remove_captured_pieces(Move,Player),  sleep(2),
+	remove_captured_pieces(Move,Player),
         is_game_over(Player).
 
 
