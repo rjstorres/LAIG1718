@@ -32,7 +32,7 @@
 			function makeRequest()
 			{
 				// Get Parameter Values
-				var requestString = "[3]";				
+				var requestString = "[2,1,2]";				
 				
 				// Make Request
 				getPrologRequest(requestString, handleReply);
@@ -42,11 +42,12 @@
 			function handleReply(data){
 				var requestString= String(data.target.response);
 				console.log(requestString);
-				getPrologRequest(requestString, handleReply2);
+				getPrologRequest('[4,1]', handleReply2);
 			}
 			
 			function handleReply2(data){
-
+			if(String(data.target.response) !='OK')
+				alert("someone lost");
 			}
 		
 		</script>

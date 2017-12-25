@@ -106,7 +106,7 @@ print_header_line(_).
 %Elem = 1, player play
 %ELem = 2, AI do play
 %Elem = 3, getBoard
-%Elem = 4, setBoard
+%Elem = 4, get is_game_over
 
 handle_request(Request, MyReply, '200 OK') :- 
 	nth1(1,Request,RequestType),
@@ -114,23 +114,28 @@ handle_request(Request, MyReply, '200 OK') :-
 	nth1(2,Request,Player),
 	nth1(3,Request,Move),
 	make_move(Player,Move),
-	print_board,
 	MyReply='OK', !.
 
 
 handle_request(Request, MyReply, '200 OK') :- 
 	nth1(1,Request,RequestType),
         RequestType==2,
-	nth1(1,Request,Player),
-	nth1(1,Request,Difficulty),
-	aI_move(Player,Difficulty),
-	print_board,
-	MyReply='OK', !.
+	nth1(2,Request,Player),
+	nth1(3,Request,Difficulty),
+	aI_move(Player,Difficulty,MyReply), !.
 
 handle_request(Request, Board, '200 OK') :- 
 	nth1(1,Request,RequestType),
         RequestType==3,
 	board(Board), !.
+
+handle_request(Request, MyReply, '200 OK') :- 
+        nth1(1,Request,RequestType),
+        RequestType==4,
+        nth1(2,Request,Player),
+	is_game_over(Player,MyReply), !.
+
+
 
 /*handle_request([4|[T]], MyReply, '200 OK') :- 
         retractall(board(_)), 
@@ -145,5 +150,4 @@ handle_request(_, 'Bad Request', '400 Bad Request').
 make_move(Player,Move):-  
         check_if_valid(Move, Player), !,
         move(Move),
-        remove_captured_pieces(Move,Player),
-        is_game_over(Player).
+        remove_captured_pieces(Move,Player).
