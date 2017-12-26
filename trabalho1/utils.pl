@@ -16,14 +16,14 @@ accCp([H|T1],[H|T2]) :- accCp(T1,T2).
 /** 
 *All valid player letters.
 */ 
-player_letter(1,'w').
-player_letter(1,'W').
-player_letter(2,'b').
-player_letter(2,'B').
-player_piece(1,'w').
-player_piece(2,'b').
-player_dux(1,'W').
-player_dux(2,'B').
+player_letter(2,'w').
+player_letter(2,'W').
+player_letter(1,'b').
+player_letter(1,'B').
+player_piece(2,'w').
+player_piece(1,'b').
+player_dux(2,'W').
+player_dux(1,'B').
 opposing_player(1,2).
 opposing_player(2,1).   
 
