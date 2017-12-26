@@ -4,7 +4,7 @@ var DEGREE_TO_RAD = Math.PI / 180;
  * XMLscene class, representing the scene that is to be rendered.
  * @constructor
  */
-function XMLscene(interface, mode,dificulty,time) {
+function XMLscene(interface, mode,dificulty,time,lasthistory) {
     CGFscene.call(this);
 
     this.interface = interface;
@@ -69,7 +69,8 @@ function XMLscene(interface, mode,dificulty,time) {
     this.removedPieces=[
       [['K1',null],['L1',null],['M1',null],['N1',null],['O1',null],['K2',null],['L2',null],['M2',null],['N2',null],['O2',null]], /*Player 1 pieces*/
       [['K7',null],['L7',null],['M7',null],['N7',null],['O7',null],['K8',null],['L8',null],['M8',null],['N8',null],['O8',null]]  /*Player 2 pieces*/
-    ]
+    ];
+    this.lasthistory = lasthistory ? lasthistory : null
     this.debugarray = ["soldier1B","soldier7B"];
 }
 
@@ -142,7 +143,10 @@ XMLscene.prototype.onGraphLoaded = function()
     // Add Selectables Group
     this.interface.addSelectableGroup(this.graph.selectables);
     //Butão de controlo da camera
-    this.interface.addCameraControl()
+    this.interface.addControls()
+    if(this.lasthistory){
+      this.interface.addReplay()
+    }
 }
 /*
 * Gerir o modo de jogo humano-humano
@@ -409,7 +413,7 @@ XMLscene.prototype.mmPlay = function(){
 * Fazer replay do jogo
 */
 XMLscene.prototype.rPlay = function(){
-  let action = this.history[this.rcounter].split("-")
+  let action = this.lasthistory[this.rcounter].split("-")
   let coords
   switch (this.gameState) {
     case this.state.P1PieceSelect:
@@ -429,42 +433,55 @@ XMLscene.prototype.rPlay = function(){
       this.graph.addMoveAnimation(coords, this.pickedSoldier)
       break;
     case this.state.P1Victory:
-      this.finalizeGame(1)
+      this.gameState = this.state.GameEnd;
+      setTimeout(this.finalizeReplay(), 1000)
       break;
     case this.state.P2Victory:
-      this.finalizeGame(2)
+      this.gameState = this.state.GameEnd;
+      setTimeout(this.finalizeReplay(), 1000)
+      break;
+    case this.state.P1BoardValidate:
+      //TODO Chamar função de validação de tabuleiro e mudar estado para EliAnimation
+      this.gameState = this.state.P2PieceSelect;
+      break;
+    case this.state.P2BoardValidate:
+      //TODO Chamar função de validação de tabuleiro e mudar estado para EliAnimation
+      this.gameState = this.state.P1PieceSelect;
       break;
     default:
       break;
     }
-    if(this.rcounter >= this.history.length){
-      this.gameMode = this.oldGameMode;
+    if(this.rcounter > this.lasthistory.length){
+      setTimeout(this.finalizeReplay(), 1000)
+      this.gameState = this.state.GameEnd;
     }
 }
 /*
-*Finalizar jogo e preparar um novo
+*Finalizar um replay
 */
-XMLscene.prototype.finalizeGame = function(winner){
-  if(winner == 1){
-    document.getElementById("p1score").innerText = Number(document.getElementById("p1score").innerText) + 1;
-  }else{
-    document.getElementById("p2score").innerText = Number(document.getElementById("p2score").innerText) + 1;
+XMLscene.prototype.finalizeReplay = function(){
+  if(this.curState == this.state.P1SpotSelect || this.curState == this.state.P1PieceSelect)
+    this.gameState = this.state.P1SpotSelect;
+  else
+    this.gameState = this.state.P2SpotSelect;
+  this.gameMode = this.oldGameMode;
+  this.removedPieces = []
+  for(let i = 0; i < 2; i++){
+    let ar = []
+    for(let j = 0; j < 10; j++){
+      ar.push(this.oldEliminated[i][j].slice())
+    }
+    this.removedPieces.push(ar);
   }
-  document.getElementById("winner").innerText = winner
-  this.gameState = this.state.GameEnd;
-  clearInterval(timerInterval);
-  document.getElementById("enddiv").removeAttribute('hidden');
-}
-/*
-*Replay game
-*/
-XMLscene.prototype.Replay = function(){
-  let oldState = this.savedStates[0]
+  this.oldGameMode = null;
+  this.curState = null;
+  this.oldEliminated = null;
+  let stt = this.savedStates[this.savedStates.length - 1];
   for(let i = 0; i < 8; i++){
     for(let j = 0; j < 10; j++){
-      if (oldState[i][j] !== ' '){
-        let piece = oldState[i][j];
-        let coords = oldState[8][j][1].toUpperCase() + oldState[i][10]
+      if (stt[i][j] !== ' '){
+        let piece = stt[i][j];
+        let coords = stt[8][j][1].toUpperCase() + stt[i][10]
         let soldier = "";
         switch (piece[piece.length - 1]) {
           case 'W':
@@ -490,14 +507,92 @@ XMLscene.prototype.Replay = function(){
       }
     }
   }
-  this.gameState = this.state.P1PieceSelect;
-  this.oldGameMode = this.gameMode;
-  this.gameMode = this.mode.R;
-  this.rcounter = 0;
-  this.gameState = this.state.P1PieceSelect;
-  if(this.pickedSoldier)
-    this.graph.nodes[this.pickedSoldier].selectable = false;
-  this.resetTimer();
+  for(let i = 0; i < 2; i++){
+    for(let j = 0; j < 10; j++){
+      if(this.removedPieces[i][j][1]){
+        this.graph.nodes[this.removedPieces[i][j][1]].coords = this.removedPieces[i][j][0]
+        this.graph.updatePosition(this.removedPieces[i][j][1]);
+      }
+    }
+  }
+}
+/*
+*Finalizar jogo e preparar um novo
+*/
+XMLscene.prototype.finalizeGame = function(winner){
+  if(winner == 1){
+    document.getElementById("p1score").innerText = Number(document.getElementById("p1score").innerText) + 1;
+  }else{
+    document.getElementById("p2score").innerText = Number(document.getElementById("p2score").innerText) + 1;
+  }
+  document.getElementById("winner").innerText = winner
+  this.gameState = this.state.GameEnd;
+  clearInterval(timerInterval);
+  document.getElementById("enddiv").removeAttribute('hidden');
+}
+/*
+*Replay game
+*/
+XMLscene.prototype.ReplayLastGame = function(){
+  if(this.interactiveState()){
+    console.log(this.lasthistory)
+    let oldState = this.savedStates[0];
+    for(let i = 0; i < 8; i++){
+      for(let j = 0; j < 10; j++){
+        if (oldState[i][j] !== ' '){
+          let piece = oldState[i][j];
+          let coords = oldState[8][j][1].toUpperCase() + oldState[i][10]
+          let soldier = "";
+          switch (piece[piece.length - 1]) {
+            case 'W':
+              soldier = 'soldierReiB'
+              this.graph.nodes[soldier].coords = coords
+              break;
+            case 'B':
+              soldier = 'soldierReiA'
+              this.graph.nodes[soldier].coords = coords
+              break;
+            case 'w':
+              soldier = 'soldier'+piece.split('w')[0]+'B'
+              this.graph.nodes[soldier].coords = coords
+              break;
+            case 'b':
+              soldier = 'soldier'+piece.split('b')[0]+'A'
+              this.graph.nodes[soldier].coords = coords
+              break;
+            default:
+              break;
+          }
+          this.graph.updatePosition(soldier);
+        }
+      }
+    }
+    this.curState = this.gameState; //Guardar uma referencia do estado a quando o replay
+    this.oldGameMode = this.gameMode; //Guardar uma referencia do modo a quando o replay
+    this.oldEliminated = [] //Guardar uma referencia das peças eliminadas
+    for(let i = 0; i < 2; i++){
+      let ar = []
+      for(let j = 0; j < 10; j++){
+        ar.push(this.removedPieces[i][j].slice())
+        this.removedPieces[i][j][1] = null
+      }
+      this.oldEliminated.push(ar);
+    }
+    this.gameMode = this.mode.R;
+    this.rcounter = 0;
+    this.gameState = this.state.P1PieceSelect;
+    if(this.pickedSoldier)
+      this.graph.nodes[this.pickedSoldier].selectable = false;
+    this.resetTimer();
+  }
+}
+/*
+* Check if the game is in an interactive state
+*/
+XMLscene.prototype.interactiveState = function(){
+  if((this.gameState == this.state.P1SpotSelect) || (this.gameState == this.state.P2SpotSelect) || (this.gameState == this.state.P1PieceSelect) || (this.gameState == this.state.P2PieceSelect))
+    return true;
+  return false;
 }
 /*
 *Save the state of the current game
@@ -610,8 +705,14 @@ XMLscene.prototype.resetTimer = function(){
 *Undo into last state
 */
 XMLscene.prototype.Undo = function(){
-  if( ((this.gameState == this.state.P1PieceSelect) || (this.gameState == this.state.P2PieceSelect)) && (this.savedStates.length > 1) && (this.gameMode != this.mode.R) ){
-    let undoState = this.gameState == this.state.P1PieceSelect ? this.state.P2PieceSelect : this.state.P1PieceSelect;
+  if( (this.interactiveState()) && (this.savedStates.length > 1) && (this.gameMode != this.mode.R) ){
+    let undoState;
+    if(this.gameState == this.state.P1PieceSelect || this.gameState == this.state.P1SpotSelect)
+      undoState = this.state.P1PieceSelect;
+    else
+      undoState = this.state.P2PieceSelect;
+    if(this.pickedSoldier)
+      this.graph.nodes[this.pickedSoldier].selectable = false;
     this.savedStates.pop();
     let oldState = this.savedStates[this.savedStates.length - 1]
     this.history.pop();
@@ -642,6 +743,12 @@ XMLscene.prototype.Undo = function(){
               break;
           }
           this.graph.updatePosition(soldier);
+          for(let i = 0; i < 2; i++){
+            for(let j = 0; j < 10; j++){
+              if(soldier == this.removedPieces[i][j][1])
+                this.removedPieces[i][j][1] = null;
+            }
+          }
         }
       }
     }

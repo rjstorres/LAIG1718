@@ -74,8 +74,9 @@ main=function()
       myScene.interface.gui.close();
       delete myInterface;
       myInterface = new MyInterface();
+      let scenehistory = myScene.history.length > 0 ? myScene.history.slice() : null
       delete myScene;
-      myScene = new XMLscene(myInterface, args[1], args[2], args[3]);
+      myScene = new XMLscene(myInterface, args[1], args[2], args[3], scenehistory);
       app.setScene(myScene);
       app.setInterface(myInterface);
       myInterface.setActiveCamera(myScene.camera);
