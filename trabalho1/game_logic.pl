@@ -637,12 +637,12 @@ check_mate(_).
 
 %Checks if the game ended
 is_game_over(Player,MyReply):-board(Board), check_soldiers_and_Dux(Board,0,0,0,0,MyReply),
-        playcounter(X), X>0 , 
-        Y is X-1, 
-        retract(playcounter(X)), 
-        assert(playcounter(Y)),
-        check_possible_moves(Player),
-	(nonvar(MyReply);MyReply='OK').
+        	playcounter(X), X>0 , 
+        	Y is X-1, 
+        	retract(playcounter(X)), 
+        	assert(playcounter(Y)),
+        	check_possible_moves(Player),
+		(nonvar(MyReply);MyReply='OK').
 
 
 is_game_over(_,MyReply):-playcounter(X), X<1,

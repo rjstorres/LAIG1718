@@ -103,10 +103,11 @@ print_header_line(_).
 % Returns 200 OK on successful aplication of parse_input on request
 % Returns 400 Bad Request on syntax error (received from parser) or on failure of parse_input
 
-%Elem = 1, player play
-%ELem = 2, AI do play
-%Elem = 3, getBoard
-%Elem = 4, get is_game_over
+%RequestType = 1, player play
+%RequestType = 2, AI do play
+%RequestType = 3, getBoard
+%RequestType = 4, get is_game_over
+%RequestType = 5, setBoard
 
 handle_request(Request, MyReply, '200 OK') :- 
 	nth1(1,Request,RequestType),
@@ -137,12 +138,13 @@ handle_request(Request, MyReply, '200 OK') :-
 
 
 
-/*handle_request([4|[T]], MyReply, '200 OK') :- 
-        retractall(board(_)), 
-        assert(board(T)), 
+handle_request([5|[T]], MyReply, '200 OK') :- 
+        replaceBoard('%20',' ', T, NewBoard),
+	retractall(board(_)), 
+        assert(board(NewBoard)), 
 	print_board,
 	MyReply='OK',
-	!.*/
+	!.
 
 handle_request(syntax_error, 'Syntax Error', '400 Bad Request') :- !.
 handle_request(_, 'Bad Request', '400 Bad Request').	
@@ -151,3 +153,12 @@ make_move(Player,Move):-
         check_if_valid(Move, Player), !,
         move(Move),
         remove_captured_pieces(Move,Player).
+
+replaceBoard(_,_,[_|[]],[H|[]]):- H=['_a_','_b_','_c_','_d_','_e_','_f_','_g_','_h_','_i_','_j_'].
+replaceBoard(O,R,[H|T],[H2|T2]):-
+        replaceColumn(O,R,H,H2),
+        replaceBoard(O,R,T,T2).
+
+replaceColumn(_, _, [], []).
+replaceColumn(O, R, [O|T], [R|T2]) :- replaceColumn(O, R, T, T2).
+replaceColumn(O, R, [H|T], [H|T2]) :- H \= O, replaceColumn(O, R, T, T2).
