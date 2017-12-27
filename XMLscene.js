@@ -26,6 +26,7 @@ function XMLscene(interface, mode,dificulty,time,lasthistory) {
     this.state = {P1PieceSelect: 1, P1SpotSelect: 2 ,P2PieceSelect: 4, P2SpotSelect: 5, GameSetup: 6, P1Animation:7, P2Animation:8,
                   P1EliAnimation:9, P2EliAnimation:10, P1BoardValidate:11, P2BoardValidate:12, P1Victory:13, P2Victory:14, GameEnd:15, Draw:16}
     this.sicstus = null;
+    this.endGame = null;
     this.sId = null;
     /*The current game state*/
     this.gameState = this.state.GameSetup;
@@ -174,7 +175,7 @@ XMLscene.prototype.responseValidate = function(player){
 * Procurar por peças a remover
 */
 XMLscene.prototype.handleElimination = function(player){
-  rempieces = this.diffBoard();
+  let rempieces = this.diffBoard();
   if(rempieces.length > 0){
     for(let i = 0; i < rempieces.length; i++){
       this.graph.addRemoveAnimation(rempieces[i]);
@@ -183,6 +184,7 @@ XMLscene.prototype.handleElimination = function(player){
   }else{
     this.gameState = player == 1 ? this.state.P2PieceSelect : this.state.P1PieceSelect;
   }
+  this.endGame = getGame_is_over(1);
 }
 /*
 * Procurar peças a remover
@@ -457,37 +459,41 @@ XMLscene.prototype.mmPlay = function(){
 * Fazer replay do jogo
 */
 XMLscene.prototype.rPlay = function(){
-  let action = this.lasthistory[this.rcounter].split("-")
-  let coords
-  switch (this.gameState) {
-    case this.state.P1PieceSelect:
-      this.pickedSoldier = action[0]
-      coords = action[2]
-      this.gameState = this.state.P1Animation;
-      this.resetTimer();
-      this.rcounter++
-      this.graph.addMoveAnimation(coords, this.pickedSoldier)
-      break;
-    case this.state.P2PieceSelect:
-      this.pickedSoldier = action[0]
-      coords = action[2]
-      this.gameState = this.state.P2Animation;
-      this.resetTimer();
-      this.rcounter++
-      this.graph.addMoveAnimation(coords, this.pickedSoldier)
-      break;
-    case this.state.P1BoardValidate:
-      this.gameState = this.state.P2PieceSelect;
-      break;
-    case this.state.P2BoardValidate:
-      this.gameState = this.state.P1PieceSelect;
-      break;
-    default:
-      break;
+  if(this.rcounter == this.lasthistory.length && (this.gameState == this.state.P1BoardValidate || this.gameState == this.state.P2BoardValidate)){
+    this.finalizeReplay();
+  }else{
+    let action = 0;
+    if(this.rcounter < this.lasthistory.length){
+      action = this.lasthistory[this.rcounter].split("-")
     }
-    if(this.rcounter > this.lasthistory.length){
-      this.finalizeReplay();
-    }
+    let coords;
+    switch (this.gameState) {
+      case this.state.P1PieceSelect:
+        this.pickedSoldier = action[0]
+        coords = action[2]
+        this.gameState = this.state.P1Animation;
+        this.resetTimer();
+        this.rcounter++
+        this.graph.addMoveAnimation(coords, this.pickedSoldier)
+        break;
+      case this.state.P2PieceSelect:
+        this.pickedSoldier = action[0]
+        coords = action[2]
+        this.gameState = this.state.P2Animation;
+        this.resetTimer();
+        this.rcounter++
+        this.graph.addMoveAnimation(coords, this.pickedSoldier)
+        break;
+      case this.state.P1BoardValidate:
+        this.gameState = this.state.P2PieceSelect;
+        break;
+      case this.state.P2BoardValidate:
+        this.gameState = this.state.P1PieceSelect;
+        break;
+      default:
+        break;
+      }
+  }
 }
 /*
 *Finalizar um replay
@@ -901,6 +907,19 @@ XMLscene.prototype.display = function() {
                 this.lights[i].update();
                 i++;
             }
+        }
+        if(this.endGame){
+          if(this.endGame.status != 0 && !this.endGame.responseText.includes('OK')){
+            if(this.endGame.responseText.includes('DRAW')){
+              this.gameState = this.state.Draw;
+            }else if(this.endGame.responseText.includes('Player 1 Lost')){
+              this.gameState = this.state.P1Victory
+            }else if(this.endGame.responseText.includes('Player 2 Lost')){
+              this.gameState = this.state.P2Victory
+            }
+            console.log(this.endGame.responseText);
+            this.endGame = null;
+          }
         }
         //Process game cycle
         switch (this.gameMode) {

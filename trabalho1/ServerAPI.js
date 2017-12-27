@@ -56,10 +56,10 @@ function handleReplyGetBoard(data) {
 
 function getGame_is_over(player) {
     // Get Parameter Values
-    var requestString = "[5,"+String(player)+ "]";
+    var requestString = "[4,"+String(player)+ "]";
 
     // Make Request
-    getPrologRequest(requestString, handleReplyGetGame_is_over);
+    return getPrologRequest(requestString, handleReplyGetGame_is_over);
 }
 
 function handleReplyGetGame_is_over(data) {
