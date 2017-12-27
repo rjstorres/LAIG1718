@@ -7,9 +7,9 @@ function MyGraphLeaf(graph, xmlelem) {
 	this.graph = graph;
 	this.type = graph.reader.getString(xmlelem, 'type');
 	this.args = null;
-	if(this.type == 'patch')
+	if (this.type == 'patch')
 		this.args = xmlelem
-	else{
+	else {
 		this.args = graph.reader.getString(xmlelem, 'args');
 		this.args = this.args.split(" ").map(Number);
 	}
@@ -36,9 +36,9 @@ function MyGraphLeaf(graph, xmlelem) {
 
 }
 
-MyGraphLeaf.prototype.display = function(afs, aft){
-	if((this.primitive instanceof Rectangle) || (this.primitive instanceof Triangle)){
-		this.primitive.setTextureCoords(afs,aft);
+MyGraphLeaf.prototype.display = function (afs, aft) {
+	if ((this.primitive instanceof Rectangle) || (this.primitive instanceof Triangle)) {
+		this.primitive.setTextureCoords(afs, aft);
 	}
 	this.primitive.display();
 }

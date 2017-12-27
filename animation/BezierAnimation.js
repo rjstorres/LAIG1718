@@ -3,45 +3,45 @@
  * @constructor
  */
 function BezierAnimation(scene, args, dir) {
-    this.invertDir = dir ? true : false
-    this.scene = scene;
-    this.args = args;
-    this.p4=args[3];
-    this.speed=args[4];
-    this.threshold = this.aproximateThreshold(args[0],args[1],args[2],args[3])//Distancia minima entre pontos
-    this.path = []; //Estrutura de memória que vai guardar pontos de bezier igualmente espaçados
-    this.length = 0; //Guardar dimensão da curva
-    this.mapPoints(args[0], args[1], args[2], args[3]); //Preencher this.path com os pontos do caminho bezier
-    this.dir = 0;
-    this.initMat = mat4.create();
-    mat4.identity(this.initMat);
-    mat4.translate(this.initMat, this.initMat, args[0])
-    this.endFlag = false;
-    this.timeSpan = this.length/this.speed;
-    this.timeStart = new Date().getTime()/1000;
-    this.timeNow = 0;
+  this.invertDir = dir ? true : false
+  this.scene = scene;
+  this.args = args;
+  this.p4 = args[3];
+  this.speed = args[4];
+  this.threshold = this.aproximateThreshold(args[0], args[1], args[2], args[3])//Distancia minima entre pontos
+  this.path = []; //Estrutura de memória que vai guardar pontos de bezier igualmente espaçados
+  this.length = 0; //Guardar dimensão da curva
+  this.mapPoints(args[0], args[1], args[2], args[3]); //Preencher this.path com os pontos do caminho bezier
+  this.dir = 0;
+  this.initMat = mat4.create();
+  mat4.identity(this.initMat);
+  mat4.translate(this.initMat, this.initMat, args[0])
+  this.endFlag = false;
+  this.timeSpan = this.length / this.speed;
+  this.timeStart = new Date().getTime() / 1000;
+  this.timeNow = 0;
 }
 
 BezierAnimation.prototype = Object.create(Animation.prototype);
-BezierAnimation.prototype.constructor=BezierAnimation;
+BezierAnimation.prototype.constructor = BezierAnimation;
 
 BezierAnimation.prototype.animate = function () {
-  if(!this.endFlag){
-    let position = this.speed*this.timeNow;
-    let ind = Math.trunc(position*this.path.length/this.length);
+  if (!this.endFlag) {
+    let position = this.speed * this.timeNow;
+    let ind = Math.trunc(position * this.path.length / this.length);
     let point = this.path[ind];
     mat = mat4.create();
     mat4.translate(mat, this.initMat, point);
-    try{
-      mat4.rotateY(mat, mat,this.getDirectionAngle(point, this.path[ind+1]));
-    }catch(err){
-      mat4.rotateY(mat, mat,this.getDirectionAngle(this.path[ind-1], this.path[ind]));
+    try {
+      mat4.rotateY(mat, mat, this.getDirectionAngle(point, this.path[ind + 1]));
+    } catch (err) {
+      mat4.rotateY(mat, mat, this.getDirectionAngle(this.path[ind - 1], this.path[ind]));
     }
-    this.timeNow = new Date().getTime()/1000 - this.timeStart;
-    if(this.timeNow > this.timeSpan){
+    this.timeNow = new Date().getTime() / 1000 - this.timeStart;
+    if (this.timeNow > this.timeSpan) {
       this.endFlag = true;
-      mat4.translate(this.initMat,this.initMat, this.p4);
-      mat4.rotateY(this.initMat,this.initMat, this.dir);
+      mat4.translate(this.initMat, this.initMat, this.p4);
+      mat4.rotateY(this.initMat, this.initMat, this.dir);
       return this.initMat;
     }
     return mat;
@@ -64,7 +64,7 @@ BezierAnimation.prototype.mapPoints = function (p1, p2, p3, p4) {
   }
 }
 
-BezierAnimation.prototype.linearDistance = function(p1,p2,p3,p4){//Calcular a distancia entre 4 pontos
+BezierAnimation.prototype.linearDistance = function (p1, p2, p3, p4) {//Calcular a distancia entre 4 pontos
   var d = Math.sqrt(
     Math.pow(p2[0] - p1[0], 2) + Math.pow(p2[1] - p1[1], 2) + Math.pow(p2[2] - p1[2], 2)
   );
@@ -113,7 +113,7 @@ BezierAnimation.prototype.getDirectionAngle = function (p1, p2) { //Calcular  an
   let xu = xdif / mag;
   let zu = zdif / mag;
   var angle = Math.atan2(xu, zu);
-  if(this.invertDir) angle+=Math.PI
+  if (this.invertDir) angle += Math.PI
   //Retorno do angulo
   if (isNaN(angle)) {
     return this.dir;

@@ -29,8 +29,8 @@ function MySceneGraph(filename, scene) {
     this.normScale = 0
     this.normScaleMax = this.scene.getNorm(Math.PI / 2);
 
-    this.materialstack=[]
-    this.texturestack=[]
+    this.materialstack = []
+    this.texturestack = []
 
     //Pickstack, permitir herança do registo para pick
     this.pickstack = []
@@ -1006,7 +1006,7 @@ MySceneGraph.prototype.parseAnimations = function (animationsNode) {
 MySceneGraph.prototype.parseTextures = function (texturesNode) {
 
     this.textures = [];
-    this.textures['clear'] = [null,1,1];
+    this.textures['clear'] = [null, 1, 1];
     var eachTexture = texturesNode.children;
     // Each texture.
 
@@ -1420,15 +1420,15 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
             this.nodes[nodeID] = new MyGraphNode(this, nodeID);
             //is the node selectable
             var selectable = null;
-            if(this.reader.hasAttribute(children[i], 'selectable')){
-              var selectableString = this.reader.getString(children[i], 'selectable')
-              if (selectableString == "true") {
-                  selectable = true;
-              } else if (selectableString == "false") {
-                  selectable = false;
-              } else {
-                  return "invalid selectable value"
-              }
+            if (this.reader.hasAttribute(children[i], 'selectable')) {
+                var selectableString = this.reader.getString(children[i], 'selectable')
+                if (selectableString == "true") {
+                    selectable = true;
+                } else if (selectableString == "false") {
+                    selectable = false;
+                } else {
+                    return "invalid selectable value"
+                }
             }
             this.nodes[nodeID].selectable = selectable;
             if (selectable) {
@@ -1436,17 +1436,17 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
             }
             //Gather initial coordinates
             let coordinate = null;
-            if(this.reader.hasAttribute(children[i], 'coordinates')){
-              let coordinateString = this.reader.getString(children[i], 'coordinates')
-              if(this.reader.hasAttribute(children[i], 'piecetype')){
-                let typeString=this.reader.getString(children[i], 'piecetype')
-                if(typeString != '1' && typeString != '2' && typeString != 's')
-                  return "piecetype attribute must be of value 1 (player1) 2 (player2) s(boardSpot)"
-                this.nodes[nodeID].piecetype = typeString;
-                this.nodes[nodeID].coords = coordinateString;
-              }else{
-                return "Coordinates attribute must have a valid piecetype attribute"
-              }
+            if (this.reader.hasAttribute(children[i], 'coordinates')) {
+                let coordinateString = this.reader.getString(children[i], 'coordinates')
+                if (this.reader.hasAttribute(children[i], 'piecetype')) {
+                    let typeString = this.reader.getString(children[i], 'piecetype')
+                    if (typeString != '1' && typeString != '2' && typeString != 's')
+                        return "piecetype attribute must be of value 1 (player1) 2 (player2) s(boardSpot)"
+                    this.nodes[nodeID].piecetype = typeString;
+                    this.nodes[nodeID].coords = coordinateString;
+                } else {
+                    return "Coordinates attribute must have a valid piecetype attribute"
+                }
             }
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
@@ -1727,60 +1727,60 @@ MySceneGraph.generateRandomString = function (length) {
 /*
 *Adicionar a animação de movimento de peça
 */
-MySceneGraph.prototype.addMoveAnimation = function(spotCoords, soldier){
-  console.log(this.scene.history)
-  let soldierNode = this.nodes[soldier];
-  //Coordenadas numéricas conforme definidas para o tabuleiro
-  let soldierZ = this.scene.rows[soldierNode.coords[1]]
-  let soldierX = this.scene.collumns[soldierNode.coords[0]]
-  //Setup da posição inicial de forma a prevenir acumulo de erros
-  mat4.identity(soldierNode.transformMatrix)
-  mat4.translate(soldierNode.transformMatrix,soldierNode.transformMatrix,[soldierX,0,soldierZ])
-  let spotZ = this.scene.rows[spotCoords[1]]
-  let spotX = this.scene.collumns[spotCoords[0]]
-  soldierNode.counterAnimations = 0 //reset animation counter
-  soldierNode.animationID = [1] //reset animation queue
-  let difX = spotX-soldierX
-  let difZ = spotZ-soldierZ
-  let invertDir = soldierNode.piecetype == '1' ? true : false //usando para a inverção de rotações de direcção
-  soldierNode.currAnimation = new BezierAnimation(this.scene, [[0,0,0], [difX/3,7,difZ/3], [2*difX/3,7,2*difZ/3], [difX, 0, difZ], 8],invertDir);
-  //mat4.translate(soldierNode.transformMatrix, soldierNode.transformMatrix, [spotX-soldierX, 0, spotZ-soldierZ]);
-  this.anims++;
-  soldierNode.coords = spotCoords
+MySceneGraph.prototype.addMoveAnimation = function (spotCoords, soldier) {
+    console.log(this.scene.history)
+    let soldierNode = this.nodes[soldier];
+    //Coordenadas numéricas conforme definidas para o tabuleiro
+    let soldierZ = this.scene.rows[soldierNode.coords[1]]
+    let soldierX = this.scene.collumns[soldierNode.coords[0]]
+    //Setup da posição inicial de forma a prevenir acumulo de erros
+    mat4.identity(soldierNode.transformMatrix)
+    mat4.translate(soldierNode.transformMatrix, soldierNode.transformMatrix, [soldierX, 0, soldierZ])
+    let spotZ = this.scene.rows[spotCoords[1]]
+    let spotX = this.scene.collumns[spotCoords[0]]
+    soldierNode.counterAnimations = 0 //reset animation counter
+    soldierNode.animationID = [1] //reset animation queue
+    let difX = spotX - soldierX
+    let difZ = spotZ - soldierZ
+    let invertDir = soldierNode.piecetype == '1' ? true : false //usando para a inverção de rotações de direcção
+    soldierNode.currAnimation = new BezierAnimation(this.scene, [[0, 0, 0], [difX / 3, 7, difZ / 3], [2 * difX / 3, 7, 2 * difZ / 3], [difX, 0, difZ], 8], invertDir);
+    //mat4.translate(soldierNode.transformMatrix, soldierNode.transformMatrix, [spotX-soldierX, 0, spotZ-soldierZ]);
+    this.anims++;
+    soldierNode.coords = spotCoords
 }
 /*
 *Adicionar a animação de eliminação de peça
 */
-MySceneGraph.prototype.addRemoveAnimation = function(soldier){
-  /*Informação relevante do soldado*/
-  let soldierNode = this.nodes[soldier];
-  let soldierZ = this.scene.rows[soldierNode.coords[1]]
-  let soldierX = this.scene.collumns[soldierNode.coords[0]]
-  //Setup da posição inicial de forma a prevenir acumulo de erros
-  mat4.identity(soldierNode.transformMatrix)
-  mat4.translate(soldierNode.transformMatrix,soldierNode.transformMatrix,[soldierX,0,soldierZ])
-  /*Obter um local de eliminação vazio*/
-  let spotCoords = this.scene.getEliSpot(soldierNode.piecetype, soldier)
-  let spotZ = this.scene.rows[spotCoords[1]]
-  let spotX = this.scene.collumns[spotCoords[0]]
-  soldierNode.counterAnimations = 0 //reset animation counter
-  soldierNode.animationID = [1] //reset animation queue
-  let difX = spotX-soldierX
-  let difZ = spotZ-soldierZ
-  let invertDir = soldierNode.piecetype == '1' ? true : false //usando para a inverção de rotações de direcção
-  soldierNode.currAnimation = new BezierAnimation(this.scene, [[0,0,0], [difX/3,20,difZ/3], [2*difX/3,20,2*difZ/3], [difX, 0, difZ], 40],invertDir);
-  this.anims++;
-  soldierNode.coords = spotCoords
+MySceneGraph.prototype.addRemoveAnimation = function (soldier) {
+    /*Informação relevante do soldado*/
+    let soldierNode = this.nodes[soldier];
+    let soldierZ = this.scene.rows[soldierNode.coords[1]]
+    let soldierX = this.scene.collumns[soldierNode.coords[0]]
+    //Setup da posição inicial de forma a prevenir acumulo de erros
+    mat4.identity(soldierNode.transformMatrix)
+    mat4.translate(soldierNode.transformMatrix, soldierNode.transformMatrix, [soldierX, 0, soldierZ])
+    /*Obter um local de eliminação vazio*/
+    let spotCoords = this.scene.getEliSpot(soldierNode.piecetype, soldier)
+    let spotZ = this.scene.rows[spotCoords[1]]
+    let spotX = this.scene.collumns[spotCoords[0]]
+    soldierNode.counterAnimations = 0 //reset animation counter
+    soldierNode.animationID = [1] //reset animation queue
+    let difX = spotX - soldierX
+    let difZ = spotZ - soldierZ
+    let invertDir = soldierNode.piecetype == '1' ? true : false //usando para a inverção de rotações de direcção
+    soldierNode.currAnimation = new BezierAnimation(this.scene, [[0, 0, 0], [difX / 3, 20, difZ / 3], [2 * difX / 3, 20, 2 * difZ / 3], [difX, 0, difZ], 40], invertDir);
+    this.anims++;
+    soldierNode.coords = spotCoords
 }
 /*
 *Atualizar a posição de uma peça conforme o seu estado interno
 */
-MySceneGraph.prototype.updatePosition = function(soldier){
-  let soldierNode = this.nodes[soldier];
-  let soldierZ = this.scene.rows[soldierNode.coords[1]]
-  let soldierX = this.scene.collumns[soldierNode.coords[0]]
-  mat4.identity(soldierNode.transformMatrix)
-  mat4.translate(soldierNode.transformMatrix,soldierNode.transformMatrix,[soldierX,0,soldierZ])
+MySceneGraph.prototype.updatePosition = function (soldier) {
+    let soldierNode = this.nodes[soldier];
+    let soldierZ = this.scene.rows[soldierNode.coords[1]]
+    let soldierX = this.scene.collumns[soldierNode.coords[0]]
+    mat4.identity(soldierNode.transformMatrix)
+    mat4.translate(soldierNode.transformMatrix, soldierNode.transformMatrix, [soldierX, 0, soldierZ])
 }
 /**
  * Displays the scene, processing each node, starting in the root node.
@@ -1830,64 +1830,64 @@ MySceneGraph.prototype.processGraph = function (node/*, parentMaterial, amplifFa
             if (node.currAnimation.endFlag) {
                 node.currAnimation = null;
                 node.counterAnimations++;
-                mat4.multiply(node.transformMatrix, node.transformMatrix,matAnimation);
-                if(node.piecetype){//Verificar se a animação é referente ao movimento de uma peça
-                  this.anims--;
-                  if(this.anims == 0){
-                    console.log("Now entering a new state")
-                    switch (this.scene.gameState) {
-                      case this.scene.state.P1Animation:
-                        this.scene.gameState = this.scene.state.P1BoardValidate
-                        break;
-                      case this.scene.state.P2Animation:
-                        this.scene.gameState = this.scene.state.P2BoardValidate
-                        break;
-                      case this.scene.state.P1EliAnimation:
-                        this.scene.gameState = this.scene.state.P2PieceSelect
-                        break;
-                      case this.scene.state.P2EliAnimation:
-                        this.scene.gameState = this.scene.state.P1PieceSelect
-                        break;
-                      default:
-                        break;
+                mat4.multiply(node.transformMatrix, node.transformMatrix, matAnimation);
+                if (node.piecetype) {//Verificar se a animação é referente ao movimento de uma peça
+                    this.anims--;
+                    if (this.anims == 0) {
+                        console.log("Now entering a new state")
+                        switch (this.scene.gameState) {
+                            case this.scene.state.P1Animation:
+                                this.scene.gameState = this.scene.state.P1BoardValidate
+                                break;
+                            case this.scene.state.P2Animation:
+                                this.scene.gameState = this.scene.state.P2BoardValidate
+                                break;
+                            case this.scene.state.P1EliAnimation:
+                                this.scene.gameState = this.scene.state.P2PieceSelect
+                                break;
+                            case this.scene.state.P2EliAnimation:
+                                this.scene.gameState = this.scene.state.P1PieceSelect
+                                break;
+                            default:
+                                break;
+                        }
                     }
-                  }
-                  //mat4.multiply(node.transformMatrix, node.transformMatrix,node.endAnimationMatrix)
-                  //mat4.identity(node.endAnimationMatrix)
-                  node.animationID.pop()
+                    //mat4.multiply(node.transformMatrix, node.transformMatrix,node.endAnimationMatrix)
+                    //mat4.identity(node.endAnimationMatrix)
+                    node.animationID.pop()
                 }
             }
         }
-        if(node.materialID == 'null'){
-          let ind = this.materialstack.length - 1
-          this.materialstack.push(this.materialstack[ind])
-        }else{
-          this.materialstack.push(node.materialID)
+        if (node.materialID == 'null') {
+            let ind = this.materialstack.length - 1
+            this.materialstack.push(this.materialstack[ind])
+        } else {
+            this.materialstack.push(node.materialID)
         }
-        if(node.textureID == 'null'){
-          let ind = this.texturestack.length - 1
-          this.texturestack.push(this.texturestack[ind])
-        }else{
-          this.texturestack.push(node.textureID)
+        if (node.textureID == 'null') {
+            let ind = this.texturestack.length - 1
+            this.texturestack.push(this.texturestack[ind])
+        } else {
+            this.texturestack.push(node.textureID)
         }
         //Node recursion call
-        if(node.piecetype){
-          this.pickstack.push(++this.pickcounter)
-          this.selectablePieces[this.pickcounter] = node.nodeID
-          for (var i = 0; i < node.children.length; i++) {
-              this.scene.pushMatrix();
-              this.processGraph(this.nodes[node.children[i]]/*, material, amplif*/);
-              this.scene.popMatrix();
-              this.applyShader = shade;
-          }
-          this.pickstack.pop()
-        }else{
-          for (var i = 0; i < node.children.length; i++) {
-              this.scene.pushMatrix();
-              this.processGraph(this.nodes[node.children[i]]/*, material, amplif*/);
-              this.scene.popMatrix();
-              this.applyShader = shade;
-          }
+        if (node.piecetype) {
+            this.pickstack.push(++this.pickcounter)
+            this.selectablePieces[this.pickcounter] = node.nodeID
+            for (var i = 0; i < node.children.length; i++) {
+                this.scene.pushMatrix();
+                this.processGraph(this.nodes[node.children[i]]/*, material, amplif*/);
+                this.scene.popMatrix();
+                this.applyShader = shade;
+            }
+            this.pickstack.pop()
+        } else {
+            for (var i = 0; i < node.children.length; i++) {
+                this.scene.pushMatrix();
+                this.processGraph(this.nodes[node.children[i]]/*, material, amplif*/);
+                this.scene.popMatrix();
+                this.applyShader = shade;
+            }
         }
         //Apply shaders to leaves
         if (shade == false && this.currentShader == "select") {
@@ -1898,23 +1898,23 @@ MySceneGraph.prototype.processGraph = function (node/*, parentMaterial, amplifFa
             this.currentShader = "select";
         }
         //Draw Leaves
-        if(node.leaves.length > 0){
-          let tex = this.textures[this.texturestack[this.texturestack.length - 1]]
-          let matter = this.materials[this.materialstack[this.materialstack.length - 1]]
-          matter.setTexture(tex[0])
-          let amplif = [tex[1],tex[2]]
-          matter.apply()
-          //material.apply();
-          if(this.pickstack.length > 0){
-            for (var i = 0; i < node.leaves.length; i++) {
-                this.scene.registerForPick(this.pickstack[this.pickstack.length - 1],node.leaves[i])
-                node.leaves[i].display(amplif[0], amplif[1]);
+        if (node.leaves.length > 0) {
+            let tex = this.textures[this.texturestack[this.texturestack.length - 1]]
+            let matter = this.materials[this.materialstack[this.materialstack.length - 1]]
+            matter.setTexture(tex[0])
+            let amplif = [tex[1], tex[2]]
+            matter.apply()
+            //material.apply();
+            if (this.pickstack.length > 0) {
+                for (var i = 0; i < node.leaves.length; i++) {
+                    this.scene.registerForPick(this.pickstack[this.pickstack.length - 1], node.leaves[i])
+                    node.leaves[i].display(amplif[0], amplif[1]);
+                }
+            } else {
+                for (var i = 0; i < node.leaves.length; i++) {
+                    node.leaves[i].display(amplif[0], amplif[1]);
+                }
             }
-          }else{
-            for (var i = 0; i < node.leaves.length; i++) {
-                node.leaves[i].display(amplif[0], amplif[1]);
-            }
-          }
         }
         this.texturestack.pop()
         this.materialstack.pop()

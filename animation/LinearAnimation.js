@@ -2,11 +2,11 @@
  * LinearAnimation
  * @constructor
  */
-function LinearAnimation(scene,args) {
+function LinearAnimation(scene, args) {
   (args.length == 2 && args[0] === Array && args[1] === Number) ? null : console.log("Error");
   this.scene = scene;
   this.args = args;
-  this.timeStart = new Date().getTime()/1000; //Conversão para segundos
+  this.timeStart = new Date().getTime() / 1000; //Conversão para segundos
   this.time = 0; //Tempo (em segundos) que decorreu na animação
   this.controlPoints = args[0];
   this.endFlag = false; //Flag para determinar se uma animação terminou
@@ -16,23 +16,23 @@ function LinearAnimation(scene,args) {
   this.timeOffset = 0; //Usado para simplificar o cálculo de distancia percorrida
   this.endMat = mat4.create();
   this.calculateTimePerPoint(this.controlPoints, this.speed);
-                /*Estrutura de dados para guardar*/
+  /*Estrutura de dados para guardar*/
   this.yDeg = []/*os ângulos de cada trajeto*/
   this.unitVectors = this.calculateUnitsDegrees(this.controlPoints);
 }
 
 LinearAnimation.prototype = Object.create(Animation.prototype);
-LinearAnimation.prototype.constructor=LinearAnimation;
+LinearAnimation.prototype.constructor = LinearAnimation;
 
 
-LinearAnimation.prototype.animate = function(){
-  if(!this.endFlag){ //Animação já terminou?
-    if(this.time > this.timePerPoint[this.currentPoint]){ //Verificar se já excedemos o ponto de controlo atual
+LinearAnimation.prototype.animate = function () {
+  if (!this.endFlag) { //Animação já terminou?
+    if (this.time > this.timePerPoint[this.currentPoint]) { //Verificar se já excedemos o ponto de controlo atual
       this.currentPoint++;
-      if(this.currentPoint == this.controlPoints.length - 1){ //Se chegamos ao fim retorna-mos a posição do ultimo ponto de controlo
+      if (this.currentPoint == this.controlPoints.length - 1) { //Se chegamos ao fim retorna-mos a posição do ultimo ponto de controlo
         this.endFlag = true;
         mat4.translate(this.endMat, this.endMat, this.controlPoints[this.controlPoints.length - 1]);
-        mat4.rotateY(this.endMat, this.endMat, this.yDeg[this.currentPoint-1])
+        mat4.rotateY(this.endMat, this.endMat, this.yDeg[this.currentPoint - 1])
         return this.endMat; //Retornar matrix com a posição final
       }
       this.timeOffset = this.timePerPoint[this.currentPoint - 1] //Apartir de cada novo ponto de controlo assumimos um deltaT inicial = 0
@@ -40,18 +40,18 @@ LinearAnimation.prototype.animate = function(){
     let cp = this.controlPoints[this.currentPoint]; //Ponto de controlo atual
     let uv = this.unitVectors[this.currentPoint]; //Vetor unitário de direcção entre os dois pontos de controlo
     var translate = [
-      cp[0]+uv[0]*this.speed*(this.time - this.timeOffset),
-      cp[1]+uv[1]*this.speed*(this.time - this.timeOffset),
-      cp[2]+uv[2]*this.speed*(this.time - this.timeOffset)
+      cp[0] + uv[0] * this.speed * (this.time - this.timeOffset),
+      cp[1] + uv[1] * this.speed * (this.time - this.timeOffset),
+      cp[2] + uv[2] * this.speed * (this.time - this.timeOffset)
     ];
     let tMat = mat4.create();
     mat4.translate(tMat, tMat, translate);
     mat4.rotateY(tMat, tMat, this.yDeg[this.currentPoint]);
 
-    this.time = new Date().getTime()/1000 - this.timeStart;
+    this.time = new Date().getTime() / 1000 - this.timeStart;
     return tMat;
   }
-  else{
+  else {
     return this.endMat; //Após o fim this.initMat tem valor igual ao ultimo ponto de controlo.
   }
 }

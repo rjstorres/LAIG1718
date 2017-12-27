@@ -38,7 +38,7 @@ ComboAnimation.prototype.animate = function () {
         if (this.counter >= this.ComboAnimationsID.length)
             this.endFlag = true;
 
-       
+
         return matToReturn;
     }
 }
