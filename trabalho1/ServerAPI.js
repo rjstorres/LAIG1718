@@ -5,17 +5,24 @@ function getPrologRequest(requestString, onSuccess, onError, port) {
 
     request.onload = onSuccess || function (data) { console.log("Request successful. Reply: " + data.target.response); };
     request.onerror = onError || function () { console.log("Error waiting for response"); };
+    request.onreadystatechange = function(){
+      if(this.readyState == 4 && this.status == 200){
+        console.log(request.responseText)
+      }
+    }
 
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     request.send();
+    return request
 }
 
-function makePlay(player, play) {
+function makePlay(player, playor, playds) {
+    let play = '['+playor[0].toLowerCase()+','+playor[1]+','+playds[0].toLowerCase()+','+playds[1]+']';
     // Get Parameter Values
     var requestString = "[1," +String(player) + "," + String(play) +"]";
 
     // Make Request
-    getPrologRequest(requestString, handleReplyMakePlay);
+    return getPrologRequest(requestString, handleReplyMakePlay);
 }
 
 //Handle the Reply
@@ -28,7 +35,7 @@ function makeAIPlay(player, difficulty) {
     var requestString = "[2," +String(player) + "," + String(difficulty) +"]";
 
     // Make Request
-    getPrologRequest(requestString, handleReplyMakeAIPlay);
+    return getPrologRequest(requestString, handleReplyMakeAIPlay);
 }
 
 function handleReplyMakeAIPlay(data) {
@@ -40,7 +47,7 @@ function getBoard() {
     var requestString = "[3]";
 
     // Make Request
-    getPrologRequest(requestString, handleReplyGetBoard);
+    return getPrologRequest(requestString, handleReplyGetBoard);
 }
 
 function handleReplyGetBoard(data) {
@@ -59,12 +66,28 @@ function handleReplyGetGame_is_over(data) {
     //OK ou Player 1/2 Lost,(Reason), ou DRAW!!
 }
 
-function setBoard(board) {
+function setBoard(stateboard) {
+    let board = '[[';
+    let aux = [];
+    for(let i = 0; i < 8; i++){
+      for(let j = 0; j < 11; j++){
+        //console.log(stateboard[i][j])
+        aux.push(stateboard[i][j][stateboard[i][j].length - 1])
+      }
+      board = board + String(aux);
+      aux = [];
+      board = board + '],['
+    }
+    for(let i = 0; i < 10; i++){
+      aux.push(stateboard[8][i])
+    }
+    board = board + String(aux);
+    board = board + ']]';
     // Get Parameter Values
     var requestString = prepareToSendBoard(board);
 
     // Make Request
-    getPrologRequest(requestString, handleReplySetBoard);
+    return getPrologRequest(requestString, handleReplySetBoard);
 }
 
 function handleReplySetBoard(data) {
@@ -95,4 +118,3 @@ function prepareToSendBoard(board) {
     boardToSend+="]"
     return boardToSend;
 }
-

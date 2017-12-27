@@ -59,9 +59,9 @@ MyInterface.prototype.addSelectableGroup = function(nodes){
 MyInterface.prototype.addControls = function(){
   this.gui.add(this.scene, 'ChangeCamera');
   this.gui.add(this.scene, 'Undo')
-  this.gui.add(this.scene, 'DebugRemove')
   this.gui.add(this.scene, 'DebugWinP1')
   this.gui.add(this.scene, 'DebugWinP2')
+  this.gui.add(this.scene, 'DebugDraw')
 }
 MyInterface.prototype.addReplay = function(){
   this.gui.add(this.scene, 'ReplayLastGame')

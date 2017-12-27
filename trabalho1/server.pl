@@ -25,7 +25,7 @@ server :-
 	socket_server_close(Socket),
 	write('Closed Server'),nl.
 
-% Server Loop 
+% Server Loop
 % Uncomment writes for more information on incomming connections
 server_loop(Socket) :-
 	repeat,
@@ -40,22 +40,22 @@ server_loop(Socket) :-
 			close_stream(Stream),
 			fail
 		)),
-		
+
 		% Generate Response
 		handle_request(Request, MyReply, Status),
 		format('Request: ~q~n',[Request]),
 		format('Reply: ~q~n', [MyReply]),
-		
+
 		% Output Response
 		format(Stream, 'HTTP/1.0 ~p~n', [Status]),
 		format(Stream, 'Access-Control-Allow-Origin: *~n', []),
 		format(Stream, 'Content-Type: text/plain~n~n', []),
 		format(Stream, '~p', [MyReply]),
-	
+
 		% write('Finnished Connection'),nl,nl,
 		close_stream(Stream),
 	(Request = quit), !.
-	
+
 close_stream(Stream) :- flush_output(Stream), close(Stream).
 
 
@@ -66,15 +66,15 @@ close_stream(Stream) :- flush_output(Stream), close(Stream).
 read_request(Stream, Request) :-
 	read_line(Stream, LineCodes),
 	print_header_line(LineCodes),
-	
+
 	% Parse Request
 	atom_codes('GET /',Get),
 	append(Get,RL,LineCodes),
-	read_request_aux(RL,RL2),	
-	
+	read_request_aux(RL,RL2),
+
 	catch(read_from_codes(RL2, Request), error(syntax_error(_),_), fail), !.
 read_request(_,syntax_error).
-	
+
 read_request_aux([32|_],[46]) :- !.
 read_request_aux([C|Cs],[C|RCs]) :- read_request_aux(Cs, RCs).
 
@@ -109,28 +109,28 @@ print_header_line(_).
 %RequestType = 4, get is_game_over
 %RequestType = 5, setBoard
 
-handle_request(Request, MyReply, '200 OK') :- 
+handle_request(Request, Board, '200 OK') :-
 	nth1(1,Request,RequestType),
 	RequestType==1,
 	nth1(2,Request,Player),
 	nth1(3,Request,Move),
 	make_move(Player,Move),
-	MyReply='OK', !.
+	board(Board), !.
 
 
-handle_request(Request, MyReply, '200 OK') :- 
+handle_request(Request, MyReply, '200 OK') :-
 	nth1(1,Request,RequestType),
         RequestType==2,
 	nth1(2,Request,Player),
 	nth1(3,Request,Difficulty),
 	aI_move(Player,Difficulty,MyReply), !.
 
-handle_request(Request, Board, '200 OK') :- 
+handle_request(Request, Board, '200 OK') :-
 	nth1(1,Request,RequestType),
         RequestType==3,
 	board(Board), !.
 
-handle_request(Request, MyReply, '200 OK') :- 
+handle_request(Request, MyReply, '200 OK') :-
         nth1(1,Request,RequestType),
         RequestType==4,
         nth1(2,Request,Player),
@@ -138,18 +138,18 @@ handle_request(Request, MyReply, '200 OK') :-
 
 
 
-handle_request([5|[T]], MyReply, '200 OK') :- 
+handle_request([5|[T]], MyReply, '200 OK') :-
         replaceBoard('%20',' ', T, NewBoard),
-	retractall(board(_)), 
-        assert(board(NewBoard)), 
+	retractall(board(_)),
+        assert(board(NewBoard)),
 	print_board,
 	MyReply='OK',
 	!.
 
 handle_request(syntax_error, 'Syntax Error', '400 Bad Request') :- !.
-handle_request(_, 'Bad Request', '400 Bad Request').	
+handle_request(_, 'Bad Request', '400 Bad Request').
 
-make_move(Player,Move):-  
+make_move(Player,Move):-
         check_if_valid(Move, Player), !,
         move(Move),
         remove_captured_pieces(Move,Player).

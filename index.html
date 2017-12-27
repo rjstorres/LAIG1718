@@ -54,8 +54,8 @@ canvas {
       <input type="radio" name="modo" value="3"> Máquina/Máquina
       <br />
       <h3>Dificuldade:</h3>
-      <input type="radio" name="dif" value="0" checked> Simples
-      <input type="radio" name="dif" value="1"> Avançado
+      <input type="radio" name="dif" value="1" checked> Simples
+      <input type="radio" name="dif" value="2"> Avançado
       <br />
       <h3>Tempo por jogada (segundos):</h3>
       <button onclick="decreasetime()">&#8810;</button>
@@ -75,7 +75,7 @@ canvas {
               border-color: black;
               border-width: 5px;
               border-radius: 10px;" id="timediv">
-      <h3 style="font-size:300%; color:white; margin-top:10px;margin-bottom:0px;margin-right:10px; width:132px">&#9201; <a id="retime">0</a></h3>
+      <h3 style="font-size:300%; color:white; margin-top:10px;margin-bottom:0px;margin-right:10px; width:150px">&#9201; <a id="retime">30</a></h3>
   </div>
   <div style="position: absolute;
               top:-1%;
@@ -98,7 +98,7 @@ canvas {
               border-color: black;
               border-width: 5px;
               border-radius: 10px;" id="enddiv">
-      <h3 style="font-size:200%; color:white; margin-top:10px;margin-bottom:10px;margin-right:25px;margin-left:25px">Vitória do jogador <span id="winner">1</span></h3>
+      <h3 id="winner" style="font-size:200%; color:white; margin-top:10px;margin-bottom:10px;margin-right:25px;margin-left:25px"></h3>
       <button id="restartButton" style="margin-left: 40%; height:40px; width:80px; font-size:130%; margin-bottom:20px"><b>OK</b></button>
   </div>
   <section id="cgf"></section>
