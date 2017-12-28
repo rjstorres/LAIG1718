@@ -58,6 +58,8 @@ function XMLscene(interface, mode, dificulty, time, lasthistory) {
   this.pickedSoldier = null
   /*Movement history. Format: SoldierOrigin-SoldierDestinatio*/
   this.history = []
+  /*Save removed soldiers. Simplifies replays, Format: Array with null or array of soldierId, index == turns*/
+  this.remhistory = [];
   /*Game saved States*/
   this.savedStates = [
     [
@@ -79,7 +81,8 @@ function XMLscene(interface, mode, dificulty, time, lasthistory) {
     [['K1', null], ['L1', null], ['M1', null], ['N1', null], ['O1', null], ['K2', null], ['L2', null], ['M2', null], ['N2', null], ['O2', null]], /*Player 1 pieces*/
     [['K7', null], ['L7', null], ['M7', null], ['N7', null], ['O7', null], ['K8', null], ['L8', null], ['M8', null], ['N8', null], ['O8', null]]  /*Player 2 pieces*/
   ];
-  this.lasthistory = lasthistory ? lasthistory : null
+  this.lasthistory = lasthistory ? lasthistory[0] : null
+  this.lastremhistory = lasthistory ? lasthistory[1] : null
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -180,11 +183,13 @@ XMLscene.prototype.responseValidate = function (player) {
 XMLscene.prototype.handleElimination = function (player) {
   let rempieces = this.diffBoard();
   if (rempieces.length > 0) {
+    this.remhistory.push(rempieces);
     for (let i = 0; i < rempieces.length; i++) {
       this.graph.addRemoveAnimation(rempieces[i]);
     }
     this.gameState = player == 1 ? this.state.P1EliAnimation : this.state.P2EliAnimation;
   } else {
+    this.remhistory.push(null);
     this.gameState = player == 1 ? this.state.P2PieceSelect : this.state.P1PieceSelect;
   }
   this.endGame = getGame_is_over(player);
@@ -462,9 +467,10 @@ XMLscene.prototype.mmPlay = function () {
 * Fazer replay do jogo
 */
 XMLscene.prototype.rPlay = function () {
-  if (this.rcounter == this.lasthistory.length && (this.gameState == this.state.P1BoardValidate || this.gameState == this.state.P2BoardValidate)) {
+  if (this.rcounter == this.lasthistory.length && (this.gameState == this.state.P1PieceSelect || this.gameState == this.state.P2PieceSelect)) {
     this.finalizeReplay();
   } else {
+    let rempieces = null;
     let action = 0;
     if (this.rcounter < this.lasthistory.length) {
       action = this.lasthistory[this.rcounter].split("-")
@@ -476,7 +482,6 @@ XMLscene.prototype.rPlay = function () {
         coords = action[2]
         this.gameState = this.state.P1Animation;
         this.resetTimer();
-        this.rcounter++
         this.graph.addMoveAnimation(coords, this.pickedSoldier)
         break;
       case this.state.P2PieceSelect:
@@ -484,14 +489,31 @@ XMLscene.prototype.rPlay = function () {
         coords = action[2]
         this.gameState = this.state.P2Animation;
         this.resetTimer();
-        this.rcounter++
         this.graph.addMoveAnimation(coords, this.pickedSoldier)
         break;
       case this.state.P1BoardValidate:
-        this.gameState = this.state.P2PieceSelect;
+        rempieces = this.lastremhistory[this.rcounter];
+        if (rempieces) {
+          for (let i = 0; i < rempieces.length; i++) {
+            this.graph.addRemoveAnimation(rempieces[i]);
+          }
+          this.gameState = this.state.P1EliAnimation;
+        } else {
+          this.gameState = this.state.P2PieceSelect;
+        }
+        this.rcounter++
         break;
       case this.state.P2BoardValidate:
-        this.gameState = this.state.P1PieceSelect;
+        rempieces = this.lastremhistory[this.rcounter];
+        if (rempieces) {
+          for (let i = 0; i < rempieces.length; i++) {
+            this.graph.addRemoveAnimation(rempieces[i]);
+          }
+          this.gameState = this.state.P2EliAnimation;
+        } else {
+          this.gameState = this.state.P1PieceSelect;
+        }
+        this.rcounter++
         break;
       default:
         break;
@@ -623,6 +645,10 @@ XMLscene.prototype.ReplayLastGame = function () {
       }
       this.oldEliminated.push(ar);
     }
+    this.removedPieces = [
+      [['K1', null], ['L1', null], ['M1', null], ['N1', null], ['O1', null], ['K2', null], ['L2', null], ['M2', null], ['N2', null], ['O2', null]],
+      [['K7', null], ['L7', null], ['M7', null], ['N7', null], ['O7', null], ['K8', null], ['L8', null], ['M8', null], ['N8', null], ['O8', null]]
+    ];
     this.gameMode = this.mode.R;
     this.rcounter = 0;
     this.gameState = this.state.P1PieceSelect;
@@ -776,7 +802,7 @@ XMLscene.prototype.getEliSpot = function (Player, id) {
 XMLscene.prototype.manageTimer = function (scene) {
   if (this.gameState != this.state.P1Animation && this.gameState != this.state.P2Animation) {
 
-    if (Number(this.timerTag.innerText) > 1) {
+    if (Number(this.timerTag.innerText) >= 1) {
       this.timerTag.innerText = Number(this.timerTag.innerText) - 1
     }
     else if (Number(this.timerTag.innerText) == 0) {

@@ -73,7 +73,10 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', '../graph/MySceneGraph.js', './tr
       myScene.interface.gui.close();
       delete myInterface;
       myInterface = new MyInterface();
-      let scenehistory = myScene.history.length > 0 ? myScene.history.slice() : null
+      let scenehistory = null;
+      if(myScene.history.length > 0){
+        scenehistory = [myScene.history.slice(),myScene.remhistory.slice()];
+      }
       delete myScene;
       myScene = new XMLscene(myInterface, args[1], args[2], args[3], scenehistory);
       app.setScene(myScene);
