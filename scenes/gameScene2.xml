@@ -58,11 +58,17 @@
     </TEXTURE>
 
     <TEXTURE id="greenSpot">
-      <file path="boardTextures/greenSpot.png" />
+      <file path="boardTextures/blueSpot.png" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
+
+    <TEXTURE id="SoccerField">
+      <file path="boardTextures/SoccerField.png" />
+      <amplif_factor s="200" t="140" />
+    </TEXTURE>
+
     <TEXTURE id="redSpot">
-      <file path="boardTextures/redSpot.png" />
+      <file path="boardTextures/whiteSpot.png" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
     <TEXTURE id="boardBase">
@@ -216,6 +222,7 @@
         <NODEREF id="soldierSet"/>
         <NODEREF id="eliminatedA"/>
         <NODEREF id="eliminatedB"/>
+        <NODEREF id="soccerField"/>
       </DESCENDANTS>
     </NODE>
 
@@ -2398,6 +2405,15 @@
         </DESCENDANTS>
       </NODE>
 
+
+    <NODE id="soccerField">
+        <MATERIAL id="null" />
+        <TEXTURE id="SoccerField" />
+        <ROTATION axis="x" angle="90" />
+        <DESCENDANTS>
+          <LEAF  type="rectangle" args="-100 -70 100 70" />
+        </DESCENDANTS>
+      </NODE>
 
 
     </NODES>
