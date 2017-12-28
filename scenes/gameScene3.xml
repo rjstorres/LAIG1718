@@ -57,6 +57,11 @@
       <amplif_factor s="1" t="1" />
     </TEXTURE>
 
+    <TEXTURE id="SkyFloor">
+      <file path="boardTextures/SkyFloor.png" />
+      <amplif_factor s="200" t="140" />
+    </TEXTURE>
+
     <TEXTURE id="greenSpot">
       <file path="boardTextures/greenSpot.png" />
       <amplif_factor s="1" t="1" />
@@ -216,6 +221,7 @@
         <NODEREF id="soldierSet"/>
         <NODEREF id="eliminatedA"/>
         <NODEREF id="eliminatedB"/>
+        <NODEREF id="SkyFloor"/>
       </DESCENDANTS>
     </NODE>
 
@@ -2395,6 +2401,15 @@
         <TRANSLATION x="0" y="0" z="0.5" />
         <DESCENDANTS>
           <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+        </DESCENDANTS>
+      </NODE>
+
+      <NODE id="SkyFloor">
+        <MATERIAL id="lightMaterial" />
+        <TEXTURE id="SkyFloor" />
+        <ROTATION axis="x" angle="90" />
+        <DESCENDANTS>
+          <LEAF  type="rectangle" args="-100 -70 100 70" />
         </DESCENDANTS>
       </NODE>
 
