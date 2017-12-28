@@ -63,11 +63,11 @@
     </TEXTURE>
 
     <TEXTURE id="greenSpot">
-      <file path="boardTextures/greenSpot.png" />
+      <file path="boardTextures/whiteSpot.png" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
     <TEXTURE id="redSpot">
-      <file path="boardTextures/redSpot.png" />
+      <file path="boardTextures/brownSpot.png" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
     <TEXTURE id="boardBase">
@@ -1654,7 +1654,7 @@
       </NODE>
 
       <NODE id ="spot11" piecetype="s" coordinates="A8">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-5" y="0" z="0"/>
         <DESCENDANTS>
@@ -1670,7 +1670,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot13" piecetype="s" coordinates="C8">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-2.8" y="0" z="0"/>
         <DESCENDANTS>
@@ -1686,7 +1686,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot15" piecetype="s" coordinates="E8">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-0.6" y="0" z="0"/>
         <DESCENDANTS>
@@ -1702,7 +1702,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot17" piecetype="s" coordinates="G8">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="1.6" y="0" z="0"/>
         <DESCENDANTS>
@@ -1718,7 +1718,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot19" piecetype="s" coordinates="I8">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="3.8" y="0" z="0"/>
         <DESCENDANTS>
@@ -1734,7 +1734,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot31" piecetype="s" coordinates="A6">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-5" y="0" z="0"/>
         <DESCENDANTS>
@@ -1750,7 +1750,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot33" piecetype="s" coordinates="C6">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-2.8" y="0" z="0"/>
         <DESCENDANTS>
@@ -1766,7 +1766,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot35" piecetype="s" coordinates="E6">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-0.6" y="0" z="0"/>
         <DESCENDANTS>
@@ -1782,7 +1782,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot37" piecetype="s" coordinates="G6">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="1.6" y="0" z="0"/>
         <DESCENDANTS>
@@ -1798,7 +1798,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot39" piecetype="s" coordinates="I6">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="3.8" y="0" z="0"/>
         <DESCENDANTS>
@@ -1814,7 +1814,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot51" piecetype="s" coordinates="A4">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-5" y="0" z="0"/>
         <DESCENDANTS>
@@ -1830,7 +1830,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot53" piecetype="s" coordinates="C4">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-2.8" y="0" z="0"/>
         <DESCENDANTS>
@@ -1846,7 +1846,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot55" piecetype="s" coordinates="E4">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-0.6" y="0" z="0"/>
         <DESCENDANTS>
@@ -1862,7 +1862,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot57" piecetype="s" coordinates="G4">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="1.6" y="0" z="0"/>
         <DESCENDANTS>
@@ -1878,7 +1878,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot59" piecetype="s" coordinates="I4">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="3.8" y="0" z="0"/>
         <DESCENDANTS>
@@ -1894,7 +1894,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot71" piecetype="s" coordinates="A2">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-5" y="0" z="0"/>
         <DESCENDANTS>
@@ -1910,7 +1910,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot73" piecetype="s" coordinates="C2">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-2.8" y="0" z="0"/>
         <DESCENDANTS>
@@ -1926,7 +1926,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot75" piecetype="s" coordinates="E2">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-0.6" y="0" z="0"/>
         <DESCENDANTS>
@@ -1942,7 +1942,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot77" piecetype="s" coordinates="G2">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="1.6" y="0" z="0"/>
         <DESCENDANTS>
@@ -1958,7 +1958,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot79" piecetype="s" coordinates="I2">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="3.8" y="0" z="0"/>
         <DESCENDANTS>
@@ -1983,7 +1983,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot22Inverted" piecetype="s" coordinates="B7">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-3.9" y="0" z="0"/>
         <DESCENDANTS>
@@ -1999,7 +1999,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot24Inverted" piecetype="s" coordinates="D7">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-1.7" y="0" z="0"/>
         <DESCENDANTS>
@@ -2015,7 +2015,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot26Inverted" piecetype="s" coordinates="F7">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="0.5" y="0" z="0"/>
         <DESCENDANTS>
@@ -2031,7 +2031,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot28Inverted" piecetype="s" coordinates="H7">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="2.7" y="0" z="0"/>
         <DESCENDANTS>
@@ -2047,7 +2047,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot210Inverted" piecetype="s" coordinates="J7">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="4.9" y="0" z="0"/>
         <DESCENDANTS>
@@ -2063,7 +2063,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot42Inverted" piecetype="s" coordinates="B5">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-3.9" y="0" z="0"/>
         <DESCENDANTS>
@@ -2079,7 +2079,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot44Inverted" piecetype="s" coordinates="D5">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-1.7" y="0" z="0"/>
         <DESCENDANTS>
@@ -2095,7 +2095,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot46Inverted" piecetype="s" coordinates="F5">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="0.5" y="0" z="0"/>
         <DESCENDANTS>
@@ -2111,7 +2111,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot48Inverted" piecetype="s" coordinates="H5">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="2.7" y="0" z="0"/>
         <DESCENDANTS>
@@ -2127,7 +2127,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot410Inverted" piecetype="s" coordinates="J5">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="4.9" y="0" z="0"/>
         <DESCENDANTS>
@@ -2143,7 +2143,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot62Inverted" piecetype="s" coordinates="B3">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-3.9" y="0" z="0"/>
         <DESCENDANTS>
@@ -2159,7 +2159,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot64Inverted" piecetype="s" coordinates="D3">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-1.7" y="0" z="0"/>
         <DESCENDANTS>
@@ -2175,7 +2175,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot66Inverted" piecetype="s" coordinates="F3">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="0.5" y="0" z="0"/>
         <DESCENDANTS>
@@ -2191,7 +2191,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot68Inverted" piecetype="s" coordinates="H3">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="2.7" y="0" z="0"/>
         <DESCENDANTS>
@@ -2207,7 +2207,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot610Inverted" piecetype="s" coordinates="J3">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="4.9" y="0" z="0"/>
         <DESCENDANTS>
@@ -2223,7 +2223,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot82Inverted" piecetype="s" coordinates="B1">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-3.9" y="0" z="0"/>
         <DESCENDANTS>
@@ -2239,7 +2239,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot84Inverted" piecetype="s" coordinates="D1">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="-1.7" y="0" z="0"/>
         <DESCENDANTS>
@@ -2255,7 +2255,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot86Inverted" piecetype="s" coordinates="F1">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="0.5" y="0" z="0"/>
         <DESCENDANTS>
@@ -2271,7 +2271,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot88Inverted" piecetype="s" coordinates="H1">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="2.7" y="0" z="0"/>
         <DESCENDANTS>
@@ -2287,7 +2287,7 @@
         </DESCENDANTS>
       </NODE>
       <NODE id ="spot810Inverted" piecetype="s" coordinates="J1">
-        <MATERIAL id="null" />
+        <MATERIAL id="lightMaterial" />
         <TEXTURE id="greenSpot" />
         <TRANSLATION x="4.9" y="0" z="0"/>
         <DESCENDANTS>
