@@ -109,7 +109,10 @@
       <file path="boardTextures/chestArmor.png" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
-
+    <TEXTURE id="tableTexture">
+      <file path="boardTextures/table.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
   </TEXTURES>
 
 
