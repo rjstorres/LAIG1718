@@ -3,13 +3,11 @@
   <!-- Initial values -->
   <INITIALS>
     <frustum near="0.1" far="500"/>
-
     <translation x="-1" y="1" z="0" />
     <rotation axis="y" angle="0" />
     <rotation axis="x" angle="0" />
     <rotation axis="z" angle="0" />
     <scale sx="0.5" sy="0.5" sz="0.5" />
-    <!--<scale sx="1" sy="1" sz="1" /> -->
     <reference length="5" />
   </INITIALS>
 
@@ -51,11 +49,6 @@
 
   <!-- Textures -->
   <TEXTURES>
-    <!-- Floor -->
-    <TEXTURE id="rocks">
-      <file path="latrunculiImages/rocks.jpg" />
-      <amplif_factor s="1" t="1" />
-    </TEXTURE>
 
     <TEXTURE id="greenSpot">
       <file path="boardTextures/greenSpot.png" />
@@ -106,45 +99,10 @@
       <amplif_factor s="1" t="1" />
     </TEXTURE>
 
-
     <TEXTURE id="tableTexture">
       <file path="boardTextures/table.jpg" />
       <amplif_factor s="1" t="1" />
     </TEXTURE>
-
-    <!-- Sword and shield  work -->
-    <TEXTURE id="swordBlade">
-      <file path="latrunculiImages/swordblade.jpg" />
-      <amplif_factor s="5" t="10" />
-    </TEXTURE>
-
-    <TEXTURE id="swordHandle">
-      <file path="latrunculiImages/swordHandle.jpg" />
-      <amplif_factor s="5" t="4" />
-    </TEXTURE>
-
-    <TEXTURE id="shieldTexture">
-      <file path="latrunculiImages/shield.jpg" />
-      <amplif_factor s="1" t="1" />
-    </TEXTURE>
-
-    <!-- pedestal bench -->
-    <TEXTURE id="banco">
-      <file path="latrunculiImages/bank.jpg" />
-      <amplif_factor s="1" t="1" />
-    </TEXTURE>
-
-    <TEXTURE id="armor">
-      <file path="latrunculiImages/steel.jpg" />
-      <amplif_factor s="2" t="2" />
-    </TEXTURE>
-
-    <TEXTURE id="capeText">
-      <file path="latrunculiImages/cape.jpg" />
-      <amplif_factor s="1" t="1" />
-    </TEXTURE>
-
-
   </TEXTURES>
 
 
@@ -214,7 +172,6 @@
       <DESCENDANTS>
         <NODEREF id="gameBoard" />
         <NODEREF id="table"/>
-        <!--<NODEREF id="soldierBase"/> -->
         <NODEREF id="soldierSet"/>
         <NODEREF id="eliminatedA"/>
         <NODEREF id="eliminatedB"/>
@@ -455,8 +412,6 @@
         <ROTATION axis="y" angle="180"/>
         <DESCENDANTS>
           <NODEREF id="soldier" />
-          <!--<NODEREF id="sword" />
-          <NODEREF id="shield" />-->
         </DESCENDANTS>
       </NODE>
       <NODE id="soldierBase">
@@ -465,8 +420,6 @@
         <TRANSLATION x="0" y="0.8" z="0"/>
         <DESCENDANTS>
           <NODEREF id="soldier" />
-          <!--<NODEREF id="sword" />
-          <NODEREF id="shield" />-->
         </DESCENDANTS>
       </NODE>
       <NODE id="soldierReiBaseA">
@@ -476,8 +429,6 @@
         <ROTATION axis="y" angle="180"/>
         <DESCENDANTS>
           <NODEREF id="soldierRei" />
-          <!--<NODEREF id="sword" />
-          <NODEREF id="shield" />-->
         </DESCENDANTS>
       </NODE>
       <NODE id="soldierReiBase">
@@ -486,8 +437,6 @@
         <TRANSLATION x="0" y="0.8" z="0"/>
         <DESCENDANTS>
           <NODEREF id="soldierRei" />
-          <!--<NODEREF id="sword" />
-          <NODEREF id="shield" />-->
         </DESCENDANTS>
       </NODE>
 
@@ -498,10 +447,9 @@
           <NODEREF id="hip"/>
           <NODEREF id="upperBody"/>
           <NODEREF id="block"/>
-          <!--<NODEREF id="legLeft"/>
-          <NODEREF id="legRight"/> -->
         </DESCENDANTS>
       </NODE>
+
       <NODE id="soldierRei">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -512,6 +460,7 @@
           <NODEREF id="legRight"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="block">
         <MATERIAL id="lightMaterial" />
         <TEXTURE id="tableTexture" />
@@ -521,6 +470,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="hip">
         <MATERIAL id="null" />
         <TEXTURE id="neckArmorTex" />
@@ -529,6 +479,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="legRight">
         <MATERIAL id="null" />
         <TEXTURE id="neckArmorTex" />
@@ -541,6 +492,7 @@
           <NODEREF id="footRight"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="hipJointRight">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -549,6 +501,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="thighRight">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -558,6 +511,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="kneeRight">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -567,6 +521,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="forelegRight">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -576,6 +531,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="footRight">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -585,6 +541,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="legLeft">
         <MATERIAL id="null" />
         <TEXTURE id="neckArmorTex" />
@@ -597,6 +554,7 @@
           <NODEREF id="footLeft"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="hipJointLeft">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -605,6 +563,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="thighLeft">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -614,6 +573,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="kneeLeft">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -623,6 +583,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="forelegLeft">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -632,6 +593,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="footLeft">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -641,6 +603,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="upperBody">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -648,12 +611,13 @@
         <DESCENDANTS>
           <NODEREF id="core"/>
           <NODEREF id="chest"/>
-          <!--<NODEREF id="neck"/> -->
+  
           <NODEREF id="head"/>
           <NODEREF id="armLeft"/>
           <NODEREF id="armRight"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="upperBodyRei">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -667,6 +631,7 @@
           <NODEREF id="armRight"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="core">
         <MATERIAL id="null" />
         <TEXTURE id="coreArmorTex" />
@@ -684,6 +649,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="neck">
         <MATERIAL id="null" />
         <TEXTURE id="neckArmorTex" />
@@ -701,6 +667,7 @@
           <NODEREF id="cubeHeadArmor"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="headRei">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -709,18 +676,18 @@
           <NODEREF id="reiCubeHeadArmor"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="armLeft">
         <MATERIAL id="null" />
         <TEXTURE id="neckArmorTex" />
         <TRANSLATION x="1" y="0.5" z="0"/>
         <DESCENDANTS>
           <NODEREF id="shoulderLeft"/>
-        <!--  <NODEREF id="bicepsLeft"/>
-          <NODEREF id="elbowLeft"/> -->
           <NODEREF id="forearmLeft"/>
           <NODEREF id="handLeft"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="shoulderLeft">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -729,6 +696,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="bicepsLeft">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -738,6 +706,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="elbowLeft">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -747,6 +716,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="forearmLeft">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -756,6 +726,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="handLeft">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -765,18 +736,18 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="armRight">
         <MATERIAL id="null" />
         <TEXTURE id="neckArmorTex" />
         <TRANSLATION x="-1" y="0.5" z="0"/>
         <DESCENDANTS>
           <NODEREF id="shoulderRight"/>
-          <!--<NODEREF id="bicepsRight"/>
-          <NODEREF id="elbowRight"/>-->
           <NODEREF id="forearmRight"/>
           <NODEREF id="handRight"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="shoulderRight">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -785,6 +756,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="bicepsRight">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -794,6 +766,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="elbowRight">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -803,6 +776,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="forearmRight">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -812,6 +786,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="handRight">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -821,6 +796,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="cubeHeadArmor">
         <MATERIAL id="null" />
         <TEXTURE id="headSideArmorTex" />
@@ -833,6 +809,7 @@
           <NODEREF id="leftFace"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="reiCubeHeadArmor">
         <MATERIAL id="null" />
         <TEXTURE id="reiHeadSideArmorTex" />
@@ -845,6 +822,7 @@
           <NODEREF id="leftFace"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="reiFaceArmor">
         <MATERIAL id="null" />
         <TEXTURE id="reiFaceArmorTex" />
@@ -852,6 +830,7 @@
           <NODEREF id="frontFace"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="faceArmor">
         <MATERIAL id="null" />
         <TEXTURE id="faceArmorTex" />
@@ -859,6 +838,7 @@
           <NODEREF id="frontFace"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="crestArmor">
         <MATERIAL id="null" />
         <TEXTURE id="crestArmorTex" />
@@ -867,325 +847,6 @@
         </DESCENDANTS>
       </NODE>
 
-      <NODE id="shield">
-        <MATERIAL id="trunkTreeMaterial" />
-        <TEXTURE id="shieldTexture" />
-
-        <TRANSLATION x="0.9" y="-0.1" z="0.9" />
-        <SCALE sx="0.3" sy="0.3" sz="0.3" />
-        <SCALE sx="1" sy="0.8" sz="0.1" />
-        <DESCENDANTS>
-          <NODEREF id="baseRow" />
-          <NODEREF id="fesseAndChiefRow" />
-        </DESCENDANTS>
-
-      </NODE>
-
-      <NODE id="baseRow">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-        <ROTATION axis="x" angle="90" />
-        <DESCENDANTS>
-          <LEAF type="cylinder" args="4 2 0 20 20 1 0" />
-        </DESCENDANTS>
-      </NODE>
-
-      <NODE id="fesseAndChiefRow">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-        <TRANSLATION x="0" y="4" z="0" />
-        <ROTATION axis="x" angle="90" />
-        <DESCENDANTS>
-          <LEAF type="cylinder" args="4 2 2 20 20 0 1" />
-        </DESCENDANTS>
-      </NODE>
-
-      <NODE id="sword">
-        <MATERIAL id="lightMaterial" />
-        <TEXTURE id="null" />
-        <TRANSLATION x="-0.9" y="0.05" z="0.7" />
-        <SCALE sx="0.4" sy="0.4" sz="0.4" />
-        <DESCENDANTS>
-          <NODEREF id="blade" />
-          <NODEREF id="handle" />
-        </DESCENDANTS>
-      </NODE>
-
-      <NODE id="blade">
-        <MATERIAL id="lightMaterial" />
-        <TEXTURE id="swordBlade" />
-
-        <TRANSLATION x="-0.5" y="-4.7" z="-0.13" />
-        <DESCENDANTS>
-          <NODEREF id="parteInferiorEspada" />
-          <NODEREF id="parteSuperiorEspada" />
-        </DESCENDANTS>
-      </NODE>
-
-      <NODE id="parteInferiorEspada">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <SCALE sx="0.5" sy="2.5" sz="0.1" />
-        <SCALE sx="0.2" sy="0.5" sz="0.2" />
-        <DESCENDANTS>
-          <NODEREF id="prisma" />
-        </DESCENDANTS>
-      </NODE>
-
-      <NODE id="parteSuperiorEspada">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <TRANSLATION x="0.5" y="10.687" z="0.1" />
-        <SCALE sx="0.0355" sy="0.1" sz="0.0077" />
-
-        <DESCENDANTS>
-          <NODEREF id="piramide" />
-        </DESCENDANTS>
-      </NODE>
-
-
-      <NODE id="handle">
-        <MATERIAL id="trunkTreeMaterial" />
-        <TEXTURE id="swordHandle" />
-
-        <DESCENDANTS>
-          <NODEREF id="crossGuard" />
-          <NODEREF id="grip" />
-          <NODEREF id="pommel" />
-        </DESCENDANTS>
-      </NODE>
-
-      <NODE id="crossGuard">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <TRANSLATION x="-2.5" y="0" z="-0.42" />
-        <SCALE sx="0.5" sy="0.05" sz="0.08" />
-
-        <DESCENDANTS>
-          <NODEREF id="prisma" />
-        </DESCENDANTS>
-      </NODE>
-
-
-      <NODE id="grip">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-
-        <SCALE sx="0.6" sy="0.8" sz="0.6" />
-        <ROTATION axis="x" angle="90" />
-        <DESCENDANTS>
-          <NODEREF id="gripSup" />
-          <NODEREF id="gripInf" />
-          <NODEREF id="gripMid" />
-        </DESCENDANTS>
-
-      </NODE>
-      <NODE id="gripSup">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <TRANSLATION x="0" y="0" z="-0.492" />
-
-        <DESCENDANTS>
-          <LEAF type="cylinder" args="0.5 0.15 0.3 20 20" />
-        </DESCENDANTS>
-
-      </NODE>
-
-      <NODE id="gripInf">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-        <TRANSLATION x="0" y="0" z="1.5" />
-        <DESCENDANTS>
-          <LEAF type="cylinder" args="0.5 0.3 0.15 20 20" />
-        </DESCENDANTS>
-
-      </NODE>
-
-      <NODE id="gripMid">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <DESCENDANTS>
-          <LEAF type="cylinder" args="1.5 0.3 0.3 20 20" />
-        </DESCENDANTS>
-
-      </NODE>
-
-
-      <NODE id="pommel">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <TRANSLATION x="0" y="-1.6" z="0" />
-        <SCALE sx="1.1" sy="1" sz="1.1" />
-
-        <DESCENDANTS>
-          <LEAF id="sphere1" type="sphere" args="0.2 20 20" />
-        </DESCENDANTS>
-      </NODE>
-
-      <NODE id="Cape">
-        <MATERIAL id="null" />
-        <TEXTURE id="capeText" />
-
-        <ROTATION axis="y" angle="180" />
-        <ROTATION axis="z" angle="-90" />
-
-        <SCALE sx="0.7" sy="0.5" sz="0.5" />
-        <DESCENDANTS>
-          <LEAF  type="patch" args="20 20" >
-            <CPLINE>
-              <CPOINT xx="-1.5" yy="-1.5" zz="0.0" ww="1"/>
-              <CPOINT xx="-1.5" yy="1.5" zz="0.0" ww="1"/>
-            </CPLINE>
-            <CPLINE>
-              <CPOINT xx="0" yy="-1.5" zz="3.0" ww="1"/>
-              <CPOINT xx="0" yy="1.5" zz="3.0" ww="1"/>
-            </CPLINE>
-            <CPLINE>
-              <CPOINT xx="1.5" yy="-1.5" zz="0.0" ww="1"/>
-              <CPOINT xx="1.5" yy="1.5" zz="0.0" ww="1"/>
-            </CPLINE>
-            <CPLINE>
-              <CPOINT xx="2.0" yy="-2.0" zz="2.0" ww="1"/>
-              <CPOINT xx="2.0" yy="2.0" zz="2.0" ww="1"/>
-            </CPLINE>
-          </LEAF>
-        </DESCENDANTS>
-      </NODE>
-
-      <NODE id="prisma">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-        <DESCENDANTS>
-          <NODEREF id="faceCubo1" />
-          <NODEREF id="faceCubo2" />
-          <NODEREF id="faceCubo3" />
-          <NODEREF id="faceCubo4" />
-          <NODEREF id="faceCubo5" />
-          <NODEREF id="faceCubo6" />
-        </DESCENDANTS>
-      </NODE>
-      <NODE id="faceCubo1">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-        <TRANSLATION x="2.5" y="4" z="7.5" />
-        <DESCENDANTS>
-          <LEAF  type="rectangle" args="0 4 5 0" />
-        </DESCENDANTS>
-      </NODE>
-      <NODE id="faceCubo2">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-        <TRANSLATION x="2.5" y="4" z="2.5" />
-        <ROTATION axis="y" angle="-90" />
-        <DESCENDANTS>
-          <LEAF  type="rectangle" args="0 4 5 0" />
-        </DESCENDANTS>
-      </NODE>
-      <NODE id="faceCubo3">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-        <TRANSLATION x="7.5" y="4" z="7.5" />
-        <ROTATION axis="y" angle="90" />
-        <DESCENDANTS>
-          <LEAF  type="rectangle" args="0 4 5 0" />
-        </DESCENDANTS>
-      </NODE>
-      <NODE id="faceCubo4">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <TRANSLATION x="7.5" y="4" z="2.5" />
-        <ROTATION axis="y" angle="180" />
-
-        <DESCENDANTS>
-          <LEAF  type="rectangle" args="0 4 5 0" />
-        </DESCENDANTS>
-      </NODE>
-      <NODE id="faceCubo5">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <ROTATION axis="x" angle="-90" />
-        <TRANSLATION x="2.5" y="-7.5" z="8" />
-        <SCALE sx="1" sy="1.25" sz="1" />
-
-        <DESCENDANTS>
-          <LEAF  type="rectangle" args="0 4 5 0" />
-        </DESCENDANTS>
-      </NODE>
-      <NODE id="faceCubo6">
-        <MATERIAL id="null" />
-        <TEXTURE id="null" />
-
-        <TRANSLATION x="2.5" y="4" z="2.5" />
-        <ROTATION axis="x" angle="90" />
-        <SCALE sx="1" sy="1.25" sz="1" />
-
-        <DESCENDANTS>
-          <LEAF  type="rectangle" args="0 4 5 0" />
-        </DESCENDANTS>
-      </NODE>
-      <NODE id="piramide">
-          <MATERIAL id="null" />
-          <TEXTURE id="null" />
-          <DESCENDANTS>
-         		<NODEREF id="meiaPiramide1" />
-            <NODEREF id="meiaPiramide2" />
-          </DESCENDANTS>
-      </NODE>
-      <!-- Half a pyramid -->
-      <NODE id="meiaPiramide1">
-          <MATERIAL id="null" />
-          <TEXTURE id="null" />
-          <DESCENDANTS>
-              <NODEREF id="meiaPiramide" />
-          </DESCENDANTS>
-      </NODE>
-      <!-- The other half -->
-      <NODE id="meiaPiramide2">
-          <MATERIAL id="null" />
-          <TEXTURE id="null" />
-      		<ROTATION axis="y" angle="180" />
-          <DESCENDANTS>
-              <NODEREF id="meiaPiramide" />
-          </DESCENDANTS>
-      </NODE>
-      <!-- Generic half a pyramid -->
-      <NODE id="meiaPiramide">
-          <MATERIAL id="null" />
-          <TEXTURE id="null" />
-          <DESCENDANTS>
-              <NODEREF id="facePiramide1" />
-              <NODEREF id="facePiramide2" />
-          </DESCENDANTS>
-      </NODE>
-      <!-- Pyramid face -->
-     <NODE id="facePiramide1">
-          <MATERIAL id="null" />
-          <TEXTURE id="null" />
-      		<ROTATION axis="x" angle="44.42" />
-         	<ROTATION axis="y" angle="-45" />
-          <DESCENDANTS>
-  					<LEAF id="triangle1" type="triangle" args="2 0 12 12 0 2 0 0 0" />
-          </DESCENDANTS>
-      </NODE>
-      <!-- Another pyramid face -->
-      <NODE id="facePiramide2">
-          <MATERIAL id="null" />
-          <TEXTURE id="null" />
-         	<ROTATION axis="z" angle="-44.42" />
-         	<ROTATION axis="y" angle="45" />
-          <DESCENDANTS>
-  					<LEAF id="triangle1" type="triangle" args="2 0 12 12 0 2 0 0 0" />
-          </DESCENDANTS>
-      </NODE>
 
       <!-- #TABLE -->
       <NODE id="table">
@@ -1202,6 +863,7 @@
           <NODEREF id="tableLegs"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="tableLegs">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -1215,6 +877,7 @@
           <NODEREF id="legTL" />
         </DESCENDANTS>
       </NODE>
+
       <NODE id="legBR">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -1225,6 +888,7 @@
           <NODEREF id="tableLeg" />
         </DESCENDANTS>
       </NODE>
+
       <NODE id="legBL">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -1257,6 +921,7 @@
           <NODEREF id="tableLeg" />
         </DESCENDANTS>
       </NODE>
+
       <NODE id="tableLeg">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -1267,6 +932,7 @@
           <NODEREF id="cube" />
         </DESCENDANTS>
       </NODE>
+
       <NODE id="tableLeft">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -1279,6 +945,7 @@
           <LEAF type="cylinder" args="1 1 1 40 40 1 1"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="tableRight">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -1291,6 +958,7 @@
           <LEAF type="cylinder" args="1 1 1 20 20 1 1"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="tableCenter">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -1301,6 +969,7 @@
           <NODEREF id="cube" />
         </DESCENDANTS>
       </NODE>
+
       <!--#ELIMINATED BOARD -->
       <NODE id="eliminatedA">
         <MATERIAL id="null" />
@@ -1312,6 +981,7 @@
           <NODEREF id="eliRowsA" />
         </DESCENDANTS>
       </NODE>
+
       <NODE id="eliRowsA">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -1321,6 +991,7 @@
           <NODEREF id="eliRow2A"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="eliRow1A">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -1333,6 +1004,7 @@
           <NODEREF id="elispot15"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="eliRow2A">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -1345,6 +1017,7 @@
           <NODEREF id="elispot25"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="elispot11">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
@@ -1353,6 +1026,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="elispot12">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
@@ -1361,6 +1035,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="elispot13">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
@@ -1369,6 +1044,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="elispot14">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
@@ -1377,6 +1053,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="elispot15">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
@@ -1385,6 +1062,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="elispot21">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
@@ -1393,6 +1071,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="elispot22">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
@@ -1401,6 +1080,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="elispot23">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
@@ -1409,6 +1089,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="elispot24">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
@@ -1417,6 +1098,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="elispot25">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
@@ -1425,6 +1107,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="eliminatedB">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -1436,6 +1119,7 @@
           <NODEREF id="eliRow2B"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="eliRow1B">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -1448,6 +1132,7 @@
           <NODEREF id="elispot35"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="eliRow2B">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -1460,6 +1145,7 @@
           <NODEREF id="elispot45"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="elispot31">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
@@ -1468,6 +1154,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="elispot32">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
@@ -1476,6 +1163,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="elispot33">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
@@ -1484,6 +1172,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="elispot34">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
@@ -1492,6 +1181,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="elispot35">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
@@ -1500,6 +1190,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="elispot41">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
@@ -1508,6 +1199,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="elispot42">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
@@ -1516,6 +1208,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="elispot43">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
@@ -1524,6 +1217,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="elispot44">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
@@ -1532,6 +1226,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="elispot45">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
@@ -1540,6 +1235,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <!--#GAMEBOARD-->
       <NODE id="gameBoard">
         <MATERIAL id="null" />
@@ -1633,6 +1329,7 @@
           <NODEREF id="spotsInverted8"/>
         </DESCENDANTS>
       </NODE>
+
       <!--#SPOTS-->
       <NODE id ="spots1">
         <MATERIAL id="null" />
@@ -1650,6 +1347,7 @@
           <NODEREF id="spot110"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="spotsInverted2">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -1666,6 +1364,7 @@
           <NODEREF id="spot210Inverted"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="spots3">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -1682,6 +1381,7 @@
           <NODEREF id="spot310"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="spotsInverted4">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -1698,6 +1398,7 @@
           <NODEREF id="spot410Inverted"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="spots5">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -1714,6 +1415,7 @@
           <NODEREF id="spot510"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="spotsInverted6">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -1730,6 +1432,7 @@
           <NODEREF id="spot610Inverted"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="spots7">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -1746,6 +1449,7 @@
           <NODEREF id="spot710"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="spotsInverted8">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -1843,6 +1547,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="spot31" piecetype="s" coordinates="A6">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
@@ -1923,6 +1628,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="spot51" piecetype="s" coordinates="A4">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
@@ -2003,6 +1709,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="spot71" piecetype="s" coordinates="A2">
         <MATERIAL id="null" />
         <TEXTURE id="greenSpot" />
@@ -2164,6 +1871,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="spot41Inverted" piecetype="s" coordinates="A5">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
@@ -2244,6 +1952,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="spot61Inverted" piecetype="s" coordinates="A3">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
@@ -2324,6 +2033,7 @@
           <NODEREF id="cube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id ="spot81Inverted" piecetype="s" coordinates="A1">
         <MATERIAL id="null" />
         <TEXTURE id="redSpot" />
@@ -2415,6 +2125,7 @@
           <NODEREF id="woodcube"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="woodcube">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -2431,6 +2142,7 @@
           <NODEREF id="bottomFace"/>
         </DESCENDANTS>
       </NODE>
+
       <NODE id="plankFaces">
         <MATERIAL id="null" />
         <TEXTURE id="boardSide" />
@@ -2442,7 +2154,6 @@
           <NODEREF id="leftFace"/>
         </DESCENDANTS>
       </NODE>
-
 
       <NODE id="cube">
         <MATERIAL id="null" />
@@ -2486,6 +2197,7 @@
           <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
         </DESCENDANTS>
       </NODE>
+
       <NODE id="bottomFace">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -2495,6 +2207,7 @@
           <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
         </DESCENDANTS>
       </NODE>
+
       <NODE id="rightFace">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
@@ -2504,6 +2217,7 @@
           <LEAF  type="rectangle" args="-0.5 0.5 0.5 -0.5" />
         </DESCENDANTS>
       </NODE>
+
       <NODE id="leftFace">
         <MATERIAL id="null" />
         <TEXTURE id="null" />
