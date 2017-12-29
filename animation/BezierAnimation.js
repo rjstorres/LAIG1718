@@ -3,7 +3,7 @@
  * @constructor
  */
 function BezierAnimation(scene, args, dir) {
-  this.invertDir = dir ? true : false
+  this.invertDir = dir ? true : false;
   this.scene = scene;
   this.args = args;
   this.p4 = args[3];
@@ -30,7 +30,7 @@ BezierAnimation.prototype.animate = function () {
     let position = this.speed * this.timeNow;
     let ind = Math.trunc(position * this.path.length / this.length);
     let point = this.path[ind];
-    mat = mat4.create();
+    let mat = mat4.create();
     mat4.translate(mat, this.initMat, point);
     try {
       mat4.rotateY(mat, mat, this.getDirectionAngle(point, this.path[ind + 1]));

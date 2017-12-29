@@ -8,7 +8,7 @@ function MyGraphLeaf(graph, xmlelem) {
 	this.type = graph.reader.getString(xmlelem, 'type');
 	this.args = null;
 	if (this.type == 'patch')
-		this.args = xmlelem
+		this.args = xmlelem;
 	else {
 		this.args = graph.reader.getString(xmlelem, 'args');
 		this.args = this.args.split(" ").map(Number);

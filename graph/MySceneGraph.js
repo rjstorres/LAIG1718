@@ -25,17 +25,17 @@ function MySceneGraph(filename, scene) {
 
     this.selectables = [];//Ids dos nodes selecionáveis
     this.applyShader = false;
-    this.currentShader = "default"
-    this.normScale = 0
+    this.currentShader = "default";
+    this.normScale = 0;
     this.normScaleMax = this.scene.getNorm(Math.PI / 2);
 
-    this.materialstack = []
-    this.texturestack = []
+    this.materialstack = [];
+    this.texturestack = [];
 
     //Pickstack, permitir herança do registo para pick
-    this.pickstack = []
-    this.pickcounter = 1 //usado para definir ids
-    this.selectablePieces = {}
+    this.pickstack = [];
+    this.pickcounter = 1; //usado para definir ids
+    this.selectablePieces = {};
 
     this.idRoot = null;// The id of the root element.
 
@@ -462,7 +462,7 @@ MySceneGraph.prototype.parseIllumination = function (illuminationNode) {
             if (isNaN(r))
                 return "ambient 'r' is a non numeric value on the ILLUMINATION block";
             else if (r < 0 || r > 1)
-                return "ambient 'r' must be a value between 0 and 1 on the ILLUMINATION block"
+                return "ambient 'r' must be a value between 0 and 1 on the ILLUMINATION block";
             else
                 this.ambientIllumination[0] = r;
         }
@@ -475,7 +475,7 @@ MySceneGraph.prototype.parseIllumination = function (illuminationNode) {
             if (isNaN(g))
                 return "ambient 'g' is a non numeric value on the ILLUMINATION block";
             else if (g < 0 || g > 1)
-                return "ambient 'g' must be a value between 0 and 1 on the ILLUMINATION block"
+                return "ambient 'g' must be a value between 0 and 1 on the ILLUMINATION block";
             else
                 this.ambientIllumination[1] = g;
         }
@@ -488,7 +488,7 @@ MySceneGraph.prototype.parseIllumination = function (illuminationNode) {
             if (isNaN(b))
                 return "ambient 'b' is a non numeric value on the ILLUMINATION block";
             else if (b < 0 || b > 1)
-                return "ambient 'b' must be a value between 0 and 1 on the ILLUMINATION block"
+                return "ambient 'b' must be a value between 0 and 1 on the ILLUMINATION block";
             else
                 this.ambientIllumination[2] = b;
         }
@@ -501,7 +501,7 @@ MySceneGraph.prototype.parseIllumination = function (illuminationNode) {
             if (isNaN(a))
                 return "ambient 'a' is a non numeric value on the ILLUMINATION block";
             else if (a < 0 || a > 1)
-                return "ambient 'a' must be a value between 0 and 1 on the ILLUMINATION block"
+                return "ambient 'a' must be a value between 0 and 1 on the ILLUMINATION block";
             else
                 this.ambientIllumination[3] = a;
         }
@@ -521,7 +521,7 @@ MySceneGraph.prototype.parseIllumination = function (illuminationNode) {
             if (isNaN(r))
                 return "background 'r' is a non numeric value on the ILLUMINATION block";
             else if (r < 0 || r > 1)
-                return "background 'r' must be a value between 0 and 1 on the ILLUMINATION block"
+                return "background 'r' must be a value between 0 and 1 on the ILLUMINATION block";
             else
                 this.background[0] = r;
         }
@@ -534,7 +534,7 @@ MySceneGraph.prototype.parseIllumination = function (illuminationNode) {
             if (isNaN(g))
                 return "background 'g' is a non numeric value on the ILLUMINATION block";
             else if (g < 0 || g > 1)
-                return "background 'g' must be a value between 0 and 1 on the ILLUMINATION block"
+                return "background 'g' must be a value between 0 and 1 on the ILLUMINATION block";
             else
                 this.background[1] = g;
         }
@@ -634,7 +634,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
             else if (isNaN(aux))
                 return "'enable value' is a non numeric value on the LIGHTS block";
             else if (aux != 0 && aux != 1)
-                return "'enable value' must be 0 or 1 on the LIGHTS block"
+                return "'enable value' must be 0 or 1 on the LIGHTS block";
             else
                 enableLight = aux == 0 ? false : true;
         }
@@ -681,7 +681,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(w))
                     return "'w' is a non numeric value on the LIGHTS block";
                 else if (w < 0 || w > 1)
-                    return "'w' must be a value between 0 and 1 on the LIGHTS block"
+                    return "'w' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     positionLight.push(w);
             }
@@ -700,7 +700,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(r))
                     return "ambient 'r' is a non numeric value on the LIGHTS block";
                 else if (r < 0 || r > 1)
-                    return "ambient 'r' must be a value between 0 and 1 on the LIGHTS block"
+                    ;
                 else
                     ambientIllumination.push(r);
             }
@@ -713,7 +713,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(g))
                     return "ambient 'g' is a non numeric value on the LIGHTS block";
                 else if (g < 0 || g > 1)
-                    return "ambient 'g' must be a value between 0 and 1 on the LIGHTS block"
+                    return "ambient 'g' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     ambientIllumination.push(g);
             }
@@ -726,7 +726,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(b))
                     return "ambient 'b' is a non numeric value on the LIGHTS block";
                 else if (b < 0 || b > 1)
-                    return "ambient 'b' must be a value between 0 and 1 on the LIGHTS block"
+                    return "ambient 'b' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     ambientIllumination.push(b);
             }
@@ -739,7 +739,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(a))
                     return "ambient 'a' is a non numeric value on the LIGHTS block";
                 else if (a < 0 || a > 1)
-                    return "ambient 'a' must be a value between 0 and 1 on the LIGHTS block"
+                    return "ambient 'a' must be a value between 0 and 1 on the LIGHTS block";
                 ambientIllumination.push(a);
             }
             else
@@ -757,7 +757,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(r))
                     return "diffuse 'r' is a non numeric value on the LIGHTS block";
                 else if (r < 0 || r > 1)
-                    return "diffuse 'r' must be a value between 0 and 1 on the LIGHTS block"
+                    return "diffuse 'r' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     diffuseIllumination.push(r);
             }
@@ -770,7 +770,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(g))
                     return "diffuse 'g' is a non numeric value on the LIGHTS block";
                 else if (g < 0 || g > 1)
-                    return "diffuse 'g' must be a value between 0 and 1 on the LIGHTS block"
+                    return "diffuse 'g' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     diffuseIllumination.push(g);
             }
@@ -783,7 +783,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(b))
                     return "diffuse 'b' is a non numeric value on the LIGHTS block";
                 else if (b < 0 || b > 1)
-                    return "diffuse 'b' must be a value between 0 and 1 on the LIGHTS block"
+                    return "diffuse 'b' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     diffuseIllumination.push(b);
             }
@@ -796,7 +796,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(a))
                     return "diffuse 'a' is a non numeric value on the LIGHTS block";
                 else if (a < 0 || a > 1)
-                    return "diffuse 'a' must be a value between 0 and 1 on the LIGHTS block"
+                    return "diffuse 'a' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     diffuseIllumination.push(a);
             }
@@ -815,7 +815,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(r))
                     return "specular 'r' is a non numeric value on the LIGHTS block";
                 else if (r < 0 || r > 1)
-                    return "specular 'r' must be a value between 0 and 1 on the LIGHTS block"
+                    return "specular 'r' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     specularIllumination.push(r);
             }
@@ -828,7 +828,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(g))
                     return "specular 'g' is a non numeric value on the LIGHTS block";
                 else if (g < 0 || g > 1)
-                    return "specular 'g' must be a value between 0 and 1 on the LIGHTS block"
+                    return "specular 'g' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     specularIllumination.push(g);
             }
@@ -841,7 +841,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(b))
                     return "specular 'b' is a non numeric value on the LIGHTS block";
                 else if (b < 0 || b > 1)
-                    return "specular 'b' must be a value between 0 and 1 on the LIGHTS block"
+                    return "specular 'b' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     specularIllumination.push(b);
             }
@@ -854,7 +854,7 @@ MySceneGraph.prototype.parseLights = function (lightsNode) {
                 if (isNaN(a))
                     return "specular 'a' is a non numeric value on the LIGHTS block";
                 else if (a < 0 || a > 1)
-                    return "specular 'a' must be a value between 0 and 1 on the LIGHTS block"
+                    return "specular 'a' must be a value between 0 and 1 on the LIGHTS block";
                 else
                     specularIllumination.push(a);
             }
@@ -1137,7 +1137,7 @@ MySceneGraph.prototype.parseMaterials = function (materialsNode) {
         else if (isNaN(r))
             return "specular 'r' is a non numeric value on the MATERIALS block";
         else if (r < 0 || r > 1)
-            return "specular 'r' must be a value between 0 and 1 on the MATERIALS block"
+            return "specular 'r' must be a value between 0 and 1 on the MATERIALS block";
         specularComponent.push(r);
         // G.
         var g = this.reader.getFloat(materialSpecs[specularIndex], 'g');
@@ -1313,77 +1313,8 @@ MySceneGraph.prototype.parseMaterials = function (materialsNode) {
     console.log("Parsed materials");
 }
 
-/**
- * Parses the <LEAVES> block.
- */
 
-/*
-MySceneGraph.prototype.parseLeaves = function(leavesNode) {
 
-    var children = leavesNode.children;
-
-    var numArgs = [];
-    numArgs["rectangle"] = 4;
-    numArgs["cylinder"] = 5;
-    numArgs["sphere"] = 3;
-    numArgs["triangle"] = 9;
-
-    for (var i = 0; i < children.length; i++) {
-        if (children[i].nodeName != "LEAF") {
-            this.onXMLMinorError("invalid tag name <" + children[i].nodeName + ">");
-            continue;
-        }
-
-        // Retrieves node ID.
-        var nodeID = this.reader.getString(children[i], 'id');
-        if (nodeID == null )
-            return "failed to parse node ID";
-        // Verifies ID.
-        if (this.nodes[nodeID] != null )
-            return "node ID must be unique (conflict: ID = " + nodeID + ")";
-
-        // Gets type of leaf.
-        var type = this.reader.getItem(children[i], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
-        if (type == null )
-            return "failed to parse type of leaf for ID = " + nodeID;
-
-        // Retrieves arguments.
-        var unsplit = this.reader.getString(children[i], 'args');
-        if (unsplit == null )
-            return "failed to retrieve list of arguments";
-        var args = unsplit.split(/ +/);
-
-        if (args[args.length - 1] == "")
-            args.splice(-1, 1);
-
-        // Checks if all arguments are numeric.
-        for (var j = 0; j < args.length; j++) {
-            var numeric;
-            if (isNaN((numeric = parseFloat(args[j]))))
-                return "non-numeric argument for ID = " + nodeID;
-            else
-                args[j] = numeric;
-        }
-
-        // Checks for a correct number of arguments.
-        if (args.length != numArgs[type])
-            return "incorrect number of arguments for type " + type + " (ID = " + nodeID + ")";
-
-        // Checks valid cylinder and sphere parameters.
-        if (type === 'cylinder' || type == 'sphere') {
-            for (var j = 0; j < args.length; j++) {
-                if (args[j] < 0)
-                    return "all arguments for a " +  type + " must be positive";
-            }
-        }
-
-        // Creates node.
-        this.nodes[nodeID] = new MyGraphLeaf(this,nodeID,type,args);
-    }
-
-    console.log("Parsed leaves");
-}
-*/
 /**
  * Parses the <NODES> block.
  */
@@ -1421,13 +1352,13 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
             //is the node selectable
             var selectable = null;
             if (this.reader.hasAttribute(children[i], 'selectable')) {
-                var selectableString = this.reader.getString(children[i], 'selectable')
+                var selectableString = this.reader.getString(children[i], 'selectable');
                 if (selectableString == "true") {
                     selectable = true;
                 } else if (selectableString == "false") {
                     selectable = false;
                 } else {
-                    return "invalid selectable value"
+                    return "invalid selectable value";
                 }
             }
             this.nodes[nodeID].selectable = selectable;
@@ -1437,15 +1368,15 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
             //Gather initial coordinates
             let coordinate = null;
             if (this.reader.hasAttribute(children[i], 'coordinates')) {
-                let coordinateString = this.reader.getString(children[i], 'coordinates')
+                let coordinateString = this.reader.getString(children[i], 'coordinates');
                 if (this.reader.hasAttribute(children[i], 'piecetype')) {
-                    let typeString = this.reader.getString(children[i], 'piecetype')
+                    let typeString = this.reader.getString(children[i], 'piecetype');
                     if (typeString != '1' && typeString != '2' && typeString != 's')
-                        return "piecetype attribute must be of value 1 (player1) 2 (player2) s(boardSpot)"
+                        return "piecetype attribute must be of value 1 (player1) 2 (player2) s(boardSpot)";
                     this.nodes[nodeID].piecetype = typeString;
                     this.nodes[nodeID].coords = coordinateString;
                 } else {
-                    return "Coordinates attribute must have a valid piecetype attribute"
+                    return "Coordinates attribute must have a valid piecetype attribute";
                 }
             }
             // Gathers child nodes.
@@ -1619,7 +1550,7 @@ MySceneGraph.prototype.parseNodes = function (nodesNode) {
                                     }
                                 }
                             }
-                            console.log("patch leaf processed")
+                            console.log("patch leaf processed");
                         }
                         this.nodes[nodeID].addLeaf(new MyGraphLeaf(this, descendants[j]));
 
@@ -1705,8 +1636,6 @@ MySceneGraph.prototype.generateDefaultMaterial = function () {
 
     // Generates random material ID not currently in use.
     this.defaultMaterialID = 'clear';
-    //do this.defaultMaterialID = MySceneGraph.generateRandomString(5);
-    //while (this.materials[this.defaultMaterialID] != null);
 
     this.materials[this.defaultMaterialID] = materialDefault;
 }
@@ -1728,25 +1657,24 @@ MySceneGraph.generateRandomString = function (length) {
 *Adicionar a animação de movimento de peça
 */
 MySceneGraph.prototype.addMoveAnimation = function (spotCoords, soldier) {
-    console.log(this.scene.history)
+    console.log(this.scene.history);
     let soldierNode = this.nodes[soldier];
     //Coordenadas numéricas conforme definidas para o tabuleiro
-    let soldierZ = this.scene.rows[soldierNode.coords[1]]
-    let soldierX = this.scene.collumns[soldierNode.coords[0]]
+    let soldierZ = this.scene.rows[soldierNode.coords[1]];
+    let soldierX = this.scene.collumns[soldierNode.coords[0]];
     //Setup da posição inicial de forma a prevenir acumulo de erros
-    mat4.identity(soldierNode.transformMatrix)
-    mat4.translate(soldierNode.transformMatrix, soldierNode.transformMatrix, [soldierX, 0, soldierZ])
-    let spotZ = this.scene.rows[spotCoords[1]]
-    let spotX = this.scene.collumns[spotCoords[0]]
-    soldierNode.counterAnimations = 0 //reset animation counter
-    soldierNode.animationID = [1] //reset animation queue
-    let difX = spotX - soldierX
-    let difZ = spotZ - soldierZ
-    let invertDir = soldierNode.piecetype == '1' ? true : false //usando para a inverção de rotações de direcção
+    mat4.identity(soldierNode.transformMatrix);
+    mat4.translate(soldierNode.transformMatrix, soldierNode.transformMatrix, [soldierX, 0, soldierZ]);
+    let spotZ = this.scene.rows[spotCoords[1]];
+    let spotX = this.scene.collumns[spotCoords[0]];
+    soldierNode.counterAnimations = 0; //reset animation counter
+    soldierNode.animationID = [1]; //reset animation queue
+    let difX = spotX - soldierX;
+    let difZ = spotZ - soldierZ;
+    let invertDir = soldierNode.piecetype == '1' ? true : false; //usando para a inverção de rotações de direcção
     soldierNode.currAnimation = new BezierAnimation(this.scene, [[0, 0, 0], [difX / 3, 7, difZ / 3], [2 * difX / 3, 7, 2 * difZ / 3], [difX, 0, difZ], 8], invertDir);
-    //mat4.translate(soldierNode.transformMatrix, soldierNode.transformMatrix, [spotX-soldierX, 0, spotZ-soldierZ]);
     this.anims++;
-    soldierNode.coords = spotCoords
+    soldierNode.coords = spotCoords;
 }
 /*
 *Adicionar a animação de eliminação de peça
@@ -1754,62 +1682,51 @@ MySceneGraph.prototype.addMoveAnimation = function (spotCoords, soldier) {
 MySceneGraph.prototype.addRemoveAnimation = function (soldier) {
     /*Informação relevante do soldado*/
     let soldierNode = this.nodes[soldier];
-    let soldierZ = this.scene.rows[soldierNode.coords[1]]
-    let soldierX = this.scene.collumns[soldierNode.coords[0]]
+    let soldierZ = this.scene.rows[soldierNode.coords[1]];
+    let soldierX = this.scene.collumns[soldierNode.coords[0]];
     //Setup da posição inicial de forma a prevenir acumulo de erros
-    mat4.identity(soldierNode.transformMatrix)
-    mat4.translate(soldierNode.transformMatrix, soldierNode.transformMatrix, [soldierX, 0, soldierZ])
+    mat4.identity(soldierNode.transformMatrix);
+    mat4.translate(soldierNode.transformMatrix, soldierNode.transformMatrix, [soldierX, 0, soldierZ]);
     /*Obter um local de eliminação vazio*/
-    let spotCoords = this.scene.getEliSpot(soldierNode.piecetype, soldier)
-    let spotZ = this.scene.rows[spotCoords[1]]
-    let spotX = this.scene.collumns[spotCoords[0]]
-    soldierNode.counterAnimations = 0 //reset animation counter
-    soldierNode.animationID = [1] //reset animation queue
-    let difX = spotX - soldierX
-    let difZ = spotZ - soldierZ
-    let invertDir = soldierNode.piecetype == '1' ? true : false //usando para a inverção de rotações de direcção
+    let spotCoords = this.scene.getEliSpot(soldierNode.piecetype, soldier);
+    let spotZ = this.scene.rows[spotCoords[1]];
+    let spotX = this.scene.collumns[spotCoords[0]];
+    soldierNode.counterAnimations = 0; //reset animation counter
+    soldierNode.animationID = [1]; //reset animation queue
+    let difX = spotX - soldierX;
+    let difZ = spotZ - soldierZ;
+    let invertDir = soldierNode.piecetype == '1' ? true : false; //usando para a inverção de rotações de direcção
     soldierNode.currAnimation = new BezierAnimation(this.scene, [[0, 0, 0], [difX / 3, 20, difZ / 3], [2 * difX / 3, 20, 2 * difZ / 3], [difX, 0, difZ], 40], invertDir);
     this.anims++;
-    soldierNode.coords = spotCoords
+    soldierNode.coords = spotCoords;
 }
 /*
 *Atualizar a posição de uma peça conforme o seu estado interno
 */
 MySceneGraph.prototype.updatePosition = function (soldier) {
     let soldierNode = this.nodes[soldier];
-    let soldierZ = this.scene.rows[soldierNode.coords[1]]
-    let soldierX = this.scene.collumns[soldierNode.coords[0]]
-    mat4.identity(soldierNode.transformMatrix)
-    mat4.translate(soldierNode.transformMatrix, soldierNode.transformMatrix, [soldierX, 0, soldierZ])
+    let soldierZ = this.scene.rows[soldierNode.coords[1]];
+    let soldierX = this.scene.collumns[soldierNode.coords[0]];
+    mat4.identity(soldierNode.transformMatrix);
+    mat4.translate(soldierNode.transformMatrix, soldierNode.transformMatrix, [soldierX, 0, soldierZ]);
 }
 /**
  * Displays the scene, processing each node, starting in the root node.
  */
 MySceneGraph.prototype.displayScene = function () {
     this.shader.setUniformsValues({ normScale: this.normScale, normScaleMax: this.normScaleMax });
-    this.texturestack = ['clear']
-    this.processGraph(this.nodes['root']/*, this.materials[this.defaultMaterialID], [1, 1]*/);
+    this.texturestack = ['clear'];
+    this.processGraph(this.nodes['root']);
     this.pickcounter = 1;
 }
 
-MySceneGraph.prototype.processGraph = function (node/*, parentMaterial, amplifFactor*/) {
-    //var material = Object.create(parentMaterial);
-    //var amplif = amplifFactor;
+MySceneGraph.prototype.processGraph = function (node) {
+
     if (node.nodeID != null) {
-        //Processar material
-        //if (node.materialID != 'null') {
-        //    material = this.materials[node.materialID];
-        //}
-        //Apply Texture
-        //if (node.textureID != 'null') {
-        //    let txt = this.textures[node.textureID]
-        //    material.setTexture(txt[0]);
-        //    amplif = [txt[1],txt[2]]; //s e t
-        //}
         //TRACK SHADERS
         let shade;
         if (node.selectable) {
-            this.applyShader = true;//this.scene.selectableNodes[node.nodeID];
+            this.applyShader = true;
         } else if (node.selectable === false) {
             this.applyShader = false;
         }
@@ -1817,15 +1734,13 @@ MySceneGraph.prototype.processGraph = function (node/*, parentMaterial, amplifFa
         //Apply transformMatrix
         this.scene.multMatrix(node.transformMatrix);
         //Handle animations
-        //if (node.counterAnimations >= node.animationID.length && node.animationID.length > 0)
-        //    this.scene.multMatrix(node.endAnimationMatrix);
-        /*else*/ if (node.animationID.length > 0 && node.counterAnimations < node.animationID.length) {
+        if (node.animationID.length > 0 && node.counterAnimations < node.animationID.length) {
             if (node.currAnimation == null) {
                 node.currAnimation = this.animations[node.animationID[node.counterAnimations]].clone();
                 node.currAnimation.restartTime();
             }
             var matAnimation = node.currAnimation.animate();
-            //this.scene.multMatrix(node.endAnimationMatrix);
+
             this.scene.multMatrix(matAnimation);
             if (node.currAnimation.endFlag) {
                 node.currAnimation = null;
@@ -1834,57 +1749,56 @@ MySceneGraph.prototype.processGraph = function (node/*, parentMaterial, amplifFa
                 if (node.piecetype) {//Verificar se a animação é referente ao movimento de uma peça
                     this.anims--;
                     if (this.anims == 0) {
-                        console.log("Now entering a new state")
+                        console.log("Now entering a new state");
                         switch (this.scene.gameState) {
                             case this.scene.state.P1Animation:
-                                this.scene.gameState = this.scene.state.P1BoardValidate
+                                this.scene.gameState = this.scene.state.P1BoardValidate;
                                 break;
                             case this.scene.state.P2Animation:
-                                this.scene.gameState = this.scene.state.P2BoardValidate
+                                this.scene.gameState = this.scene.state.P2BoardValidate;
                                 break;
                             case this.scene.state.P1EliAnimation:
-                                this.scene.gameState = this.scene.state.P2PieceSelect
+                                this.scene.gameState = this.scene.state.P2PieceSelect;
                                 break;
                             case this.scene.state.P2EliAnimation:
-                                this.scene.gameState = this.scene.state.P1PieceSelect
+                                this.scene.gameState = this.scene.state.P1PieceSelect;
                                 break;
                             default:
                                 break;
                         }
                     }
-                    //mat4.multiply(node.transformMatrix, node.transformMatrix,node.endAnimationMatrix)
-                    //mat4.identity(node.endAnimationMatrix)
-                    node.animationID.pop()
+
+                    node.animationID.pop();
                 }
             }
         }
         if (node.materialID == 'null') {
-            let ind = this.materialstack.length - 1
-            this.materialstack.push(this.materialstack[ind])
+            let ind = this.materialstack.length - 1;
+            this.materialstack.push(this.materialstack[ind]);
         } else {
-            this.materialstack.push(node.materialID)
+            this.materialstack.push(node.materialID);
         }
         if (node.textureID == 'null') {
-            let ind = this.texturestack.length - 1
-            this.texturestack.push(this.texturestack[ind])
+            let ind = this.texturestack.length - 1;
+            this.texturestack.push(this.texturestack[ind]);
         } else {
-            this.texturestack.push(node.textureID)
+            this.texturestack.push(node.textureID);
         }
         //Node recursion call
         if (node.piecetype) {
-            this.pickstack.push(++this.pickcounter)
-            this.selectablePieces[this.pickcounter] = node.nodeID
+            this.pickstack.push(++this.pickcounter);
+            this.selectablePieces[this.pickcounter] = node.nodeID;
             for (var i = 0; i < node.children.length; i++) {
                 this.scene.pushMatrix();
-                this.processGraph(this.nodes[node.children[i]]/*, material, amplif*/);
+                this.processGraph(this.nodes[node.children[i]]);
                 this.scene.popMatrix();
                 this.applyShader = shade;
             }
-            this.pickstack.pop()
+            this.pickstack.pop();
         } else {
             for (var i = 0; i < node.children.length; i++) {
                 this.scene.pushMatrix();
-                this.processGraph(this.nodes[node.children[i]]/*, material, amplif*/);
+                this.processGraph(this.nodes[node.children[i]]);
                 this.scene.popMatrix();
                 this.applyShader = shade;
             }
@@ -1899,15 +1813,14 @@ MySceneGraph.prototype.processGraph = function (node/*, parentMaterial, amplifFa
         }
         //Draw Leaves
         if (node.leaves.length > 0) {
-            let tex = this.textures[this.texturestack[this.texturestack.length - 1]]
-            let matter = this.materials[this.materialstack[this.materialstack.length - 1]]
-            matter.setTexture(tex[0])
-            let amplif = [tex[1], tex[2]]
-            matter.apply()
-            //material.apply();
+            let tex = this.textures[this.texturestack[this.texturestack.length - 1]];
+            let matter = this.materials[this.materialstack[this.materialstack.length - 1]];
+            matter.setTexture(tex[0]);
+            let amplif = [tex[1], tex[2]];
+            matter.apply();
             if (this.pickstack.length > 0) {
                 for (var i = 0; i < node.leaves.length; i++) {
-                    this.scene.registerForPick(this.pickstack[this.pickstack.length - 1], node.leaves[i])
+                    this.scene.registerForPick(this.pickstack[this.pickstack.length - 1], node.leaves[i]);
                     node.leaves[i].display(amplif[0], amplif[1]);
                 }
             } else {
@@ -1916,10 +1829,10 @@ MySceneGraph.prototype.processGraph = function (node/*, parentMaterial, amplifFa
                 }
             }
         }
-        this.texturestack.pop()
-        this.materialstack.pop()
+        this.texturestack.pop();
+        this.materialstack.pop();
     } else {
-        console.log("Erro: nodeID == null")
+        console.log("Erro: nodeID == null");
     }
 
 }

@@ -23,9 +23,9 @@ Triangle.prototype.initBuffers = function () {
 	];
 
 	//calculo de normais
-	vectorU = [this.vertices[3] - this.vertices[0], this.vertices[4] - this.vertices[1], this.vertices[5] - this.vertices[2]];
-	vectorV = [this.vertices[6] - this.vertices[0], this.vertices[7] - this.vertices[1], this.vertices[8] - this.vertices[2]];
-	Normals = [
+	var vectorU = [this.vertices[3] - this.vertices[0], this.vertices[4] - this.vertices[1], this.vertices[5] - this.vertices[2]];
+	var vectorV = [this.vertices[6] - this.vertices[0], this.vertices[7] - this.vertices[1], this.vertices[8] - this.vertices[2]];
+	var Normals = [
 		(vectorU[1] * vectorV[2]) - (vectorU[2] * vectorV[1]),
 		(vectorU[2] * vectorV[0]) - (vectorU[0] * vectorV[2]),
 		(vectorU[0] * vectorV[1]) - (vectorU[1] * vectorV[0])
@@ -64,6 +64,6 @@ Triangle.prototype.setTextureCoords = function (afs, aft) {
 		0, 1,
 		dist[0] / afs, 1,
 		(dist[0] - dist[1] * cosine) / afs, 1 - (dist[1] * sine) / aft
-	]
+	];
 	this.updateTexCoordsGLBuffers();
 }

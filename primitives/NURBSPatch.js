@@ -10,7 +10,7 @@ function NURBSPatch(scene, args) {
   this.points = [];
   for (var i = 0; i < args.children.length; i++) {
     let uArray = [];
-    let cpoints = args.children[i].children
+    let cpoints = args.children[i].children;
     for (var j = 0; j < cpoints.length; j++) {
       uArray.push(
         [
@@ -26,7 +26,7 @@ function NURBSPatch(scene, args) {
   this.udegree = this.points.length - 1;
   this.vdegree = this.points[0].length - 1;
   this.init();
-};
+}
 
 NURBSPatch.prototype.constructor = NURBSPatch;
 
@@ -43,7 +43,7 @@ NURBSPatch.prototype.makeSurface = function (degree1, degree2, controlvertexes) 
   var knots2 = this.getKnotsVector(degree2);
 
   var nurbsSurface = new CGFnurbsSurface(degree1, degree2, knots1, knots2, controlvertexes);
-  getSurfacePoint = function (u, v) {
+  var getSurfacePoint = function (u, v) {
     return nurbsSurface.getPoint(u, v);
   };
   this.obj = new CGFnurbsObject(this.scene, getSurfacePoint, this.divisionsuv[0], this.divisionsuv[1]);

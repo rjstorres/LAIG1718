@@ -17,7 +17,7 @@ function LinearAnimation(scene, args) {
   this.endMat = mat4.create();
   this.calculateTimePerPoint(this.controlPoints, this.speed);
   /*Estrutura de dados para guardar*/
-  this.yDeg = []/*os ângulos de cada trajeto*/
+  this.yDeg = [];/*os ângulos de cada trajeto*/
   this.unitVectors = this.calculateUnitsDegrees(this.controlPoints);
 }
 
@@ -95,7 +95,7 @@ LinearAnimation.prototype.calculateUnitsDegrees = function (traj) { //Obter dire
 }
 
 LinearAnimation.prototype.clone = function () {
-  animationClone = new LinearAnimation(this.scene, this.args);
+  let animationClone = new LinearAnimation(this.scene, this.args);
   return animationClone;
 }
 

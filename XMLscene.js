@@ -13,20 +13,20 @@ function XMLscene(interface, mode, dificulty, time, lasthistory) {
   this.selectableNodes = {};
   this.normScale = 0;
   this.counter = 0;
-  this.oldTime = new Date().getTime()
+  this.oldTime = new Date().getTime();
   //Camera stats
-  this.ChangeCamera = function () { this.movingCamera = true }
-  this.currentCamera = 0
-  this.cameraTimer = 0
-  this.movingCamera = false
+  this.ChangeCamera = function () { this.movingCamera = true; };
+  this.currentCamera = 0;
+  this.cameraTimer = 0;
+  this.movingCamera = false;
   //Game state
   /*Game mode enumerator*/
-  this.mode = { HH: 1, HM: 2, MM: 3, R: 4 }
+  this.mode = { HH: 1, HM: 2, MM: 3, R: 4 };
   /*Game State enumerator*/
   this.state = {
     P1PieceSelect: 1, P1SpotSelect: 2, P2PieceSelect: 4, P2SpotSelect: 5, GameSetup: 6, P1Animation: 7, P2Animation: 8,
     P1EliAnimation: 9, P2EliAnimation: 10, P1BoardValidate: 11, P2BoardValidate: 12, P1Victory: 13, P2Victory: 14, GameEnd: 15, Draw: 16
-  }
+  };
   this.sicstus = null;
   this.endGame = null;
   this.sId = null;
@@ -34,30 +34,30 @@ function XMLscene(interface, mode, dificulty, time, lasthistory) {
   this.gameState = this.state.GameSetup;
   /*The current game mode */
   if (mode) {
-    this.gameMode = Number(mode)
+    this.gameMode = Number(mode);
   } else {
-    this.gameMode = this.mode.HH
+    this.gameMode = this.mode.HH;
   }
   if (time) {
-    this.timer = Number(time)
+    this.timer = Number(time);
   } else {
-    this.timer = 30
+    this.timer = 30;
   }
-  this.timerTag = document.getElementById('retime')
-  this.timerTag.innerText = this.timer
+  this.timerTag = document.getElementById('retime');
+  this.timerTag.innerText = this.timer;
   //Dificuldade do jogo
-  this.dificulty = dificulty ? dificulty : '1'
+  this.dificulty = dificulty ? dificulty : '1';
 
   /*Game Coordinates enumerator*/
-  this.rows = { "1": 0, "2": -3.7, "3": -7.4, "4": -11, "5": -14.7, "6": -18.3, "7": -22.2, "8": -25.9 }
+  this.rows = { "1": 0, "2": -3.7, "3": -7.4, "4": -11, "5": -14.7, "6": -18.3, "7": -22.2, "8": -25.9 };
   this.collumns = {
     "A": -16.6, "B": -13, "C": -9.3, "D": -5.7, "E": -2, "F": 1.7, "G": 5.3, "H": 9, "I": 12.7, "J": 16.3,
     "K": 23.8, "L": 27.5, "M": 31.2, "N": 34.9, "O": 38.6
-  } /*Colunas para peças removidas*/
+  }; /*Colunas para peças removidas*/
   /*Current Selected soldier*/
-  this.pickedSoldier = null
+  this.pickedSoldier = null;
   /*Movement history. Format: SoldierOrigin-SoldierDestinatio*/
-  this.history = []
+  this.history = [];
   /*Save removed soldiers. Simplifies replays, Format: Array with null or array of soldierId, index == turns*/
   this.remhistory = [];
   /*Game saved States*/
@@ -81,8 +81,8 @@ function XMLscene(interface, mode, dificulty, time, lasthistory) {
     [['K1', null], ['L1', null], ['M1', null], ['N1', null], ['O1', null], ['K2', null], ['L2', null], ['M2', null], ['N2', null], ['O2', null]], /*Player 1 pieces*/
     [['K7', null], ['L7', null], ['M7', null], ['N7', null], ['O7', null], ['K8', null], ['L8', null], ['M8', null], ['N8', null], ['O8', null]]  /*Player 2 pieces*/
   ];
-  this.lasthistory = lasthistory ? lasthistory[0] : null
-  this.lastremhistory = lasthistory ? lasthistory[1] : null
+  this.lasthistory = lasthistory ? lasthistory[0] : null;
+  this.lastremhistory = lasthistory ? lasthistory[1] : null;
 }
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -153,9 +153,9 @@ XMLscene.prototype.onGraphLoaded = function () {
   // Add Selectables Group
   this.interface.addSelectableGroup(this.graph.selectables);
   //Butão de controlo da camera
-  this.interface.addControls()
+  this.interface.addControls();
   if (this.lasthistory) {
-    this.interface.addReplay()
+    this.interface.addReplay();
   }
 }
 /*
@@ -164,12 +164,12 @@ XMLscene.prototype.onGraphLoaded = function () {
 XMLscene.prototype.responseValidate = function (player) {
   if (this.sicstus.status != 0) {
     if (this.sicstus.status == 200) {
-      let targetCoords = this.history[this.history.length - 1].split("-")[2]
+      let targetCoords = this.history[this.history.length - 1].split("-")[2];
       this.graph.nodes[this.pickedSoldier].selectable = false;
       this.gameState = player == 1 ? this.state.P1Animation : this.state.P2Animation;
       this.resetTimer();
-      this.saveState(this.pickedSoldier, this.graph.nodes[this.pickedSoldier].coords, targetCoords, this.sicstus.responseText)
-      this.graph.addMoveAnimation(targetCoords, this.pickedSoldier)
+      this.saveState(this.pickedSoldier, this.graph.nodes[this.pickedSoldier].coords, targetCoords, this.sicstus.responseText);
+      this.graph.addMoveAnimation(targetCoords, this.pickedSoldier);
     } else if (this.sicstus.status == 400) {
       this.history.pop();
       console.log("Invalid move");
@@ -208,16 +208,16 @@ XMLscene.prototype.diffBoard = function () {
         let p = '';
         switch (inid[inid.length - 1]) {
           case 'W':
-            p = 'soldierReiB'
+            p = 'soldierReiB';
             break;
           case 'B':
-            p = 'soldierReiA'
+            p = 'soldierReiA';
             break;
           case 'w':
-            p = 'soldier' + inid.split('w')[0] + 'B'
+            p = 'soldier' + inid.split('w')[0] + 'B';
             break;
           case 'b':
-            p = 'soldier' + inid.split('b')[0] + 'A'
+            p = 'soldier' + inid.split('b')[0] + 'A';
             break;
           default:
             break;
@@ -263,8 +263,8 @@ XMLscene.prototype.hhPlay = function () {
             this.graph.nodes[this.sId].selectable = true;
           } else if (this.graph.nodes[this.sId].piecetype == 's') {
             if (this.sicstus == null) {
-              this.sicstus = makePlay(1, this.graph.nodes[this.pickedSoldier].coords, this.graph.nodes[this.sId].coords)
-              this.history.push(this.pickedSoldier + "-" + this.graph.nodes[this.pickedSoldier].coords + "-" + this.graph.nodes[this.sId].coords)
+              this.sicstus = makePlay(1, this.graph.nodes[this.pickedSoldier].coords, this.graph.nodes[this.sId].coords);
+              this.history.push(this.pickedSoldier + "-" + this.graph.nodes[this.pickedSoldier].coords + "-" + this.graph.nodes[this.sId].coords);
             }
           }
         } else if (this.sicstus) {
@@ -279,8 +279,8 @@ XMLscene.prototype.hhPlay = function () {
             this.graph.nodes[this.sId].selectable = true;
           } else if (this.graph.nodes[this.sId].piecetype == 's') {
             if (this.sicstus == null) {
-              this.sicstus = makePlay(2, this.graph.nodes[this.pickedSoldier].coords, this.graph.nodes[this.sId].coords)
-              this.history.push(this.pickedSoldier + "-" + this.graph.nodes[this.pickedSoldier].coords + "-" + this.graph.nodes[this.sId].coords)
+              this.sicstus = makePlay(2, this.graph.nodes[this.pickedSoldier].coords, this.graph.nodes[this.sId].coords);
+              this.history.push(this.pickedSoldier + "-" + this.graph.nodes[this.pickedSoldier].coords + "-" + this.graph.nodes[this.sId].coords);
             }
           }
         } else if (this.sicstus) {
@@ -294,13 +294,13 @@ XMLscene.prototype.hhPlay = function () {
         this.handleElimination(2);
         break;
       case this.state.P1Victory:
-        this.finalizeGame(1)
+        this.finalizeGame(1);
         break;
       case this.state.P2Victory:
-        this.finalizeGame(2)
+        this.finalizeGame(2);
         break;
       case this.state.Draw:
-        this.finalizeGame(3)
+        this.finalizeGame(3);
         break;
       default:
         break;
@@ -357,8 +357,8 @@ XMLscene.prototype.hmPlay = function () {
             this.graph.nodes[this.sId].selectable = true;
           } else if (this.graph.nodes[this.sId].piecetype == 's') {
             if (this.sicstus == null) {
-              this.sicstus = makePlay(1, this.graph.nodes[this.pickedSoldier].coords, this.graph.nodes[this.sId].coords)
-              this.history.push(this.pickedSoldier + "-" + this.graph.nodes[this.pickedSoldier].coords + "-" + this.graph.nodes[this.sId].coords)
+              this.sicstus = makePlay(1, this.graph.nodes[this.pickedSoldier].coords, this.graph.nodes[this.sId].coords);
+              this.history.push(this.pickedSoldier + "-" + this.graph.nodes[this.pickedSoldier].coords + "-" + this.graph.nodes[this.sId].coords);
             }
           }
         } else if (this.sicstus) {
@@ -371,15 +371,14 @@ XMLscene.prototype.hmPlay = function () {
       case this.state.P2BoardValidate:
         this.handleElimination(2);
         break;
-        break;
       case this.state.P1Victory:
-        this.finalizeGame(1)
+        this.finalizeGame(1);
         break;
       case this.state.P2Victory:
-        this.finalizeGame(2)
+        this.finalizeGame(2);
         break;
       case this.state.Draw:
-        this.finalizeGame(3)
+        this.finalizeGame(3);
         break;
       default:
         break;
@@ -387,6 +386,7 @@ XMLscene.prototype.hmPlay = function () {
     this.sId = null;
   }
 }
+
 /*
 * Gerir o modo de jogo maquina-maquina
 */
@@ -400,7 +400,7 @@ XMLscene.prototype.mmPlay = function () {
           let aimove = this.sicstus.responseText;
           aimove = aimove.split('[')[1].split(']')[0].split(',');
           let origin = aimove[0].toUpperCase() + aimove[1];
-          this.pickedSoldier = ''
+          this.pickedSoldier = '';
           for (let i = 82; i <= 103; i++) {
             let search = this.graph.selectablePieces[i];
             if (this.graph.nodes[search].coords == origin) {
@@ -426,7 +426,7 @@ XMLscene.prototype.mmPlay = function () {
           let aimove = this.sicstus.responseText;
           aimove = aimove.split('[')[1].split(']')[0].split(',');
           let origin = aimove[0].toUpperCase() + aimove[1];
-          this.pickedSoldier = ''
+          this.pickedSoldier = '';
           for (let i = 82; i <= 103; i++) {
             let search = this.graph.selectablePieces[i];
             if (this.graph.nodes[search].coords == origin) {
@@ -451,13 +451,13 @@ XMLscene.prototype.mmPlay = function () {
       this.handleElimination(2);
       break;
     case this.state.P1Victory:
-      this.finalizeGame(1)
+      this.finalizeGame(1);
       break;
     case this.state.P2Victory:
-      this.finalizeGame(2)
+      this.finalizeGame(2);
       break;
     case this.state.Draw:
-      this.finalizeGame(3)
+      this.finalizeGame(3);
       break;
     default:
       break;
@@ -473,23 +473,23 @@ XMLscene.prototype.rPlay = function () {
     let rempieces = null;
     let action = 0;
     if (this.rcounter < this.lasthistory.length) {
-      action = this.lasthistory[this.rcounter].split("-")
+      action = this.lasthistory[this.rcounter].split("-");
     }
     let coords;
     switch (this.gameState) {
       case this.state.P1PieceSelect:
-        this.pickedSoldier = action[0]
-        coords = action[2]
+        this.pickedSoldier = action[0];
+        coords = action[2];
         this.gameState = this.state.P1Animation;
         this.resetTimer();
-        this.graph.addMoveAnimation(coords, this.pickedSoldier)
+        this.graph.addMoveAnimation(coords, this.pickedSoldier);
         break;
       case this.state.P2PieceSelect:
-        this.pickedSoldier = action[0]
-        coords = action[2]
+        this.pickedSoldier = action[0];
+        coords = action[2];
         this.gameState = this.state.P2Animation;
         this.resetTimer();
-        this.graph.addMoveAnimation(coords, this.pickedSoldier)
+        this.graph.addMoveAnimation(coords, this.pickedSoldier);
         break;
       case this.state.P1BoardValidate:
         rempieces = this.lastremhistory[this.rcounter];
@@ -501,7 +501,7 @@ XMLscene.prototype.rPlay = function () {
         } else {
           this.gameState = this.state.P2PieceSelect;
         }
-        this.rcounter++
+        this.rcounter++;
         break;
       case this.state.P2BoardValidate:
         rempieces = this.lastremhistory[this.rcounter];
@@ -513,7 +513,7 @@ XMLscene.prototype.rPlay = function () {
         } else {
           this.gameState = this.state.P1PieceSelect;
         }
-        this.rcounter++
+        this.rcounter++;
         break;
       default:
         break;
@@ -529,11 +529,11 @@ XMLscene.prototype.finalizeReplay = function () {
   else
     this.gameState = this.state.P2PieceSelect;
   this.gameMode = this.oldGameMode;
-  this.removedPieces = []
+  this.removedPieces = [];
   for (let i = 0; i < 2; i++) {
-    let ar = []
+    let ar = [];
     for (let j = 0; j < 10; j++) {
-      ar.push(this.oldEliminated[i][j].slice())
+      ar.push(this.oldEliminated[i][j].slice());
     }
     this.removedPieces.push(ar);
   }
@@ -545,24 +545,24 @@ XMLscene.prototype.finalizeReplay = function () {
     for (let j = 0; j < 10; j++) {
       if (stt[i][j] !== ' ') {
         let piece = stt[i][j];
-        let coords = stt[8][j][1].toUpperCase() + stt[i][10]
+        let coords = stt[8][j][1].toUpperCase() + stt[i][10];
         let soldier = "";
         switch (piece[piece.length - 1]) {
           case 'W':
-            soldier = 'soldierReiB'
-            this.graph.nodes[soldier].coords = coords
+            soldier = 'soldierReiB';
+            this.graph.nodes[soldier].coords = coords;
             break;
           case 'B':
-            soldier = 'soldierReiA'
-            this.graph.nodes[soldier].coords = coords
+            soldier = 'soldierReiA';
+            this.graph.nodes[soldier].coords = coords;
             break;
           case 'w':
-            soldier = 'soldier' + piece.split('w')[0] + 'B'
-            this.graph.nodes[soldier].coords = coords
+            soldier = 'soldier' + piece.split('w')[0] + 'B';
+            this.graph.nodes[soldier].coords = coords;
             break;
           case 'b':
-            soldier = 'soldier' + piece.split('b')[0] + 'A'
-            this.graph.nodes[soldier].coords = coords
+            soldier = 'soldier' + piece.split('b')[0] + 'A';
+            this.graph.nodes[soldier].coords = coords;
             break;
           default:
             break;
@@ -574,7 +574,7 @@ XMLscene.prototype.finalizeReplay = function () {
   for (let i = 0; i < 2; i++) {
     for (let j = 0; j < 10; j++) {
       if (this.removedPieces[i][j][1]) {
-        this.graph.nodes[this.removedPieces[i][j][1]].coords = this.removedPieces[i][j][0]
+        this.graph.nodes[this.removedPieces[i][j][1]].coords = this.removedPieces[i][j][0];
         this.graph.updatePosition(this.removedPieces[i][j][1]);
       }
     }
@@ -602,7 +602,7 @@ XMLscene.prototype.finalizeGame = function (winner) {
 */
 XMLscene.prototype.ReplayLastGame = function () {
   if (this.interactiveState()) {
-    console.log(this.lasthistory)
+    console.log(this.lasthistory);
     let oldState = this.savedStates[0];
     for (let i = 0; i < 8; i++) {
       for (let j = 0; j < 10; j++) {
@@ -612,20 +612,20 @@ XMLscene.prototype.ReplayLastGame = function () {
           let soldier = "";
           switch (piece[piece.length - 1]) {
             case 'W':
-              soldier = 'soldierReiB'
-              this.graph.nodes[soldier].coords = coords
+              soldier = 'soldierReiB';
+              this.graph.nodes[soldier].coords = coords;
               break;
             case 'B':
-              soldier = 'soldierReiA'
-              this.graph.nodes[soldier].coords = coords
+              soldier = 'soldierReiA';
+              this.graph.nodes[soldier].coords = coords;
               break;
             case 'w':
-              soldier = 'soldier' + piece.split('w')[0] + 'B'
-              this.graph.nodes[soldier].coords = coords
+              soldier = 'soldier' + piece.split('w')[0] + 'B';
+              this.graph.nodes[soldier].coords = coords;
               break;
             case 'b':
-              soldier = 'soldier' + piece.split('b')[0] + 'A'
-              this.graph.nodes[soldier].coords = coords
+              soldier = 'soldier' + piece.split('b')[0] + 'A';
+              this.graph.nodes[soldier].coords = coords;
               break;
             default:
               break;
@@ -636,12 +636,12 @@ XMLscene.prototype.ReplayLastGame = function () {
     }
     this.curState = this.gameState; //Guardar uma referencia do estado a quando o replay
     this.oldGameMode = this.gameMode; //Guardar uma referencia do modo a quando o replay
-    this.oldEliminated = [] //Guardar uma referencia das peças eliminadas
+    this.oldEliminated = []; //Guardar uma referencia das peças eliminadas
     for (let i = 0; i < 2; i++) {
       let ar = []
       for (let j = 0; j < 10; j++) {
-        ar.push(this.removedPieces[i][j].slice())
-        this.removedPieces[i][j][1] = null
+        ar.push(this.removedPieces[i][j].slice());
+        this.removedPieces[i][j][1] = null;
       }
       this.oldEliminated.push(ar);
     }
@@ -669,33 +669,33 @@ XMLscene.prototype.interactiveState = function () {
 *Save the state of the current game
 */
 XMLscene.prototype.saveState = function (soldier, origin, destination, serverBoard) {
-  let oldState = this.savedStates[this.savedStates.length - 1].slice()
-  let newState = []
+  let oldState = this.savedStates[this.savedStates.length - 1].slice();
+  let newState = [];
   for (let i = 0; i < 9; i++) {
-    newState.push(oldState[i].slice())
+    newState.push(oldState[i].slice());
   }
-  let row = 8 - Number(origin[1])
-  let col = origin.charCodeAt(0) - 65
-  newState[row][col] = ' '
-  let id
+  let row = 8 - Number(origin[1]);
+  let col = origin.charCodeAt(0) - 65;
+  newState[row][col] = ' ';
+  let id;
   if (soldier.includes('A')) {
     if (soldier.includes('Rei'))
-      id = 'B'
+      id = 'B';
     else {
-      id = soldier.split('soldier')[1].split('A')[0] + 'b'
+      id = soldier.split('soldier')[1].split('A')[0] + 'b';
     }
   } else {
     if (soldier.includes('Rei'))
-      id = 'W'
+      id = 'W';
     else {
-      id = soldier.split('soldier')[1].split('B')[0] + 'w'
+      id = soldier.split('soldier')[1].split('B')[0] + 'w';
     }
   }
-  row = 8 - Number(destination[1])
-  col = destination.charCodeAt(0) - 65
-  newState[row][col] = id
-  this.savedStates.push(newState)
-  console.log(this.savedStates)
+  row = 8 - Number(destination[1]);
+  col = destination.charCodeAt(0) - 65;
+  newState[row][col] = id;
+  this.savedStates.push(newState);
+  console.log(this.savedStates);
   //Parse do tabuleiro recebido do servidor
   this.serverBoard = [];
   let aux = [];
@@ -728,7 +728,7 @@ XMLscene.prototype.makeRandomMove = function () {
         let aimove = this.sicstus.responseText;
         aimove = aimove.split('[')[1].split(']')[0].split(',');
         let origin = aimove[0].toUpperCase() + aimove[1];
-        this.pickedSoldier = ''
+        this.pickedSoldier = '';
         for (let i = 82; i <= 103; i++) {
           let search = this.graph.selectablePieces[i];
           if (this.graph.nodes[search].coords == origin) {
@@ -750,7 +750,7 @@ XMLscene.prototype.makeRandomMove = function () {
         let aimove = this.sicstus.responseText;
         aimove = aimove.split('[')[1].split(']')[0].split(',');
         let origin = aimove[0].toUpperCase() + aimove[1];
-        this.pickedSoldier = ''
+        this.pickedSoldier = '';
         for (let i = 82; i <= 103; i++) {
           let search = this.graph.selectablePieces[i];
           if (this.graph.nodes[search].coords == origin) {
@@ -770,15 +770,15 @@ XMLscene.prototype.makeRandomMove = function () {
 * Debug end of game states
 */
 XMLscene.prototype.DebugWinP1 = function () {
-  console.log("Setting player 1 victory..")
+  console.log("Setting player 1 victory..");
   this.gameState = this.state.P1Victory;
 }
 XMLscene.prototype.DebugWinP2 = function () {
-  console.log("Setting player 2 victory..")
+  console.log("Setting player 2 victory..");
   this.gameState = this.state.P2Victory;
 }
 XMLscene.prototype.DebugDraw = function () {
-  console.log("Setting a draw..")
+  console.log("Setting a draw..");
   this.gameState = this.state.Draw;
 }
 /*
@@ -795,7 +795,7 @@ XMLscene.prototype.getEliSpot = function (Player, id) {
     }
   }
   return sp;
-}
+};
 /*
 * Manage the game timer
 */
@@ -803,10 +803,10 @@ XMLscene.prototype.manageTimer = function (scene) {
   if (this.gameState != this.state.P1Animation && this.gameState != this.state.P2Animation) {
 
     if (Number(this.timerTag.innerText) >= 1) {
-      this.timerTag.innerText = Number(this.timerTag.innerText) - 1
+      this.timerTag.innerText = Number(this.timerTag.innerText) - 1;
     }
     else if (Number(this.timerTag.innerText) == 0) {
-      this.makeRandomMove()
+      this.makeRandomMove();
     }
   }
 }
@@ -814,8 +814,9 @@ XMLscene.prototype.manageTimer = function (scene) {
 * Reset the timer
 */
 XMLscene.prototype.resetTimer = function () {
-  this.timerTag.innerText = this.timer
+  this.timerTag.innerText = this.timer;
 }
+
 /*
 *Undo into last state
 */
@@ -836,24 +837,24 @@ XMLscene.prototype.Undo = function () {
       for (let j = 0; j < 10; j++) {
         if (oldState[i][j] !== ' ') {
           let piece = oldState[i][j];
-          let coords = oldState[8][j][1].toUpperCase() + oldState[i][10]
+          let coords = oldState[8][j][1].toUpperCase() + oldState[i][10];
           let soldier = "";
           switch (piece[piece.length - 1]) {
             case 'W':
-              soldier = 'soldierReiB'
-              this.graph.nodes[soldier].coords = coords
+              soldier = 'soldierReiB';
+              this.graph.nodes[soldier].coords = coords;
               break;
             case 'B':
-              soldier = 'soldierReiA'
-              this.graph.nodes[soldier].coords = coords
+              soldier = 'soldierReiA';
+              this.graph.nodes[soldier].coords = coords;
               break;
             case 'w':
-              soldier = 'soldier' + piece.split('w')[0] + 'B'
-              this.graph.nodes[soldier].coords = coords
+              soldier = 'soldier' + piece.split('w')[0] + 'B';
+              this.graph.nodes[soldier].coords = coords;
               break;
             case 'b':
-              soldier = 'soldier' + piece.split('b')[0] + 'A'
-              this.graph.nodes[soldier].coords = coords
+              soldier = 'soldier' + piece.split('b')[0] + 'A';
+              this.graph.nodes[soldier].coords = coords;
               break;
             default:
               break;
@@ -941,9 +942,9 @@ XMLscene.prototype.display = function () {
         if (this.endGame.responseText.includes('DRAW')) {
           this.gameState = this.state.Draw;
         } else if (this.endGame.responseText.includes('Player 1 Lost')) {
-          this.gameState = this.state.P1Victory
+          this.gameState = this.state.P1Victory;
         } else if (this.endGame.responseText.includes('Player 2 Lost')) {
-          this.gameState = this.state.P2Victory
+          this.gameState = this.state.P2Victory;
         }
         console.log(this.endGame.responseText);
         this.endGame = null;
@@ -952,16 +953,16 @@ XMLscene.prototype.display = function () {
     //Process game cycle
     switch (this.gameMode) {
       case this.mode.R:
-        this.rPlay()
+        this.rPlay();
         break;
       case this.mode.HH:
-        this.hhPlay()
+        this.hhPlay();
         break;
       case this.mode.HM:
-        this.hmPlay()
+        this.hmPlay();
         break;
       case this.mode.MM:
-        this.mmPlay()
+        this.mmPlay();
         break;
       default:
         break;
@@ -971,7 +972,7 @@ XMLscene.prototype.display = function () {
     this.graph.normScale = this.getNorm(this.counter);
     this.graph.displayScene();
     this.moveCamera();
-    //this.timeNow = this.date.getTime()-this.timeStart
+
 
   }
   else {
@@ -989,35 +990,34 @@ XMLscene.prototype.moveCamera = function () {
   if (this.movingCamera) {
     switch (this.currentCamera) {
       case 0:
-        this.cameraTimer += 1
-        this.camera.orbit(CGFcameraAxis.Y, 0.1)
+        this.cameraTimer += 1;
+        this.camera.orbit(CGFcameraAxis.Y, 0.1);
         if (this.cameraTimer > 10) {
-          this.currentCamera = 1
-          this.movingCamera = false
-          this.cameraTimer = 0
+          this.currentCamera = 1;
+          this.movingCamera = false;
+          this.cameraTimer = 0;
         }
         break;
       case 1:
-        this.cameraTimer += 1
-        this.camera.orbit(CGFcameraAxis.Y, -0.11)
-        this.camera.translate(vec4.fromValues(0, 21, -18, 0))
-        this.camera.setTarget(vec3.fromValues(0, 0, 0))
+        this.cameraTimer += 1;
+        this.camera.orbit(CGFcameraAxis.Y, -0.11);
+        this.camera.translate(vec4.fromValues(0, 21, -18, 0));
+        this.camera.setTarget(vec3.fromValues(0, 0, 0));
         if (this.cameraTimer == 10) {
-          this.camera.setPosition(vec3.fromValues(0, 90, 1))
-          console.log(this.camera.position)
-          this.currentCamera = 2
-          this.movingCamera = false
-          this.cameraTimer = 0
+          this.camera.setPosition(vec3.fromValues(0, 90, 1));
+          console.log(this.camera.position);
+          this.currentCamera = 2;
+          this.movingCamera = false;
+          this.cameraTimer = 0;
         }
         break;
       case 2:
-        this.cameraTimer += 1
-        this.camera.setPosition(vec3.fromValues(0, 90 - (4 * this.cameraTimer), 1 + (4.9 * this.cameraTimer)))
-        //this.camera.setTarget(vec3.fromValues(0,0,0))
+        this.cameraTimer += 1;
+        this.camera.setPosition(vec3.fromValues(0, 90 - (4 * this.cameraTimer), 1 + (4.9 * this.cameraTimer)));
         if (this.cameraTimer == 10) {
-          this.currentCamera = 0
-          this.movingCamera = false
-          this.cameraTimer = 0
+          this.currentCamera = 0;
+          this.movingCamera = false;
+          this.cameraTimer = 0;
         }
         break;
       default:

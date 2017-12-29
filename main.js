@@ -27,7 +27,7 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', '../graph/MySceneGraph.js', './tr
 
     //Função para gerir a interface inicial e setup
     var startApp = function (e) {
-      console.log("start")
+      console.log("start");
       //Recolha da informação
       let args = [];
       let cb = document.getElementsByName('cen');
@@ -37,16 +37,16 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', '../graph/MySceneGraph.js', './tr
           break;
         }
       }
-      let filename
+      let filename;
       switch (args[0]) {
         case 'c1':
-          filename = 'gameScene.xml'
+          filename = 'gameScene.xml';
           break;
         case 'c2':
-          filename = 'gameScene2.xml'
+          filename = 'gameScene2.xml';
           break;
         case 'c3':
-          filename = 'gameScene3.xml'
+          filename = 'gameScene3.xml';
           break;
         default:
           break;
@@ -65,17 +65,17 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', '../graph/MySceneGraph.js', './tr
           break;
         }
       }
-      args.push(document.getElementById('time').value)
-      console.log(args)
-      //document.body.removeChild(document.body.childNodes[1])
+      args.push(document.getElementById('time').value);
+      console.log(args);
+
       document.getElementById("uidiv").setAttribute("hidden", "");
       //Setup da cena segundo cenário escolhido
       myScene.interface.gui.close();
       delete myInterface;
       myInterface = new MyInterface();
       let scenehistory = null;
-      if(myScene.history.length > 0){
-        scenehistory = [myScene.history.slice(),myScene.remhistory.slice()];
+      if (myScene.history.length > 0) {
+        scenehistory = [myScene.history.slice(), myScene.remhistory.slice()];
       }
       delete myScene;
       myScene = new XMLscene(myInterface, args[1], args[2], args[3], scenehistory);
@@ -88,12 +88,12 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', '../graph/MySceneGraph.js', './tr
       timerInterval = setInterval(myScene.manageTimer.bind(myScene), 1000);
       myScene.clearPickRegistration();
     }
-    document.getElementById("startButton").onclick = startApp
+    document.getElementById("startButton").onclick = startApp;
     var restartApp = function (e) {
       document.getElementById("uidiv").removeAttribute('hidden');
       document.getElementById("enddiv").setAttribute('hidden', "");
     }
-    document.getElementById("restartButton").onclick = restartApp
+    document.getElementById("restartButton").onclick = restartApp;
 
 
 

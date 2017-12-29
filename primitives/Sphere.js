@@ -59,7 +59,7 @@ Sphere.prototype.initBuffers = function () {
       //[!]Informação de texturas
       this.texCoords.push(
         sc, st
-      )
+      );
     }
   }
 
@@ -80,7 +80,7 @@ Sphere.prototype.initBuffers = function () {
   for (var floor = 0; floor < this.sections - 2; floor++) { //offset -2 pois as secções topo e baixo são lidadas de diferente forma
     let row = (this.partsPerSections + 1) * floor; //offset + 1 devido a vertices repetidos
     for (var i = 1; i <= this.partsPerSections; i++) {
-      let pivot = i + row + this.partsPerSections - 1
+      let pivot = i + row + this.partsPerSections - 1;
       this.indices.push(
         pivot, pivot + this.partsPerSections + 2, pivot + this.partsPerSections + 1,
         pivot, pivot + 1, pivot + this.partsPerSections + 2
@@ -89,7 +89,7 @@ Sphere.prototype.initBuffers = function () {
   }
   //Parte de topo da esfera
   let top = (this.vertices.length / 3) - (this.partsPerSections + 1);
-  for (i = top - this.partsPerSections - 1, j = 0; j <= this.partsPerSections; i++ , j++) {
+  for (var i = top - this.partsPerSections - 1, j = 0; j <= this.partsPerSections; i++ , j++) {
     this.indices.push(
       top + j, i, i + 1
     );

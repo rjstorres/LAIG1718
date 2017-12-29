@@ -31,14 +31,14 @@ Cylinder.prototype.constructor = Cylinder;
 Cylinder.prototype.initBuffers = function () {
 
 
-  this.vertices = []
-  this.indices = []
-  this.normals = []
-  this.texCoords = []
+  this.vertices = [];
+  this.indices = [];
+  this.normals = [];
+  this.texCoords = [];
 
-  for (i = 0, radius = this.bRadius; i <= this.sections; i++ , radius = this.bRadius + (this.radiusStep * i)) {
+  for (var i = 0, radius = this.bRadius; i <= this.sections; i++ , radius = this.bRadius + (this.radiusStep * i)) {
     this.tCoord = this.tStep * i;
-    for (j = 0; j <= this.partsPerSections; j++) {
+    for (var j = 0; j <= this.partsPerSections; j++) {
       this.sCoord = this.vStep * j;
       var x = radius * Math.cos(this.trig * j);
       var y = radius * Math.sin(this.trig * j);
@@ -56,9 +56,9 @@ Cylinder.prototype.initBuffers = function () {
   }
 
   var offset = 0;
-  for (i = 0; i < this.sections; i++) {
+  for (var i = 0; i < this.sections; i++) {
     offset = i * (this.partsPerSections + 1);
-    for (j = 0; j < this.partsPerSections; j++) {
+    for (var j = 0; j < this.partsPerSections; j++) {
       this.indices.push(
         j + offset, j + 1 + offset, j + this.partsPerSections + 1 + offset,
         j + 1 + offset, j + this.partsPerSections + 2 + offset, j + this.partsPerSections + 1 + offset
