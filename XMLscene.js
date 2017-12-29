@@ -173,6 +173,7 @@ XMLscene.prototype.responseValidate = function (player) {
     } else if (this.sicstus.status == 400) {
       this.history.pop();
       console.log("Invalid move");
+      alert("Invalid move");
     }
     this.sicstus = null;
   }
