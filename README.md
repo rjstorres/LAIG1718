@@ -1,8 +1,8 @@
-#Laboratório de Aplicações com Interface Gráfica  
+# Laboratório de Aplicações com Interface Gráfica  
 
 MIEIC – 2017/2018 
 
-##Trabalho 3 – Interface 3D de um jogo 
+## Trabalho 3 – Interface 3D de um jogo 
 
 O presente documento enuncia os aspetos gerais a desenvolver nas interfaces gráficas para os jogos propostos na disciplina de Programação em Lógica. A interface gráfica para o jogo escolhido por cada grupo será desenvolvida durante as aulas práticas da unidade curricular Laboratório de Aplicações com Interface Gráfica, utilizando a linguagem JavaScript e com recurso à tecnologia WebGL. 
 
